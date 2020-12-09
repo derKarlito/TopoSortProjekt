@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Models;
 using UnityEngine;
+
+//TODO: look at Start()
+//it's too late
 namespace TopoSort{
 
  public class MoveCube : MonoBehaviour {
@@ -12,6 +16,8 @@ namespace TopoSort{
      void Start()
      {
          Debug.Log("Iam alive");
+
+         Graph g1 = new Graph(mockNodes());
          
          Algorithm test = new Algorithm(mockNodes());
      }
