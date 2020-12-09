@@ -31,9 +31,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cacf2f57-6546-4f23-91a9-f344fc5bc73e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Algorithm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Algorithm.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Node.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Node.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MoveCube.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MoveCube.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +97,7 @@
       <updated>1607528048085</updated>
       <workItem from="1607528054746" duration="76000" />
       <workItem from="1607528145175" duration="11448000" />
-      <workItem from="1607540400521" duration="647000" />
+      <workItem from="1607540400521" duration="1076000" />
     </task>
     <servers />
   </component>
