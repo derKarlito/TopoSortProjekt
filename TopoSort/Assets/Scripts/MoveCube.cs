@@ -15,11 +15,11 @@ namespace TopoSort{
      // Update is called once per frame
      void Start()
      {
-         Debug.Log("Iam alive");
+         Debug.Log("I'm alive");
 
-        // Graph g1 = new Graph(mockNodes());
+         Graph g1 = new Graph(mockNodes());
          
-         Algorithm test = new Algorithm(mockNodes());
+         Algorithm test = new Algorithm(g1);
      }
      void Update () {
         
@@ -31,13 +31,18 @@ namespace TopoSort{
          Node a = new Node("a");
          Node b = new Node("b");
          Node d = new Node("d");
-         d.addDependency(b);
+         Node c = new Node("c");
          Node e = new Node("e");
-         e.addDependency(b);
-         e.addDependency(d);
+         e.addDescendant(a);
+         e.addDescendant(b);
+         e.addDescendant(d);
+         c.addAncestor(b);
+         c.addAncestor(d);
+         b.addDescendant(d);
          returnList.Add(a);
          returnList.Add(b);
          returnList.Add(d);
+         returnList.Add(c);
          returnList.Add(e);
          return returnList;
    }
