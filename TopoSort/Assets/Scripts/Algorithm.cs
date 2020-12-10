@@ -12,7 +12,7 @@ namespace TopoSort{
     {
         public Algorithm(List<Node> input)
         {
-            
+            StartTopoSort(input);
         }
         
         
@@ -29,7 +29,7 @@ namespace TopoSort{
             foreach(Node node in input)
             {
                 Debug.Log(node.Name);
-                Debug.Log(node.Dependencies.Length); 
+                Debug.Log(node.Dependencies.Count); 
                 NodeResolve(node, sorted, visited);
             }
             
@@ -40,7 +40,7 @@ namespace TopoSort{
         // Takes a node
         // Checks for cyclic dependencies
         // 
-        private static void NodeResolve(Node node, List<Node> sorted, Dictionary<Node, bool> visited)
+        private static List<Node> NodeResolve(Node node, List<Node> sorted, Dictionary<Node, bool> visited)
         {
             visited.TryGetValue(node, out var working);   //Assigning 'working' true if (dependency) node was already visited
 
@@ -66,7 +66,7 @@ namespace TopoSort{
                 sorted.Add(node);
             }
 
-            return;
+            return sorted;
         }
 
     }

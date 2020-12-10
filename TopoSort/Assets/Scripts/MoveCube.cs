@@ -17,7 +17,7 @@ namespace TopoSort{
      {
          Debug.Log("Iam alive");
 
-         Graph g1 = new Graph(mockNodes());
+        // Graph g1 = new Graph(mockNodes());
          
          Algorithm test = new Algorithm(mockNodes());
      }
@@ -30,12 +30,13 @@ namespace TopoSort{
          List<Node> returnList = new List<Node>();
          Node a = new Node("a");
          Node b = new Node("b");
-         Node c = new Node("c", a);
-         Node d = new Node("d",b);
-         Node e = new Node("e",b,c);
+         Node d = new Node("d");
+         d.addDependency(b);
+         Node e = new Node("e");
+         e.addDependency(b);
+         e.addDependency(d);
          returnList.Add(a);
          returnList.Add(b);
-         returnList.Add(c);
          returnList.Add(d);
          returnList.Add(e);
          return returnList;
