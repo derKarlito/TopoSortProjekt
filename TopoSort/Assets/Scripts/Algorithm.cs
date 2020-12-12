@@ -11,9 +11,11 @@ namespace TopoSort{
     {
         public Algorithm(Graph input)
         {
+            Debug.Log("UNSORTED:");
             WriteGraph(input);                              //writing unsorted graph first for clarity's sake in testing
-            List<Node> sortedList = StartTopoSort(input);
-
+            Graph sorted = StartTopoSort(input);
+            Debug.Log("SORTED:");
+            WriteGraph(sorted);
         }
         
         
@@ -22,26 +24,57 @@ namespace TopoSort{
         // iterates through every Node
         // and returns a sorted graph.
         
-        public static List<Node> StartTopoSort(Graph input)
+        public static Graph StartTopoSort(Graph input)
         {
-            List<Node> origins = new List<Node>();              // Nodes with no ancestors
-            var sorted = new List<Node>();                      //Output list after sorting
-            var visited = new Dictionary<Node, bool>();         //Dictionary: Node; false(already visited) | true(temporary visited flag)
+            CheckForCycles(input); //Checks if graph has cycles, throws argument if so
+            
+            List<Node> SortedList = ExecuteTopoSort(input);
 
+            Graph sorted = new Graph(SortedList);
+            
+            return sorted;
+        }
+
+        public static void CheckForCycles(Graph input)
+        {
+            var visited = new Dictionary<Node, bool>();         //Dictionary: Node; false(already visited) | true(temporary visited flag)
             foreach(Node node in input.Nodes)
             {
-
-                if(node.Ancestors.Count == 0){  //get a list of all "starting" nodes
-                    origins.Add(node);
-                }  
-
-                if(isCycleless(node, visited) == false){
+                if(!isCycleless(node, visited)){
                      throw new ArgumentException("Cyclic dependency found."); 
                 }
-
-                sorted.Add(node);
             }
-            
+        }
+
+        public static List<Node> ExecuteTopoSort(Graph input)
+        {
+            int n = input.Length; //number of Nodes in graph
+            Queue<Node> q = new Queue<Node>();
+
+            for (int i = 0; i < n; i++)     //fills the queue with all nodes that have no incomming edges/ancestors
+            {
+                if(input.Nodes[i].InDegree == 0)
+                {
+                    q.Enqueue(input.Nodes[i]);
+                }
+            }
+
+            List<Node> sorted = new List<Node>();
+
+            while (q.Count != 0)
+            {
+                Node Element = q.Dequeue();  //remove the first Node of the queue
+                sorted.Add(Element);   //insert that Node in the sorted list, then increment index
+
+                foreach(Node Descendant in Element.Descendants)     //removes the node and its edgeds from the graph 
+                {
+                    Descendant.InDegree -= 1;
+                    if (Descendant.InDegree == 0)   //if thus a new node with 0 incomming edges is created, it is added to the queue
+                    {
+                        q.Enqueue(Descendant);
+                    }
+                }
+            }
             return sorted;
         }
 
@@ -57,7 +90,7 @@ namespace TopoSort{
 
         private static bool isCycleless(Node node, Dictionary<Node, bool> visited)
         {
-            visited.TryGetValue(node, out var working);   //Assigning 'working' true if (descendant) node was already visited
+            visited.TryGetValue(node, out var working);   //Assigning 'working' true if (Descendant) node was already visited
 
             if (working)
             {
@@ -70,9 +103,9 @@ namespace TopoSort{
                 
                 if (descendants != null)
                 {
-                    foreach (var descendant in descendants)                    //For all descendants of a node do:
+                    foreach (var Descendant in descendants)                    //For all descendants of a node do:
                     {
-                        isCycleless(descendant, visited);                     //Visit node and check for descendants
+                        isCycleless(Descendant, visited);                     //Visit node and check for descendants
                     }
                     
                 }
@@ -83,21 +116,21 @@ namespace TopoSort{
         }
 
 
-        private void WriteGraph(Graph input){
+        private void WriteGraph(Graph input)
+        {
 
             if(input == null)
                 Debug.Log("Invalid Graph");
 
-         foreach(Node node in input.Nodes)
-            {
+         foreach(Node node in input.Nodes){
             Debug.Log("Node " + node.Name +" Has " + node.Descendants.Count + " descendants." );
         
                foreach(Node n in node.Descendants){
                    Debug.Log(n.Name);
                }
             }
-
-    }
+        }
+        
     }
     
 }

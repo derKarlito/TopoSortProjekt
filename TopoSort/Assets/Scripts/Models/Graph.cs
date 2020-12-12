@@ -13,13 +13,14 @@ namespace Models
     public class Graph
     {
         public string Name { get; private set; }
+
+        public int Length => Nodes.Count;       //Makes it so that length always points to the count of the current list of Nodes
         
         public List<Node> Nodes { get; private set; }
         
         public Graph(string name, List<Node> nodes)        //Graph can have a Name and contains Nodes
         {
             Name = name;
-            //var glength = nodes.Count;
             Nodes = nodes;
         }
 
