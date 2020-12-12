@@ -32,7 +32,6 @@ namespace Models {
             InDegree++;
         }
 
-
     }
     
 }
