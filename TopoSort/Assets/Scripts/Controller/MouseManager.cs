@@ -10,4 +10,10 @@ public static class MouseManager //manages mouse position
         mousePos = Camera.main.ScreenToWorldPoint(mousePos); 
         return mousePos; 
     }
+
+    public static bool MouseHover(Collider2D Collider)
+    {
+        Vector3 mousePos = MouseManager.GetMousePos();
+        return Collider.OverlapPoint(mousePos);
+    }
 }

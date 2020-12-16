@@ -4,15 +4,10 @@ using UnityEngine;
 
 public static class NodeManager  //manages when Nodes are clicked etc
 {
-    public static NodeControl holdControl;
-    public static NodeControl dragControl;
-    public static NodeControl hoverControl;
+    public static NodeControl holdControl;      //fills with Node that is being held and placed on screen
+    public static NodeControl dragControl;      //fills with the Starting Node of an edge
+    public static NodeControl hoverControl;     //fills with the Node, the mouse is hovering over
     
-
-    //make instanceneisn line 
-    //make line know start (and end)
-
-    //Make known when Nodes are created from "inventory" 
 
     public static void StartHold(NodeControl nodeControl)
     {
@@ -22,15 +17,13 @@ public static class NodeManager  //manages when Nodes are clicked etc
     public static void StopHold(NodeControl nodeControl)
     {
         if(holdControl == nodeControl)
-        {
             holdControl = null;
-        }
     }
 
     public static void StartDrag(NodeControl nodeControl)
     {
-        var prefab = Resources.Load<EdgeControl>("Models/Edge");  //creates new Edge prefab
-        var line = Object.Instantiate(prefab); //enables use of line
+        var prefab = Resources.Load<EdgeControl>("Models/Edge");    //creates new Edge prefab
+        var line = Object.Instantiate(prefab);                      //enables use of edge
         
         line.FromNode = nodeControl;
         dragControl = nodeControl;

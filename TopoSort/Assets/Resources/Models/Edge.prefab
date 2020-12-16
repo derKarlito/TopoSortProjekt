@@ -141,7 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38fe1979b62b8484896c279344975e4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistance: 1
+  HitboxShrink: 1
+  MinDistance: 0.5
   FromNode: {fileID: 0}
   ToNode: {fileID: 0}
   Line: {fileID: 0}
