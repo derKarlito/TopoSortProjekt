@@ -53,15 +53,17 @@ public class EdgeControl : MonoBehaviour
 
         if(Input.GetMouseButtonDown(1) && !BeingCreated) //DeletesEdge per right click if edge does really exist
         {
-            if(OnEdge(FromNode.transform.position, ToNode.transform.position))
+            if(OnEdge())
             {
                 Destroy(gameObject);
             }
         }
     }
 
-    public bool OnEdge(Vector2 StartPos, Vector2 EndPos)
+    public bool OnEdge()
     {
+        Vector2 StartPos = FromNode.transform.position;
+        Vector2 EndPos = ToNode.transform.position;
 
         Vector2 StartToEnd = EndPos - StartPos;
 
