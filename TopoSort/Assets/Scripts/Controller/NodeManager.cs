@@ -8,7 +8,6 @@ public static class NodeManager  //manages when Nodes are clicked etc
     public static NodeControl dragControl;      //fills with the Starting Node of an edge
     public static NodeControl hoverControl;     //fills with the Node, the mouse is hovering over
     
-
     public static void StartHold(NodeControl nodeControl)
     {
         holdControl = nodeControl;
@@ -23,9 +22,8 @@ public static class NodeManager  //manages when Nodes are clicked etc
     public static void StartDrag(NodeControl nodeControl)
     {
         var prefab = Resources.Load<EdgeControl>("Models/Edge");    //creates new Edge prefab
-        var line = Object.Instantiate(prefab);                      //enables use of edge
-        
-        line.FromNode = nodeControl;
+        var line = Object.Instantiate(prefab);                      //enables use of edge        
+        line.SourceNode = nodeControl;
         dragControl = nodeControl;
     }
 
@@ -45,5 +43,4 @@ public static class NodeManager  //manages when Nodes are clicked etc
         if(hoverControl == nodeControl)
             hoverControl = null;
     }
-
 }

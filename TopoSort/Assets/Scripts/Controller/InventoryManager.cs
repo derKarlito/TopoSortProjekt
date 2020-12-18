@@ -4,7 +4,6 @@ using UnityEngine;
 
 public static class InventoryManager //manages when the inventory should listen up
 {
-
    public static NodeCreationControl hoverControl;
 
    public static void EnterHover(NodeCreationControl nodeControl)

@@ -7,8 +7,6 @@ public class NodeCreationControl : MonoBehaviour
     private Collider2D Collider;
 
     public int NodeValue;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +17,6 @@ public class NodeCreationControl : MonoBehaviour
     void Update()
     {
         bool onInventory = MouseManager.MouseHover(Collider);
-
         if(onInventory)
         {
             InventoryManager.EnterHover(this);
@@ -28,7 +25,6 @@ public class NodeCreationControl : MonoBehaviour
         {
             InventoryManager.ExitHover(this);
         }
-
         if(Input.GetMouseButtonDown(0) && onInventory)
         {
             var prefab = Resources.Load<NodeControl>("Models/Node");  //creates new Node prefab

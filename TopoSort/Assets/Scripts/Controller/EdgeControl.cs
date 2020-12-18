@@ -6,17 +6,12 @@ public class EdgeControl : MonoBehaviour
 {
     public float HitboxShrink;
     public float MinDistance;
-
     public bool BeingCreated = true;
-
-    public NodeControl FromNode;
-    public NodeControl ToNode;
-
+    public NodeControl SourceNode;
+    public NodeControl TargetNode;
     public LineRenderer Line;
     //New class Edge control. for clicking Edges
-
     //Line needs to know when clicked
-
     private void Start()
     {
         Line = GetComponent<LineRenderer>();
@@ -24,15 +19,14 @@ public class EdgeControl : MonoBehaviour
 
     private void Update() 
     {
-        if(FromNode == null || (!BeingCreated && ToNode == null)) //if one of both nodes is not tere anymore,edge destroys itself
+        if(SourceNode == null || (!BeingCreated && TargetNode == null)) //if one of both nodes is not tere anymore,edge destroys itself
         {
             Destroy(gameObject);
             return;                         //no update. Edge broken
         }
-
-        Line.SetPosition(0, FromNode.transform.position);
+        Line.SetPosition(0, SourceNode.transform.position);
         if(!BeingCreated)                                   //if being created is false, then the edge has a definite End aka the ToNode
-            Line.SetPosition(1, ToNode.transform.position);
+            Line.SetPosition(1, TargetNode.transform.position);
         else                                                //while it is being created, then the other end points to the mousePointer
             Line.SetPosition(1, MouseManager.GetMousePos().Z(0));
 
@@ -40,9 +34,9 @@ public class EdgeControl : MonoBehaviour
         {
             if(NodeManager.hoverControl != null)            //If mouse is hovering over any node
             {
-                ToNode = NodeManager.hoverControl; 
+                TargetNode = NodeManager.hoverControl; 
                 BeingCreated = false;
-                if(ToNode == FromNode)  //Prevents Nodes being connected to themselves
+                if(TargetNode == SourceNode)  //Prevents Nodes being connected to themselves
                     Destroy(gameObject);
             }
             else   //if mouse is not hovering over a node the edge gets destroyed
@@ -50,60 +44,52 @@ public class EdgeControl : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
         if(Input.GetMouseButtonDown(1) && !BeingCreated) //DeletesEdge per right click if edge does really exist
         {
-            if(OnEdge())
+            if(IsOnEdge())
             {
                 Destroy(gameObject);
             }
         }
     }
 
-    public bool OnEdge()
+    public bool IsOnEdge()
     {
-        Vector2 StartPos = FromNode.transform.position;
-        Vector2 EndPos = ToNode.transform.position;
+        Vector2 StartPos = SourceNode.transform.position;
+        Vector2 EndPos = TargetNode.transform.position;
 
         Vector2 StartToEnd = EndPos - StartPos;
 
         StartToEnd.Normalize();                         //set Length to 1
         StartPos += StartToEnd * HitboxShrink;          //pushes start towards End
         EndPos -= StartToEnd * HitboxShrink;            //push End towards start
-                                                        //so that there's no difficulty adding a ton of edges to a node
-                                                
+                                                        //so that there's no difficulty adding a ton of edges to a node                                                
         StartToEnd = EndPos - StartPos;                 //recalcute the new whole length of the line to see if the mouse is on that part of the line
         Vector3 MousePos = MouseManager.GetMousePos();
-        Vector2 MouseToStart = (Vector2) MousePos - StartPos;
-       
-
+        Vector2 MouseToStart = (Vector2) MousePos - StartPos;    
         //h is progress on Line
         float h = Mathf.Clamp01(Vector2.Dot(MouseToStart, StartToEnd)/StartToEnd.sqrMagnitude); //It's complex, be happy other ppl figured it out instead of us
-
         float distance = Vector2.Distance(MouseToStart, StartToEnd*h); 
-
         if(distance <= MinDistance) //then mouse is considered "on Edge"
         {
             return true;
         }
-
         return false;
     }
-
     
     private void OnDrawGizmos() //this helped visualize the precise measurements for the shrinking and the min-Distance
     {
-        Vector2 fromPos = FromNode.transform.position;
-        Vector2 toPos =  ToNode.transform.position;
+        Vector2 sourcePos = SourceNode.transform.position;
+        Vector2 targetPos =  TargetNode.transform.position;
 
-        Vector2 StartToEnd = toPos - fromPos;
+        Vector2 StartToEnd = targetPos - sourcePos;
         StartToEnd.Normalize();                          //set Length to 1
-        fromPos += StartToEnd * HitboxShrink;          //pushes start towards End
-        toPos -= StartToEnd * HitboxShrink;            //push End towards start
+        sourcePos += StartToEnd * HitboxShrink;          //pushes start towards End
+        targetPos -= StartToEnd * HitboxShrink;            //push End towards start
 
         Gizmos.color = Color.blue;
 
-        Gizmos.DrawWireSphere(fromPos, MinDistance);
-        Gizmos.DrawWireSphere(toPos, MinDistance);
+        Gizmos.DrawWireSphere(sourcePos, MinDistance);
+        Gizmos.DrawWireSphere(targetPos, MinDistance);
     }
 }

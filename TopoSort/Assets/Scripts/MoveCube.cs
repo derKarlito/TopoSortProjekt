@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using Models;
 using UnityEngine;
 
-//TODO: look at Start()
-//it's too late
 namespace TopoSort{
 
  public class MoveCube : MonoBehaviour {
- 
- 
+
      public GameObject Cube; //The Cube
  
      // Update is called once per frame
