@@ -19,14 +19,18 @@ public class EdgeControl : MonoBehaviour
 
     private void Update() 
     {
-        if(SourceNode == null || (!BeingCreated && TargetNode == null)) //if one of both nodes is not tere anymore,edge destroys itself
+        if(SourceNode == null || (!BeingCreated && TargetNode == null)) //if one of both nodes is not there anymore,edge destroys itself
         {
             Destroy(gameObject);
             return;                         //no update. Edge broken
         }
         Line.SetPosition(0, SourceNode.transform.position);
-        if(!BeingCreated)                                   //if being created is false, then the edge has a definite End aka the ToNode
+        if (!BeingCreated)                    //if being created is false, then the edge has a definite End aka the ToNode
+        {
             Line.SetPosition(1, TargetNode.transform.position);
+            SourceNode.node.addDescendant(TargetNode.node);
+            //TargetNode.node.addAncestor(SourceNode.node);
+        }
         else                                                //while it is being created, then the other end points to the mousePointer
             Line.SetPosition(1, MouseManager.GetMousePos().Z(0));
 
@@ -49,6 +53,7 @@ public class EdgeControl : MonoBehaviour
             if(IsOnEdge())
             {
                 Destroy(gameObject);
+                SourceNode.node.rmvDescendants(TargetNode.node);
             }
         }
     }

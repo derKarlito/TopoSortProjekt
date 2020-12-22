@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-//TODO: The Constructors should accept Lists, not Arrays
-//++the method
-//(++ the class property Nodes)(?)
-//Why is this red in my IDE??
 namespace Models
 {
     public class Graph
@@ -21,18 +17,32 @@ namespace Models
             Nodes = nodes;
         }
 
+        public Graph()                                    //Graph can be empty
+        {
+            
+        }
+
         public Graph(List<Node> nodes)
         {
             Nodes = nodes;
         }
         
-        public void AddNodes(List<Node> toAdd)
+        public void AddNodes(List<Node> toAdd)        //Adds List of Nodes to Graph
         {
-            foreach (var i in toAdd)                    //Cycles through all "to-add" Nodes and adds them to the Graph
+            foreach (var i in toAdd)
             {
                 Nodes.Append(i);
             }
-            return;
-        }   
+        }
+        
+        public void AddNodes(Node toAdd)            //Adds Node to Graph
+        {
+            Nodes.Append(toAdd);
+        }
+
+        public void RmvNode(Node trem)                //Removes Node from Graph
+        {
+            Nodes.Remove(trem);
+        }
     }
 }
