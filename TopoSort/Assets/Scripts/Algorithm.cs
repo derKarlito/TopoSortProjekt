@@ -6,7 +6,8 @@ using Models;
 using TopoSort;
 
 
-namespace TopoSort{
+namespace TopoSort
+{
     public class Algorithm 
     {
         public Algorithm(Graph input)
@@ -14,8 +15,15 @@ namespace TopoSort{
             Debug.Log("UNSORTED:");
             WriteGraph(input);                              //writing unsorted graph first for clarity's sake in testing
             Graph sorted = StartTopoSort(input);
-            Debug.Log("SORTED:");
-            WriteGraph(sorted);
+            if(sorted != null) //else case handled in executeTopoSort()
+            {
+                Debug.Log("SORTED:");
+                WriteGraph(sorted);
+            }
+            else
+            {
+                Debug.Log("");
+            }
         }
         ///<summary>
         /// Main-Function.
@@ -25,7 +33,7 @@ namespace TopoSort{
         ///</summary>
         public static Graph StartTopoSort(Graph input)
         {
-            CheckForCycles(input); //Checks if graph has cycles, throws argument if so
+           // CheckForCycles(input); //Checks if graph has cycles, throws argument if so
             
             List<Node> SortedList = ExecuteTopoSort(input);
 
@@ -40,7 +48,7 @@ namespace TopoSort{
             foreach(Node node in input.Nodes)
             {
                 if(!isCycleless(node, visited)){
-                     throw new ArgumentException("Cyclic dependency found."); 
+                    throw new ArgumentException("Cyclic dependency found."); 
                 }
             }
         }
@@ -69,6 +77,20 @@ namespace TopoSort{
                         q.Enqueue(Descendant);
                     }
                 }
+            }
+
+            if(sorted.Count != n) //happens when there's cycles
+            {
+                Debug.Log("Smh Graph contains cycle");
+                Debug.Log("Probably one of these nodes...");
+                //THIS ONLY WORKS WHEN THERE'S ONE SINGLE CYLCE IN THE GRAPH
+                //Otherwise it causes a stack overflow :(
+                List<Node> nodesInCycle = FindCycleNodes(input);
+                foreach(Node node in nodesInCycle)
+                {
+                    Debug.Log(node.Id);
+                }
+                return null;
             }
             return sorted;
         }
@@ -104,15 +126,53 @@ namespace TopoSort{
             return true; 
         }
 
+        
+        private static List<Node> FindCycleNodes(Graph input)
+        {
+            //We can determine which nodes are in a cycle by checking every ancestry of every node to see if it contains the node we are looking at :^)
+            //I'm sure this is very runtime-efficient :^)
+            List<Node> cycleNodes = new List<Node>();
+
+            for(int i = 0; i < input.Nodes.Count; i++) //for each node
+            {
+                InspectAncestry(input.Nodes[i], input.Nodes[i].Ancestors, cycleNodes);
+            }
+            return cycleNodes;
+        }
+        private static List<Node> InspectAncestry(Node input, List<Node> ancestors, List<Node> result)
+        {
+            if(input.Ancestors.Count != 0) //if there are ancestors at all
+            {
+                for(int j = 0; j < ancestors.Count; j++) //for each node in the ancestor list
+                { 
+                    if(input.Equals(ancestors[j])) //wenn die root node (i) gleich einer ihrer ancestors (j) ist
+                    {
+                        // node input is part of cycle
+                        if(!result.Contains(input))
+                        {
+                            result.Add(input);
+                            return result;
+                        }
+                    }  
+                    else 
+                        InspectAncestry(input, ancestors[j].Ancestors, result); //ancestors of j are also ancestors of input
+                }
+            }
+            return null;   
+        }
+        
         private void WriteGraph(Graph input)
         {
             if(input == null)
                 Debug.Log("Invalid Graph");
-            foreach(Node node in input.Nodes){
-            Debug.Log("Node " + node.Name +" Has " + node.Descendants.Count + " descendants." );
+            foreach(Node node in input.Nodes)
+            {
+                Debug.Log("Node " + node.Id +" Has " + node.Descendants.Count + " descendants." );
         
-                foreach(Node n in node.Descendants){
-                    Debug.Log(n.Name);
+                foreach(Node n in node.Descendants)
+                {
+                    Debug.Log(n.Id);
+                    
                 }
             }
         }       

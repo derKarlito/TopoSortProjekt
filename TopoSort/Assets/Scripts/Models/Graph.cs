@@ -8,9 +8,9 @@ namespace Models
 {
     public class Graph
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public int Length => Nodes.Count;       //Makes it so that length always points to the count of the current list of Nodes
-        public List<Node> Nodes { get; private set; }
+        public List<Node> Nodes { get; set; }
         public Graph(string name, List<Node> nodes)        //Graph can have a Name and contains Nodes
         {
             Name = name;
@@ -19,7 +19,7 @@ namespace Models
 
         public Graph()                                    //Graph can be empty
         {
-            
+            Nodes = new List<Node>();                     //But still needs to have a new, empty list to it
         }
 
         public Graph(List<Node> nodes)
@@ -35,14 +35,24 @@ namespace Models
             }
         }
         
-        public void AddNodes(Node toAdd)            //Adds Node to Graph
+        public void AddNode(Node toAdd)            //Adds Node to Graph
         {
-            Nodes.Append(toAdd);
+            Nodes.Add(toAdd);
         }
 
         public void RmvNode(Node trem)                //Removes Node from Graph
         {
             Nodes.Remove(trem);
+        }
+
+        public void toString()
+        {
+            string text = "";
+            foreach (Node i in Nodes) 
+            {
+                text += i.Id+"+";
+            }
+            Debug.Log(text);
         }
     }
 }

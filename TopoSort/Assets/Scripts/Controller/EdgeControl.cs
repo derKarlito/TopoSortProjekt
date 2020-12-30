@@ -25,11 +25,13 @@ public class EdgeControl : MonoBehaviour
             return;                         //no update. Edge broken
         }
         Line.SetPosition(0, SourceNode.transform.position);
-        if (!BeingCreated)                    //if being created is false, then the edge has a definite End aka the ToNode
+        if (!BeingCreated)                    //if being created is false, then the edge has a definite End aka the TargetNode
         {
             Line.SetPosition(1, TargetNode.transform.position);
-            SourceNode.node.addDescendant(TargetNode.node);
-            //TargetNode.node.addAncestor(SourceNode.node);
+            if(!SourceNode.node.Descendants.Contains(TargetNode.node)) //otherwise we'll get 2000+ times the same descendant
+            {
+                SourceNode.node.addDescendant(TargetNode.node);
+            }
         }
         else                                                //while it is being created, then the other end points to the mousePointer
             Line.SetPosition(1, MouseManager.GetMousePos().Z(0));
@@ -38,7 +40,7 @@ public class EdgeControl : MonoBehaviour
         {
             if(NodeManager.hoverControl != null)            //If mouse is hovering over any node
             {
-                TargetNode = NodeManager.hoverControl; 
+                TargetNode = NodeManager.hoverControl;
                 BeingCreated = false;
                 if(TargetNode == SourceNode)  //Prevents Nodes being connected to themselves
                     Destroy(gameObject);

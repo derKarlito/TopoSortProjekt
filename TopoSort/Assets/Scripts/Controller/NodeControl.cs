@@ -13,13 +13,11 @@ public class NodeControl : MonoBehaviour
     public TextMeshPro text;    
     Collider2D Collider;
     public Node node;
-    public int gnodeid;
     
     void Start()
     {
         Collider = GetComponent<Collider2D>();
         text.text = value.ToString();
-        gnodeid = 0;                                    //Unique Nodeid for every Node, counts from 0 for every Node created
     }
 
     // Update is called once per frame
@@ -45,18 +43,18 @@ public class NodeControl : MonoBehaviour
             startPosX = mousePos.x - this.transform.localPosition.x;
             startPosY = mousePos.y - this.transform.localPosition.y;
             isHeld = true;
-            node = new Node(gnodeid++.ToString());            //Initializes new Node with unique identifier
-            GraphManager.graph.AddNodes(node);                        //Graph gets updated
         }
 
         if(Input.GetMouseButtonUp(0) && isHeld)
         {
+    
             isHeld = false;
             if(InventoryManager.hoverControl != null) //Node gets deleted if Let go of over inventory
             {
+                if(node.Descendants.Count != 0)
+                    node.rmvDescendants(node.Descendants);        //Removes all Descendants
                 GraphManager.graph.RmvNode(node);            //Removes Node from Graph
-                node.rmvDescendants(node.Descendants);        //Removes all Descendants
-                Destroy(gameObject);                           //Destroys this Object
+                Destroy(gameObject);                         //Destroys this Object
             }
         }
 
