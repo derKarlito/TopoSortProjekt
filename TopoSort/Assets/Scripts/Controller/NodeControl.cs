@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Models;
 using TMPro;
 using UnityEngine;
 
@@ -11,10 +12,12 @@ public class NodeControl : MonoBehaviour
     public int value = 0;
     public TextMeshPro text;    
     Collider2D Collider;
+    public Node node;
+    
     void Start()
     {
         Collider = GetComponent<Collider2D>();
-        text.text = value.ToString();      
+        text.text = value.ToString();
     }
 
     // Update is called once per frame
@@ -44,10 +47,14 @@ public class NodeControl : MonoBehaviour
 
         if(Input.GetMouseButtonUp(0) && isHeld)
         {
+    
             isHeld = false;
             if(InventoryManager.hoverControl != null) //Node gets deleted if Let go of over inventory
             {
-                Destroy(gameObject);
+                if(node.Descendants.Count != 0)
+                    node.rmvDescendants(node.Descendants);        //Removes all Descendants
+                GraphManager.graph.RmvNode(node);            //Removes Node from Graph
+                Destroy(gameObject);                         //Destroys this Object
             }
         }
 
