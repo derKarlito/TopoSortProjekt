@@ -6,6 +6,7 @@ using Models;
 using TopoSort;
 
 
+
 namespace TopoSort
 {
     public class Algorithm 
@@ -15,6 +16,10 @@ namespace TopoSort
             Debug.Log("UNSORTED:");
             WriteGraph(input);                              //writing unsorted graph first for clarity's sake in testing
             Graph sorted = StartTopoSort(input);
+            AlignmentUtil alignment = new AlignmentUtil();
+            alignment.input = input.Nodes;
+            alignment.sorted = sorted.Nodes;
+            alignment.PositionNodes();
             if(sorted != null) //else case handled in executeTopoSort()
             {
                 Debug.Log("SORTED:");
