@@ -10,20 +10,29 @@ namespace TopoSort
 {
     public class Algorithm : MonoBehaviour
     {
-        public Algorithm(Graph input)
+
+        private Collider2D Collider;
+        // Start is called before the first frame update
+        void Start()
+        {
+        Collider = GetComponentInChildren<Collider2D>();
+        }
+
+        void Update()
+        {
+            bool onButton = MouseManager.MouseHover(Collider);
+            if(Input.GetMouseButtonDown(0) && onButton)
+            {
+                Debug.Log("Algorithm clicked");
+                AlgorithmSetup(GraphManager.graph);
+            }
+        }
+        public void AlgorithmSetup(Graph input)
         {
             Debug.Log("UNSORTED:");
             WriteGraph(input);                              //writing unsorted graph first for clarity's sake in testing
-            Graph sorted = StartTopoSort(input);
-            if(sorted != null) //else case handled in executeTopoSort()
-            {
-                Debug.Log("SORTED:");
-                WriteGraph(sorted);
-            }
-            else
-            {
-                Debug.Log("");
-            }
+            StartTopoSort(input);
+            
         }
         ///<summary>
         /// Main-Function.
@@ -31,15 +40,12 @@ namespace TopoSort
         /// iterates through every Node
         /// and returns a sorted graph.
         ///</summary>
-        public Graph StartTopoSort(Graph input)
+        public void StartTopoSort(Graph input)
         {
            // CheckForCycles(input); //Checks if graph has cycles, throws argument if so
             
-            List<Node> SortedList = ExecuteTopoSort(input);
-
-            Graph sorted = new Graph(SortedList);
+            ExecuteTopoSort(input);
             
-            return sorted;
         }
 
         public static void CheckForCycles(Graph input)
@@ -53,24 +59,17 @@ namespace TopoSort
             }
         }
 
-        public List<Node> ExecuteTopoSort(Graph input)
+        IEnumerator SortCoroutine(Queue<Node> q, List<Node> sorted, Graph input)
         {
-            int n = input.Length; //number of Nodes in graph
-            Queue<Node> q = new Queue<Node>();
-            for (int i = 0; i < n; i++)     //fills the queue with all nodes that have no incomming edges/ancestors
-            {
-                if(input.Nodes[i].InDegree == 0)
-                {
-                    q.Enqueue(input.Nodes[i]);
-                }
-            }
-            List<Node> sorted = new List<Node>();
+            
             while (q.Count != 0)
             {
                 Node Element = q.Dequeue();  //remove the first Node of the queue
                 AlgorithmManager.StartFeed(Element);
-                StartCoroutine(Waiter());
-                sorted.Add(Element);   //insert that Node in the sorted list, then increment index
+                
+                Debug.Log("Waiting...");
+                yield return new WaitForSeconds(5f);
+                sorted.Add(Element);   //insert that Node in the sorted list
                 foreach(Node Descendant in Element.Descendants)     //removes the node and its edgeds from the graph 
                 {
                     Descendant.InDegree -= 1;
@@ -82,7 +81,7 @@ namespace TopoSort
                 AlgorithmManager.ExitFeed(Element);
             }
 
-            if(sorted.Count != n) //happens when there's cycles
+            if(sorted.Count != input.Length) //happens when there's cycles
             {
                 Debug.Log("Smh Graph contains cycle");
                 Debug.Log("Probably one of these nodes...");
@@ -93,9 +92,25 @@ namespace TopoSort
                 {
                     Debug.Log(node.Id);
                 }
-                return null;
+                
             }
-            return sorted;
+        }
+
+        public void ExecuteTopoSort(Graph input)
+        {
+            int n = input.Length; //number of Nodes in graph
+            Queue<Node> q = new Queue<Node>();
+            for (int i = 0; i < n; i++)     //fills the queue with all nodes that have no incomming edges/ancestors
+            {
+                if(input.Nodes[i].InDegree == 0)
+                {
+                    q.Enqueue(input.Nodes[i]);
+                }
+            }
+            List<Node> sorted = new List<Node>();
+
+            StartCoroutine(SortCoroutine(q, sorted, input));
+
         }
         // Takes a node
         // Checks for cyclic dependencies
@@ -180,9 +195,5 @@ namespace TopoSort
             }
         }  
         
-        IEnumerator Waiter()
-        {
-            yield return new WaitForSeconds(5);
-        }
     }  
 }
