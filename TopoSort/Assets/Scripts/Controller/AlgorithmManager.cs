@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using Models;
 using UnityEngine;
 
-public static class AlgorithmManager //manages when nodes are hold
+public class AlgorithmManager //manages when nodes are hold
 {
-    public static NodeControl nodeHold; //hold node which are currently being viewd
+    public static Node nodeHold; //hold node which are currently being viewd
+
+    public static List<Node> finishedNodes=new List<Node>();
 
 
-
-    public static void StartFeed(NodeControl nodeControl)
+    public static void StartFeed(Node node)
     {
-        nodeHold = nodeControl;
+        nodeHold = node;
     }
 
-    public static void ExitFeed()
+    public static void ExitFeed(Node node)
     {
         nodeHold = null;
+        finishedNodes.Add(node);
     }
+
+
 
 }

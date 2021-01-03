@@ -8,7 +8,7 @@ using TopoSort;
 
 namespace TopoSort
 {
-    public class Algorithm 
+    public class Algorithm : MonoBehaviour
     {
         public Algorithm(Graph input)
         {
@@ -31,7 +31,7 @@ namespace TopoSort
         /// iterates through every Node
         /// and returns a sorted graph.
         ///</summary>
-        public static Graph StartTopoSort(Graph input)
+        public Graph StartTopoSort(Graph input)
         {
            // CheckForCycles(input); //Checks if graph has cycles, throws argument if so
             
@@ -53,7 +53,7 @@ namespace TopoSort
             }
         }
 
-        public static List<Node> ExecuteTopoSort(Graph input)
+        public List<Node> ExecuteTopoSort(Graph input)
         {
             int n = input.Length; //number of Nodes in graph
             Queue<Node> q = new Queue<Node>();
@@ -68,6 +68,8 @@ namespace TopoSort
             while (q.Count != 0)
             {
                 Node Element = q.Dequeue();  //remove the first Node of the queue
+                AlgorithmManager.StartFeed(Element);
+                StartCoroutine(Waiter());
                 sorted.Add(Element);   //insert that Node in the sorted list, then increment index
                 foreach(Node Descendant in Element.Descendants)     //removes the node and its edgeds from the graph 
                 {
@@ -77,6 +79,7 @@ namespace TopoSort
                         q.Enqueue(Descendant);
                     }
                 }
+                AlgorithmManager.ExitFeed(Element);
             }
 
             if(sorted.Count != n) //happens when there's cycles
@@ -175,6 +178,11 @@ namespace TopoSort
                     
                 }
             }
-        }       
+        }  
+        
+        IEnumerator Waiter()
+        {
+            yield return new WaitForSeconds(5);
+        }
     }  
 }
