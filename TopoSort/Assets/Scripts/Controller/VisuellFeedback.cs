@@ -3,30 +3,27 @@ using System.Collections.Generic;
 using Models;
 using UnityEngine;
 
-public class VisuellFeedback : monobehaviour //check if algorithmmanager hold a node
+public class VisuellFeedback : MonoBehaviour //check if algorithmmanager hold a node
 {
-    public SpriteRenderer spriteRenderer;
+    public static SpriteRenderer spriteRenderer;
 
     public void Start()
     {
-        spriteRenderer = GameObject.GetComponentInChildren<spriteRenderer>();
+        spriteRenderer = GameObject.Find("Node").GetComponentInChildren<SpriteRenderer>();
     }
 
-    public static void visualfeedback
-
-
+    public static void visualfeedback()
     {
-        if (nodeControl == nodeHold)
+        if (AlgorithmManager.nodeHold != null)
         {
         //ink red
-          spriteRenderer.Color = Color.Red;
-        
+          spriteRenderer.color = new Color(255,0,0);
         }
 
         else
         {
         //ink green
-         spriteRenderer.Color = Color.Green;
+         spriteRenderer.color = new Color(0,255,0);
         }
 
     }
