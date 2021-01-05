@@ -93,10 +93,11 @@ namespace TopoSort
                 {
                     Debug.Log(node.Id);
                 }
-                AlignmentUtil alignment = new AlignmentUtil();
-            	alignment.sorted = sorted;
-            	alignment.SortNotesInArrs();
+               
             }
+            AlignmentUtil alignment = new AlignmentUtil();
+            alignment.sorted = sorted;
+            alignment.SortNotesInArrs();
         }
 
         public void ExecuteTopoSort(Graph input)

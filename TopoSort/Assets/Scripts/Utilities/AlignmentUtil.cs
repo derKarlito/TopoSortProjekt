@@ -15,6 +15,8 @@ namespace TopoSort {
         private int lastX;
         int lastY;
 
+        public static bool finished = false;
+
         public int LastX {
             get{
                 return lastX;
@@ -26,6 +28,7 @@ namespace TopoSort {
             }
         }
         public void SortNotesInArrs(){
+            finished = false;
             List<List<Node>> colums = new List<List<Node>>();
             List<Node> tempColumn = new List<Node>();
             List<Node> alreadyPlaced = new List<Node>();
@@ -68,6 +71,9 @@ namespace TopoSort {
                     currentPosY = -4;
                     currentPosX += 2;
             }
+            finished = true;
+            VisuellFeedback feedback = new VisuellFeedback();
+            feedback.ColourProcess(sorted);
         }
         private bool DependenciesAlreadyResolved(Node node, List<Node> alreadyResolved){
             bool resolved = true;

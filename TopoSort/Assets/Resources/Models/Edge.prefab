@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8170835489652273423}
   m_Layer: 0
   m_Name: Edge
-  m_TagString: Untagged
+  m_TagString: Edge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -143,6 +143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitboxShrink: 1
   MinDistance: 0.5
-  FromNode: {fileID: 0}
-  ToNode: {fileID: 0}
+  BeingCreated: 1
+  SourceNode: {fileID: 0}
+  TargetNode: {fileID: 0}
   Line: {fileID: 0}
