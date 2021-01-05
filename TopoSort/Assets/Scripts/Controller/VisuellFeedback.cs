@@ -30,7 +30,7 @@ public class VisuellFeedback : MonoBehaviour //check if algorithmmanager hold a 
         {
             
         //ink green
-         spriteRenderer.color = new Color(0,255,100,25);
+         spriteRenderer.color = new Color(0,255,0, 0.5f);
         }
 
     }

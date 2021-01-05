@@ -68,7 +68,7 @@ namespace TopoSort
                 AlgorithmManager.StartFeed(Element);
                 
                 Debug.Log("Waiting...");
-                yield return new WaitForSeconds(5f);
+                yield return new WaitForSeconds(2f);
                 sorted.Add(Element);   //insert that Node in the sorted list
                 foreach(Node Descendant in Element.Descendants)     //removes the node and its edgeds from the graph 
                 {
