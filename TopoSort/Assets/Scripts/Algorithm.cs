@@ -6,6 +6,7 @@ using Models;
 using TopoSort;
 
 
+
 namespace TopoSort
 {
     public class Algorithm : MonoBehaviour
@@ -92,7 +93,9 @@ namespace TopoSort
                 {
                     Debug.Log(node.Id);
                 }
-                
+                AlignmentUtil alignment = new AlignmentUtil();
+            	alignment.sorted = sorted;
+            	alignment.SortNotesInArrs();
             }
         }
 
