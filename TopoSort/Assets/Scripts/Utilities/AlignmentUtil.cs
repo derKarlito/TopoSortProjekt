@@ -9,15 +9,15 @@ namespace TopoSort {
         public List<Node> input;
         public List<Node> sorted;
 
-        int currentPosX = -6;
-        int currentPosY = -4;
+        float currentPosX = -3.5f;
+        float currentPosY = -4;
 
-        private int lastX;
-        int lastY;
+        private float lastX;
+        float lastY;
 
         public static bool finished = false;
 
-        public int LastX {
+        public float LastX {
             get{
                 return lastX;
             }
@@ -58,7 +58,7 @@ namespace TopoSort {
                 }
 
             }
-            currentPosX = -6;
+            currentPosX = -3.5f;
             currentPosY = -4;
             foreach(List<Node> list in colums){
                 Debug.Log("List loop, length : "+list.Count);

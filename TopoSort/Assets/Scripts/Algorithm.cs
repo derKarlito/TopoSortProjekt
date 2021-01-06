@@ -16,7 +16,7 @@ namespace TopoSort
         // Start is called before the first frame update
         void Start()
         {
-        Collider = GetComponentInChildren<Collider2D>();
+            Collider = GetComponentInChildren<Collider2D>();
         }
 
         void Update()
