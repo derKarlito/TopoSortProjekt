@@ -6,24 +6,34 @@ using Models;
 using TopoSort;
 
 
+
 namespace TopoSort
 {
-    public class Algorithm 
+    public class Algorithm : MonoBehaviour
     {
-        public Algorithm(Graph input)
+
+        private Collider2D Collider;
+        // Start is called before the first frame update
+        void Start()
+        {
+            Collider = GetComponentInChildren<Collider2D>();
+        }
+
+        void Update()
+        {
+            bool onButton = MouseManager.MouseHover(Collider);
+            if(Input.GetMouseButtonDown(0) && onButton)
+            {
+                Debug.Log("Algorithm clicked");
+                AlgorithmSetup(GraphManager.graph);
+            }
+        }
+        public void AlgorithmSetup(Graph input)
         {
             Debug.Log("UNSORTED:");
             WriteGraph(input);                              //writing unsorted graph first for clarity's sake in testing
-            Graph sorted = StartTopoSort(input);
-            if(sorted != null) //else case handled in executeTopoSort()
-            {
-                Debug.Log("SORTED:");
-                WriteGraph(sorted);
-            }
-            else
-            {
-                Debug.Log("");
-            }
+            StartTopoSort(input);
+            
         }
         ///<summary>
         /// Main-Function.
@@ -31,15 +41,12 @@ namespace TopoSort
         /// iterates through every Node
         /// and returns a sorted graph.
         ///</summary>
-        public static Graph StartTopoSort(Graph input)
+        public void StartTopoSort(Graph input)
         {
            // CheckForCycles(input); //Checks if graph has cycles, throws argument if so
             
-            List<Node> SortedList = ExecuteTopoSort(input);
-
-            Graph sorted = new Graph(SortedList);
+            ExecuteTopoSort(input);
             
-            return sorted;
         }
 
         public static void CheckForCycles(Graph input)
@@ -53,7 +60,47 @@ namespace TopoSort
             }
         }
 
-        public static List<Node> ExecuteTopoSort(Graph input)
+        IEnumerator SortCoroutine(Queue<Node> q, List<Node> sorted, Graph input)
+        {
+            
+            while (q.Count != 0)
+            {
+                Node Element = q.Dequeue();  //remove the first Node of the queue
+                AlgorithmManager.StartFeed(Element);
+                
+                Debug.Log("Waiting...");
+                yield return new WaitForSeconds(2f);
+                sorted.Add(Element);   //insert that Node in the sorted list
+                foreach(Node Descendant in Element.Descendants)     //removes the node and its edgeds from the graph 
+                {
+                    Descendant.InDegree -= 1;
+                    if (Descendant.InDegree == 0)   //if thus a new node with 0 incomming edges is created, it is added to the queue
+                    {
+                        q.Enqueue(Descendant);
+                    }
+                }
+                AlgorithmManager.ExitFeed(Element);
+            }
+
+            if(sorted.Count != input.Length) //happens when there's cycles
+            {
+                Debug.Log("Smh Graph contains cycle");
+                Debug.Log("Probably one of these nodes...");
+                //THIS ONLY WORKS WHEN THERE'S ONE SINGLE CYLCE IN THE GRAPH
+                //Otherwise it causes a stack overflow :(
+                List<Node> nodesInCycle = FindCycleNodes(input);
+                foreach(Node node in nodesInCycle)
+                {
+                    Debug.Log(node.Id);
+                }
+               
+            }
+            AlignmentUtil alignment = new AlignmentUtil();
+            alignment.sorted = sorted;
+            alignment.SortNotesInArrs();
+        }
+
+        public void ExecuteTopoSort(Graph input)
         {
             int n = input.Length; //number of Nodes in graph
             Queue<Node> q = new Queue<Node>();
@@ -65,34 +112,9 @@ namespace TopoSort
                 }
             }
             List<Node> sorted = new List<Node>();
-            while (q.Count != 0)
-            {
-                Node Element = q.Dequeue();  //remove the first Node of the queue
-                sorted.Add(Element);   //insert that Node in the sorted list, then increment index
-                foreach(Node Descendant in Element.Descendants)     //removes the node and its edgeds from the graph 
-                {
-                    Descendant.InDegree -= 1;
-                    if (Descendant.InDegree == 0)   //if thus a new node with 0 incomming edges is created, it is added to the queue
-                    {
-                        q.Enqueue(Descendant);
-                    }
-                }
-            }
 
-            if(sorted.Count != n) //happens when there's cycles
-            {
-                Debug.Log("Smh Graph contains cycle");
-                Debug.Log("Probably one of these nodes...");
-                //THIS ONLY WORKS WHEN THERE'S ONE SINGLE CYLCE IN THE GRAPH
-                //Otherwise it causes a stack overflow :(
-                List<Node> nodesInCycle = FindCycleNodes(input);
-                foreach(Node node in nodesInCycle)
-                {
-                    Debug.Log(node.Id);
-                }
-                return null;
-            }
-            return sorted;
+            StartCoroutine(SortCoroutine(q, sorted, input));
+
         }
         // Takes a node
         // Checks for cyclic dependencies
@@ -175,6 +197,7 @@ namespace TopoSort
                     
                 }
             }
-        }       
+        }  
+        
     }  
 }

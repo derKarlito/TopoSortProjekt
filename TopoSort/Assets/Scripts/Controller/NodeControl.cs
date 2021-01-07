@@ -10,14 +10,13 @@ public class NodeControl : MonoBehaviour
     public float startPosY;
     public bool isHeld = false;
     public int value = 0;
-    public TextMeshPro text;    
+    public SpriteRenderer sprite;    
     Collider2D Collider;
     public Node node;
     
     void Start()
     {
         Collider = GetComponent<Collider2D>();
-        text.text = value.ToString();
     }
 
     // Update is called once per frame

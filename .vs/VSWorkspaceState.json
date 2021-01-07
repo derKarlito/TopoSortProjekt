@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\TopoSort",
+    "\\TopoSort\\Assets",
+    "\\TopoSort\\Assets\\Resources",
+    "\\TopoSort\\Assets\\Resources\\Models",
+    "\\TopoSort\\Assets\\Scenes",
+    "\\TopoSort\\Assets\\Scripts",
+    "\\TopoSort\\Assets\\Scripts\\Controller",
+    "\\TopoSort\\Assets\\Scripts\\Models",
+    "\\TopoSort\\Assets\\Scripts\\Utilities",
+    "\\TopoSort\\Assets\\Sprites"
+  ],
+  "SelectedNode": "\\TopoSort\\Assets\\Scripts\\Controller\\NodeControl.cs",
+  "PreviewInSolutionExplorer": false
+}

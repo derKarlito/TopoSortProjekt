@@ -1,52 +1,25 @@
 fileFormatVersion: 2
-guid: adbca6d96e2459b45b9c5a5f984701e4
+guid: 32dcc55d3c8f09d44a4321ee883e7347
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8842896860851574880
-    second: Inventory_sample_upper
+      213: -923508032568769581
+    second: UI_Graph_Box
   - first:
-      213: 6349417925114777002
-    second: Inventory_sample_connector
+      213: 701248211151800175
+    second: UI_Graph_Controller
   - first:
-      213: 4335292995106586537
-    second: Inventory_sample_middle
+      213: 3362987502498302967
+    second: UI_Graph_Step_Forawrd
   - first:
-      213: -5007354246861529555
-    second: Inventory_sample_connector_2
+      213: 892934641315565538
+    second: UI_Graph_Start
   - first:
-      213: 4397642172268730769
-    second: Inventory_sample_lower
+      213: 712219974827188330
+    second: UI_Graph_Step_Back
   - first:
-      213: 4701157142988856584
-    second: Inventory_up_arrow
-  - first:
-      213: 8928371784288384218
-    second: Inventory_sample_6
-  - first:
-      213: 4603549494300112697
-    second: Inventory_sample_7
-  - first:
-      213: 5711440744369923002
-    second: Inventory_sample_8
-  - first:
-      213: -1182822729701585512
-    second: Inventory_sample_9
-  - first:
-      213: 9207401110399411907
-    second: Inventory_sample_10
-  - first:
-      213: 3675210582596597457
-    second: Inventory_sample_11
-  - first:
-      213: -3848225434665184883
-    second: Inventory_sample_12
-  - first:
-      213: 3076565349723451882
-    second: Inventory_sample_13
-  - first:
-      213: -1486639683174214113
-    second: Inventory_sample_14
+      213: 9059899564482934716
+    second: UI_Graph_Editor_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -90,7 +63,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 128
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -132,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Inventory_sample_connector
+      name: UI_Graph_Box
       rect:
         serializedVersion: 2
-        x: 27
-        y: 327
-        width: 74
-        height: 21
+        x: 23
+        y: 2
+        width: 105
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aadc6f456f9ad1850800000000000000
-      internalID: 6349417925114777002
+      spriteID: 3d3c48b565a0f23f0800000000000000
+      internalID: -923508032568769581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Inventory_sample_middle
+      name: UI_Graph_Controller
       rect:
         serializedVersion: 2
-        x: 0
-        y: 202
-        width: 128
-        height: 124
+        x: 1
+        y: 2
+        width: 23
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9af319a720e0a2c30800000000000000
-      internalID: 4335292995106586537
+      spriteID: f67c41d58855bb900800000000000000
+      internalID: 701248211151800175
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Inventory_sample_connector_2
+      name: UI_Graph_Step_Forawrd
       rect:
         serializedVersion: 2
-        x: 27
-        y: 180
-        width: 74
-        height: 21
+        x: 9
+        y: 16
+        width: 7
+        height: 4
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -188,50 +161,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2e5643b7dd428ab0800000000000000
-      internalID: -5007354246861529555
+      spriteID: 7fb4d7ec05bbbae20800000000000000
+      internalID: 3362987502498302967
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Inventory_sample_lower
+      name: UI_Graph_Start
       rect:
         serializedVersion: 2
-        x: 24
-        y: 0
-        width: 80
-        height: 56
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6564246}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 199da578140970d30800000000000000
-      internalID: 4397642172268730769
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Inventory_up_arrow
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 472
-        width: 80
-        height: 55
+        x: 11
+        y: 23
+        width: 4
+        height: 5
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80d1425838ddd3140800000000000000
-      internalID: 4701157142988856584
+      spriteID: 2ef41474357546c00800000000000000
+      internalID: 892934641315565538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Graph_Step_Back
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 9
+        width: 7
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6023892b4052e900800000000000000
+      internalID: 712219974827188330
       vertices: []
       indices: 
       edges: []
