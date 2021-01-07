@@ -16,41 +16,29 @@ namespace TopoSort {
         float lastY;
 
         public static bool finished = false;
-
-        public float LastX {
-            get{
-                return lastX;
-            }
-            set{
-                lastX = value;
-                if (currentPosY > -4) currentPosY -= 2;
-                return;
-            }
-        }
         public void SortNotesInArrs(){
+            List<List<Node>> colums = new List<List<Node>>(); // List of Columns (Idx 0 first column idx 1 second etc.)
+            List<Node> alreadyPlaced = new List<Node>();       // list of already placed notes
+            int j = 0;                                         //list counter
+            colums.Add(new List<Node>());                      // add first column
             finished = false;
-            List<List<Node>> colums = new List<List<Node>>();
-            List<Node> tempColumn = new List<Node>();
-            List<Node> alreadyPlaced = new List<Node>();
-            int j = 0;
-            colums.Add(new List<Node>());
             for (int i = 0; i < sorted.Count; i++ ){
-                if(i != 0 && colums[j].Count > 3){
+                if(i != 0 && colums[j].Count > 3){             //if current column has more than 3 items, add new column to keep graph ongoing and not stacking to many nodes
                     j++;
                     colums.Add(new List<Node>());
                 }
-                if (sorted[i].Ancestors.Count == 0){ 
+                if (sorted[i].Ancestors.Count == 0){        // all nodes without ancestors are in first colum
                     colums[j].Add(sorted[i]);
                     alreadyPlaced.Add(sorted[i]);
                     Debug.Log("Added"+sorted[i]+"to list 0");
                 }
-                else if(i != 0 && !sorted[i].Ancestors.Contains(sorted[i-1]) && DependenciesAlreadyResolved(sorted[i],alreadyPlaced)){
-                    colums[j].Add(sorted[i]);
+                else if(i != 0 && !sorted[i].Ancestors.Contains(sorted[i-1]) && DependenciesAlreadyResolved(sorted[i],alreadyPlaced)){  // if last placed node is not ancestor of current node
+                    colums[j].Add(sorted[i]);                                                                                           // and all dependencies are resolved, add to same column
                     alreadyPlaced.Add(sorted[i]);
                     Debug.Log("Added"+sorted[i]+"to list "+j);
                 }                
-                else if(i != 0 && (sorted[i].Ancestors.Contains(sorted[i-1]) || DependenciesAlreadyResolved(sorted[i],alreadyPlaced))){
-                    j++;
+                else if(i != 0 && (sorted[i].Ancestors.Contains(sorted[i-1]) || DependenciesAlreadyResolved(sorted[i],alreadyPlaced))){ // add new column if all dependecies of a node are already resolved
+                    j++;                                                                                                                // or if last set node is ancestor of current node
                     colums.Add(new List<Node>());
                     colums[j].Add(sorted[i]);
                     alreadyPlaced.Add(sorted[i]);
@@ -75,6 +63,7 @@ namespace TopoSort {
             VisuellFeedback feedback = new VisuellFeedback();
             feedback.ColourProcess(sorted);
         }
+        //Check if all ancestors of a node are already resolved
         private bool DependenciesAlreadyResolved(Node node, List<Node> alreadyResolved){
             bool resolved = true;
             foreach(Node item in node.Ancestors){
@@ -83,28 +72,6 @@ namespace TopoSort {
                 }
             }
             return resolved;
-        }
-        public void PositionNodes(){
-            for(int i = 0; i < sorted.Count; i++){
-                GameObject currentNodeObject = GameObject.Find(sorted[i].Id.ToString());
-                if(i != 0 && i < sorted.Count -1 && !sorted[i].Descendants.Contains(sorted[i+1]) && !sorted[i].Descendants.Contains(sorted[i-1])){
-                    currentPosY += 2;    
-                    currentNodeObject.transform.position = new Vector2(currentPosX,currentPosY);
-                    lastY = currentPosY;
-                }
-                if(i != 0 && sorted[i].Ancestors.Contains(sorted[i-1])){
-                    currentPosX += 2;
-                    currentNodeObject.transform.position = new Vector2(currentPosX,currentPosY);
-                    lastX = currentPosX;
-                }
-
-                else{
-                    if(i != 0)
-                        currentPosX += 2;
-                    currentNodeObject.transform.position = new Vector2(currentPosX,currentPosY);
-                    LastX = currentPosX;
-                }            
-        }
-    }      
-}
+        }     
+    }
 }
