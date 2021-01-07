@@ -47,12 +47,16 @@ namespace TopoSort {
                     newCol = true;
                 }
             }
+            finished = true;
+            VisuellFeedback feedback = new VisuellFeedback();
+            feedback.ColourProcess(sorted);
         }
         private void MoveNode(Node node){
             GameObject currentNodeObject = GameObject.Find(node.Id.ToString());
             var nodeControl = currentNodeObject.GetComponent<NodeControl>();
             nodeControl.targetPosition = new Vector2(currentPosX,currentPosY);
-            nodeControl.moveNode = true;x       
+            nodeControl.moveNode = true; 
+                 
         }
         public void SortNotesInArrs(){
             List<List<Node>> colums = new List<List<Node>>(); // List of Columns (Idx 0 first column idx 1 second etc.)
