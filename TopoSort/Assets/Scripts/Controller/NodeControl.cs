@@ -8,6 +8,9 @@ public class NodeControl : MonoBehaviour
 {
     public float startPosX;
     public float startPosY;
+    public float targetPosX = 0;
+    public float targetPosY = 0;
+    public bool moveNode = false; // becomes true when algorithm sorted nodes and starts to place
     public bool isHeld = false;
     public int value = 0;
     public SpriteRenderer sprite;    
@@ -28,7 +31,12 @@ public class NodeControl : MonoBehaviour
             Vector3 mousePos = MouseManager.GetMousePos();
 
             this.gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
-        }       
+        }
+        if(moveNode){
+            var t = Time.deltaTime;
+            var currentPosition = gameObject.transform.position;
+            this.gameObject.transform.position = Vector2.Lerp(currentPosition,new Vector2(targetPosX,targetPosY),t); // move node to target position 
+        }
     }
 
     private void MouseSignal() 

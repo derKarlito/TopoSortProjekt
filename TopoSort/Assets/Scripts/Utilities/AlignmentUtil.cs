@@ -32,8 +32,9 @@ namespace TopoSort {
                     alreadyPlaced.Add(sorted[i]);
                     Debug.Log("Added"+sorted[i]+"to list 0");
                 }
-                else if(i != 0 && !sorted[i].Ancestors.Contains(sorted[i-1]) && DependenciesAlreadyResolved(sorted[i],alreadyPlaced)){  // if last placed node is not ancestor of current node
-                    colums[j].Add(sorted[i]);                                                                                           // and all dependencies are resolved, add to same column
+                else if(i != 0 && !sorted[i].Ancestors.Contains(sorted[i-1]) && DependenciesAlreadyResolved(sorted[i],alreadyPlaced) 
+                        && !sorted[i].Ancestors.Any(item => colums[j].Contains(item))){                                                 // if last placed node is not ancestor of current node
+                    colums[j].Add(sorted[i]);                                                                                           // and all dependencies are resolved and current colum does not contain any ancestors, add to same column
                     alreadyPlaced.Add(sorted[i]);
                     Debug.Log("Added"+sorted[i]+"to list "+j);
                 }                
@@ -51,9 +52,11 @@ namespace TopoSort {
             foreach(List<Node> list in colums){
                 Debug.Log("List loop, length : "+list.Count);
                     for(int i = 0; i <= list.Count - 1 ; i++){
-                        Debug.Log(list[i].Id);
                         GameObject currentNodeObject = GameObject.Find(list[i].Id.ToString());
-                        currentNodeObject.transform.position = new Vector2(currentPosX,currentPosY);
+                        var nodeControl = currentNodeObject.GetComponent<NodeControl>();
+                        nodeControl.targetPosX = currentPosX;
+                        nodeControl.targetPosY = currentPosY;
+                        nodeControl.moveNode = true;
                         currentPosY += 2;
                     }
                     currentPosY = -4;
