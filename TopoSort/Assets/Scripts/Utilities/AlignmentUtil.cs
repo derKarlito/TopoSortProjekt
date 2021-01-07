@@ -16,6 +16,48 @@ namespace TopoSort {
         float lastY;
 
         public static bool finished = false;
+
+
+        public void ImprovedGraphVisualisation(){
+            bool newCol = false;
+            List<Node> alreadyPlaced = new List<Node>();
+            List<Node> lastColum = new List<Node>();
+            List<Node> thisColumn = new List<Node>();
+            for(int i = 0; i< sorted.Count;i++){
+                var currentNode = sorted[i];
+                // No Ancestors or all dependencies are resolved and there are nor ancestors of current node in this column -> Stack it
+                if ((DependenciesAlreadyResolved(currentNode,alreadyPlaced) && !thisColumn.Any(item => currentNode.Ancestors.Contains(item)))){
+                    if(newCol)
+                        currentPosY+=2;
+                    newCol = false;
+                    MoveNode(currentNode);
+                    currentPosY += 2;
+                    alreadyPlaced.Add(currentNode);
+                    thisColumn.Add(currentNode);
+                }
+                // this column contains ancestor of current Node -> move one column further 
+                if(currentNode.Ancestors.Any(item => thisColumn.Contains(item))){
+                    lastColum = thisColumn;
+                    thisColumn = new List<Node>();
+                    currentPosX += 2;
+                    currentPosY = -4;
+                    MoveNode(currentNode);
+                    thisColumn.Add(currentNode);
+                    alreadyPlaced.Add(currentNode);
+                    newCol = true;
+                }
+            }
+            finished = true;
+            VisuellFeedback feedback = new VisuellFeedback();
+            feedback.ColourProcess(sorted);
+        }
+        private void MoveNode(Node node){
+            GameObject currentNodeObject = GameObject.Find(node.Id.ToString());
+            var nodeControl = currentNodeObject.GetComponent<NodeControl>();
+            nodeControl.targetPosition = new Vector2(currentPosX,currentPosY);
+            nodeControl.moveNode = true; 
+                 
+        }
         public void SortNotesInArrs(){
             List<List<Node>> colums = new List<List<Node>>(); // List of Columns (Idx 0 first column idx 1 second etc.)
             List<Node> alreadyPlaced = new List<Node>();       // list of already placed notes

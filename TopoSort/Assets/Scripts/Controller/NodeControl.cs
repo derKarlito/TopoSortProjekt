@@ -8,6 +8,9 @@ public class NodeControl : MonoBehaviour
 {
     public float startPosX;
     public float startPosY;
+
+    public Vector2 targetPosition;
+    public bool moveNode = false;
     public bool isHeld = false;
     public int value = 0;
     public SpriteRenderer sprite;    
@@ -29,6 +32,11 @@ public class NodeControl : MonoBehaviour
 
             this.gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
         }       
+        if(moveNode){
+            var t = Time.deltaTime;
+            var currentPosition = gameObject.transform.position;
+            this.gameObject.transform.position = Vector2.Lerp(currentPosition,targetPosition,t); // move node to target position
+        }
     }
 
     private void MouseSignal() 
