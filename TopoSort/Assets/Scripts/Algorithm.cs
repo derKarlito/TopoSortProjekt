@@ -13,6 +13,7 @@ namespace TopoSort
     {
 
         private Collider2D Collider;
+        public Planet Planet; //gameobject to then get the script from
         // Start is called before the first frame update
         void Start()
         {
@@ -62,7 +63,7 @@ namespace TopoSort
 
         IEnumerator SortCoroutine(Queue<Node> q, List<Node> sorted, Graph input)
         {
-            
+            int posInGraph = 0;
             while (q.Count != 0)
             {
                 Node Element = q.Dequeue();  //remove the first Node of the queue
@@ -70,6 +71,8 @@ namespace TopoSort
                 
                 Debug.Log("Waiting...");
                 yield return new WaitForSeconds(1f);
+                Element.position = posInGraph;
+                Planet.NodeEvaluation(Element); //Visualize thew effect of the node on the planet
                 sorted.Add(Element);   //insert that Node in the sorted list
                 foreach(Node Descendant in Element.Descendants)     //removes the node and its edgeds from the graph 
                 {
@@ -80,6 +83,7 @@ namespace TopoSort
                     }
                 }
                 AlgorithmManager.ExitFeed(Element);
+                posInGraph++;
             }
 
             if(sorted.Count != input.Length) //happens when there's cycles
@@ -199,5 +203,5 @@ namespace TopoSort
             }
         }  
         
-    }  
+    }
 }

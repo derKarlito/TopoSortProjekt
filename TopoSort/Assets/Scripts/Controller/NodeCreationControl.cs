@@ -37,7 +37,7 @@ public class NodeCreationControl : MonoBehaviour
             node.transform.position = pos;
             node.isHeld = true;             //to immediately start dragging it
             node.sprite.sprite = Resources.Load<Sprite>("Sprites/Nodes/"+NodeValue); 
-            node.node = new Node(node.GetInstanceID());     //Initializes new Node with unique identifier
+            node.node = new Node(NodeValue, node.GetInstanceID());     //Initializes new Node with unique identifier
             GraphManager.graph.AddNode(node.node);      //Graph gets updated to contain new node
         }
     }
