@@ -7,7 +7,7 @@ using System;
 public class Planet : MonoBehaviour
 {
 
-    private static SpriteRenderer sprite;
+    private static SpriteRenderer Sprite;
 
     public static string State = default;
 
@@ -31,14 +31,31 @@ public class Planet : MonoBehaviour
     {
         {"Desert", new[]{4, 0, 1, 0, 0}},
         {"Lava", new[]{6, 0, 0, 1, 3}},
-        {"Earth", new[]{2, 2, 2, 1, 1}},
-        {"Earth_Relief_1",new[]{3, 2, 2, 1, 1}},
+        {"Earth", new[]{3, 2, 2, 1, 1}},
+        {"Earth_Relief_1",new[]{5, 2, 2, 1, 1}},
+        {"Earth_Relief_2", new[]{69, 1337, 420, 69, 1312}},
+        {"Wastes", new[]{2, 1, 0, 0, 0}},
+        {"Mud", new[]{2, 4, 1, 2, 1}},
+        {"Gas", new[]{0, 2, 0, 6, 5}},
+        {"Stone", new[]{2, 0, 0, 1, 0}}
+        /*
+        {"Glass", new[]{4, 1, 0, 4, 0}},
+        {"Ice", new[]{1, 6, 0, 4, 0}},
+        {"Phytoplankton", new[]{1, 4, 3, 2, 4}},
+        {"Ocean", new[]{1, 6, 1, 2, 4}},
+        {"Toxic", new[]{3, 2, 0, 3, 0}},
+        {"Fire", new[]{2, 0, 2, 6, 1}},
+        {"Jungle", new[]{2, 3, 6, 2, 2}},
+        {"Fire_Jungle", new[]{4, 3, 6, 2, 2}},
+        {"Asteroids", new[]{5, 1, 0, 0, 6}},
+        {"Obsidian", new[]{6, 5, 0, 1, 0}}
+        */
     };
 
     // Start is called before the first frame update
     void Start()
     {
-        sprite = GetComponentInChildren<SpriteRenderer>();
+        Sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -214,15 +231,16 @@ public class Planet : MonoBehaviour
 
     public void NodeEvaluation(Node node)
     {
-        int multiplier = Mathf.Clamp(10 - node.position, 1, 10); //the deeper the node in the graph, the less relevant it is. Multiplier cannot fall under 1
-        
+        int multiplier = (int) Mathf.Ceil((node.Ancestors.Count + node.Descendants.Count)*0.5f); //Swap position for Count Ancs + count descan * 0.5 bc of Quellen and senken who only have In or Out degree then round up by 0.5
+        Debug.Log("Node gewicht von: "+node.Name+" ist "+multiplier);                              
         int attribute = (int)Enum.Parse(typeof(PlanetParam), node.Name);
 
-        CreatedPlanet[attribute] += 1*multiplier;
+        CreatedPlanet[attribute] += multiplier;
 
         string planetDisplayed = Diff(CreatedPlanet, Planets);
 
         SetPlanetSprite(planetDisplayed);
+
     }
 
     //returns the planet which is closest to whatever the player created
@@ -253,12 +271,13 @@ public class Planet : MonoBehaviour
         
         if(Resources.Load<Sprite>("Sprites/Planets/"+planet+"_Planet") != null)
         {
-            sprite.sprite = Resources.Load<Sprite>("Sprites/Planets/"+planet+"_Planet"); 
+            Sprite.sprite = Resources.Load<Sprite>("Sprites/Planets/"+planet+"_Planet"); 
         }
         else
         {
             Debug.Log("!!!!!!!!! Planet Not Found !!!!!!!!");
-            sprite.sprite = Resources.Load<Sprite>("Sprites/Planets/Default_Planet");
+            Debug.Log(planet);
+            Sprite.sprite = Resources.Load<Sprite>("Sprites/Planets/Default_Planet");
         }
     }
 
