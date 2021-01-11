@@ -25,9 +25,11 @@ namespace TopoSort
             if(Input.GetMouseButtonDown(0) && onButton)
             {
                 Debug.Log("Algorithm clicked");
+                GraphManager.isActive = false;
                 AlgorithmSetup(GraphManager.graph);
             }
         }
+
         public void AlgorithmSetup(Graph input)
         {
             Debug.Log("UNSORTED:");

@@ -82,6 +82,24 @@ public class VisuellFeedback //check if algorithmmanager hold a node
         
         }
     }
+
+    public static void ColourRevert(List<Node> nodes)
+    {
+        foreach(Node node in nodes)
+        {
+            for(int i = 0; i< Nodes.Length; i++) //Check + Färben der Nodes
+            {
+                if(node.Id.ToString() == Nodes[i].name)
+                {
+                    var spriteRenderer = Nodes[i].GetComponentInChildren<SpriteRenderer>();
+                    spriteRenderer.color = new Color (255, 255, 255, 1);
+                }
+            }
+        
+        }
+    }
+
+
    /* public void visualfeedback()
     {
         
