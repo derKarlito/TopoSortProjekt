@@ -25,7 +25,10 @@ public class AlgorithmManager //manages when nodes are hold
         finishedNodes.Add(node);
         feedback.ColourProcess(finishedNodes);
     }
-
+    public static void EmptyList()
+    {
+        finishedNodes.Clear();
+    }
 
 
 }

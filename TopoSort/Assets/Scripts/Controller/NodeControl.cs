@@ -13,7 +13,7 @@ public class NodeControl : MonoBehaviour
     public bool moveNode = false;
     public bool isHeld = false;
     public int value = 0;
-    public SpriteRenderer sprite;    
+    public SpriteRenderer sprite;
     Collider2D Collider;
     public Node node;
     
