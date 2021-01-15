@@ -28,13 +28,18 @@ public class EdgeControl : MonoBehaviour
         if (!BeingCreated)                    //if being created is false, then the edge has a definite End aka the TargetNode
         {
             Line.SetPosition(1, TargetNode.transform.position);
-            if(!SourceNode.node.Descendants.Contains(TargetNode.node)) //otherwise we'll get 2000+ times the same descendant
+            if (TargetNode.node != null)
             {
-                SourceNode.node.addDescendant(TargetNode.node);
+                if (!SourceNode.node.Descendants.Contains(TargetNode.node)) //otherwise we'll get 2000+ times the same descendant
+                {
+                    SourceNode.node.addDescendant(TargetNode.node);
+                }
             }
         }
-        else                                                //while it is being created, then the other end points to the mousePointer
-            Line.SetPosition(1, MouseManager.GetMousePos().Z(0));
+        else
+        {                                                
+            Line.SetPosition(1, MouseManager.GetMousePos().Z(0)); //while it is being created, then the other end points to the mousePointer
+        }
 
         if(Input.GetMouseButtonUp(1) && BeingCreated)       //right-MouseButton let go while Edge does not have End Point
         {
@@ -42,8 +47,10 @@ public class EdgeControl : MonoBehaviour
             {
                 TargetNode = NodeManager.hoverControl;
                 BeingCreated = false;
-                if(TargetNode == SourceNode)  //Prevents Nodes being connected to themselves
-                    Destroy(gameObject);
+                if (TargetNode == SourceNode)
+                {
+                    Destroy(gameObject); //Prevents Nodes being connected to themselves
+                }
             }
             else   //if mouse is not hovering over a node the edge gets destroyed
             {
@@ -87,7 +94,7 @@ public class EdgeControl : MonoBehaviour
     private void OnDrawGizmos() //this helped visualize the precise measurements for the shrinking and the min-Distance
     {
         Vector2 sourcePos = SourceNode.transform.position;
-        Vector2 targetPos =  TargetNode.transform.position;
+        Vector2 targetPos = TargetNode != null ? TargetNode.transform.position : MouseManager.GetMousePos();       // To keep the console clean from NullRefs
 
         Vector2 StartToEnd = targetPos - sourcePos;
         StartToEnd.Normalize();                          //set Length to 1

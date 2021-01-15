@@ -13,11 +13,26 @@ namespace TopoSort
     {
 
         private Collider2D Collider;
+        private Collider2D ForwardCollider;
+        private Stack StepStack;
+        public Queue<Node> SourceQueue;
+        public List<Node> SortedNodes;
+        private bool Prepared;
+        public Dictionary<Node, int> InDegrees;
+
         // Start is called before the first frame update
         void Start()
         {
-            Collider = GetComponentInChildren<Collider2D>();
+            Collider = this.gameObject.transform.Find("Play").GetComponent<Collider2D>(); // To precisely pick the collider of the Play button
+            ForwardCollider = this.gameObject.transform.Find("Forward").GetComponent<Collider2D>();
+            StepStack = new Stack();
+            SourceQueue = new Queue<Node>();
+            SortedNodes = new List<Node>();
+            Prepared = false;
+            InDegrees = new Dictionary<Node, int>();
+
         }
+
 
         void Update()
         {
@@ -27,7 +42,96 @@ namespace TopoSort
                 Debug.Log("Algorithm clicked");
                 AlgorithmSetup(GraphManager.graph);
             }
+
+            onButton = MouseManager.MouseHover(ForwardCollider);
+            if (Input.GetMouseButtonDown(0) && onButton)
+            {
+                Debug.Log("Step forward");
+              
+                if (!Prepared)
+                {
+                    PrepareAlgorithm(GraphManager.graph);
+                    Prepared = true;
+                }
+                StepForward();
+            }
         }
+
+        void PrepareAlgorithm(Graph graph)
+        {
+            for (int i = 0; i < graph.Nodes.Count; i++)
+            {
+                Node n = graph.Nodes[i];                
+                InDegrees.Add(n, 0);
+            }
+
+            for (int i = 0; i < graph.Nodes.Count; i++) {
+                Node n = graph.Nodes[i];
+                for (int k = 0; k < n.Descendants.Count; k++)
+                {
+                    InDegrees[n.Descendants[k]]++;
+                }
+            }
+            
+            Queue<Node> sources = FindSources(graph);
+            for (int i = 0; i < sources.Count; i++) {
+                SourceQueue.Enqueue(sources.Dequeue());
+            }
+            Debug.Log("Algorithm prepared!");
+            
+        }
+
+        void StepForward()
+        {
+            AlgorithmState state = new AlgorithmState();
+            Node current = SourceQueue.Dequeue();
+            SortedNodes.Add(current);
+            Debug.Log("Current Node added: " + current.Id);
+
+            for (int i = 0; i < current.Descendants.Count; i++)
+            {
+                Node des = current.Descendants[i];
+                int deg = --InDegrees[des];
+                if (deg == 0)
+                {
+                    state.NewSources.Add(des);
+                    SourceQueue.Enqueue(des);
+                }
+                
+
+            }
+
+            state.Current = current;
+            StepStack.Push(state);
+        }
+
+        static Queue<Node> FindSources(Graph graph)
+        {
+            Queue<Node> result = new Queue<Node>();
+
+            int[] inDegree = new int[graph.Length];
+            foreach (Node n in graph.Nodes)
+            {
+
+                foreach (Node d in n.Descendants)
+                {
+                    int i = graph.Nodes.IndexOf(d);
+                    inDegree[i]++;
+                }
+
+            }
+
+            for (int i = 0; i < inDegree.Length; i++)
+            {
+                if (inDegree[i] == 0)
+                {
+                    result.Enqueue(graph.Nodes[i]);
+                }
+            }
+
+            return result;
+        }
+
         public void AlgorithmSetup(Graph input)
         {
             Debug.Log("UNSORTED:");
@@ -62,7 +166,10 @@ namespace TopoSort
 
         IEnumerator SortCoroutine(Queue<Node> q, List<Node> sorted, Graph input)
         {
-            
+
+
+            AlignmentUtil.finished = false;
+
             while (q.Count != 0)
             {
                 Node Element = q.Dequeue();  //remove the first Node of the queue
@@ -95,6 +202,7 @@ namespace TopoSort
                 }
                
             }
+
             AlignmentUtil alignment = new AlignmentUtil();
             alignment.sorted = sorted;
             alignment.SortNotesInArrs();
