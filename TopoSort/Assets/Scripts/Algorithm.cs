@@ -26,15 +26,9 @@ namespace TopoSort
             if(Input.GetMouseButtonDown(0) && onButton)
             {
                 Debug.Log("Algorithm clicked");
-                AlgorithmSetup(GraphManager.graph);
+                GraphManager.isActive = false;
+                StartTopoSort(GraphManager.graph);
             }
-        }
-        public void AlgorithmSetup(Graph input)
-        {
-            Debug.Log("UNSORTED:");
-            WriteGraph(input);                              //writing unsorted graph first for clarity's sake in testing
-            StartTopoSort(input);
-            
         }
         ///<summary>
         /// Main-Function.
@@ -45,9 +39,10 @@ namespace TopoSort
         public void StartTopoSort(Graph input)
         {
            // CheckForCycles(input); //Checks if graph has cycles, throws argument if so
-            
-            ExecuteTopoSort(input);
-            
+            Debug.Log("UNSORTED:");
+            WriteGraph(input);                              //writing unsorted graph first for clarity's sake in testing
+            SortCoroutine(input);
+            AlgorithmManager.EmptyList();
         }
 
         public static void CheckForCycles(Graph input)
@@ -61,16 +56,27 @@ namespace TopoSort
             }
         }
 
-        IEnumerator SortCoroutine(Queue<Node> q, List<Node> sorted, Graph input)
+        IEnumerator SortCoroutine(Graph input)
         {
             Planet.PlanetReset();
             int posInGraph = 0;
+            
+            List<Node> sorted = new List<Node>(); //List to get the sorted nodes
+        
+            Queue<Node> q = new Queue<Node>();
+            for (int i = 0; i < input.Length; i++)     //fills the queue with all nodes that have no incomming edges/ancestors
+            {
+                if(input.Nodes[i].InDegree == 0)
+                {
+                    q.Enqueue(input.Nodes[i]);
+                }
+            }
+            
             while (q.Count != 0)
             {
                 Node Element = q.Dequeue();  //remove the first Node of the queue
                 AlgorithmManager.StartFeed(Element);
                 
-                Debug.Log("Waiting...");
                 yield return new WaitForSeconds(1f);
                 Element.position = posInGraph;
                 Planet.NodeEvaluation(Element); //Visualize thew effect of the node on the planet
@@ -103,24 +109,6 @@ namespace TopoSort
             AlignmentUtil alignment = new AlignmentUtil();
             alignment.sorted = sorted;
             alignment.ImprovedGraphVisualisation();
-        }
-
-        public void ExecuteTopoSort(Graph input)
-        {
-            int n = input.Length; //number of Nodes in graph
-            Queue<Node> q = new Queue<Node>();
-            for (int i = 0; i < n; i++)     //fills the queue with all nodes that have no incomming edges/ancestors
-            {
-                input.Nodes[i].SimulatedInDegree = input.Nodes[i].InDegree;
-                if(input.Nodes[i].SimulatedInDegree == 0)
-                {
-                    q.Enqueue(input.Nodes[i]);
-                }
-            }
-            List<Node> sorted = new List<Node>();
-
-            StartCoroutine(SortCoroutine(q, sorted, input));
-
         }
         // Takes a node
         // Checks for cyclic dependencies

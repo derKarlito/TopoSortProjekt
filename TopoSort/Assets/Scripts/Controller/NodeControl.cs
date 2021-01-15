@@ -13,7 +13,7 @@ public class NodeControl : MonoBehaviour
     public bool moveNode = false;
     public bool isHeld = false;
     public int value = 0;
-    public SpriteRenderer sprite;    
+    public SpriteRenderer sprite;
     Collider2D Collider;
     public Node node;
     
@@ -32,11 +32,13 @@ public class NodeControl : MonoBehaviour
 
             this.gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
         }       
-        if(moveNode){
+        if(!GraphManager.isActive && targetPosition != new Vector2 (0,0) )
+        {
             var t = Time.deltaTime;
             var currentPosition = gameObject.transform.position;
             this.gameObject.transform.position = Vector2.Lerp(currentPosition,targetPosition,t); // move node to target position
         }
+        
     }
 
     private void MouseSignal() 
@@ -44,6 +46,10 @@ public class NodeControl : MonoBehaviour
         bool onNode = MouseManager.MouseHover(Collider);        
         if (Input.GetMouseButtonDown(0) && onNode)  //left mouse button drags the node on the screen
         {
+            if(!GraphManager.isActive)
+            {
+                GraphManager.RegainControl();
+            }
             Vector3 mousePos;
             mousePos = Input.mousePosition;
             mousePos = Camera.main.ScreenToWorldPoint(mousePos);
