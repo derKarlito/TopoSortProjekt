@@ -63,6 +63,7 @@ namespace TopoSort
 
         IEnumerator SortCoroutine(Queue<Node> q, List<Node> sorted, Graph input)
         {
+            Planet.PlanetReset();
             int posInGraph = 0;
             while (q.Count != 0)
             {
@@ -76,8 +77,8 @@ namespace TopoSort
                 sorted.Add(Element);   //insert that Node in the sorted list
                 foreach(Node Descendant in Element.Descendants)     //removes the node and its edgeds from the graph 
                 {
-                    Descendant.InDegree -= 1;
-                    if (Descendant.InDegree == 0)   //if thus a new node with 0 incomming edges is created, it is added to the queue
+                    Descendant.SimulatedInDegree -= 1;
+                    if (Descendant.SimulatedInDegree == 0)   //if thus a new node with 0 incomming edges is created, it is added to the queue
                     {
                         q.Enqueue(Descendant);
                     }
@@ -110,7 +111,8 @@ namespace TopoSort
             Queue<Node> q = new Queue<Node>();
             for (int i = 0; i < n; i++)     //fills the queue with all nodes that have no incomming edges/ancestors
             {
-                if(input.Nodes[i].InDegree == 0)
+                input.Nodes[i].SimulatedInDegree = input.Nodes[i].InDegree;
+                if(input.Nodes[i].SimulatedInDegree == 0)
                 {
                     q.Enqueue(input.Nodes[i]);
                 }

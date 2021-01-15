@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Models;
 using System;
+using System.Linq;
 
 public class Planet : MonoBehaviour
 {
@@ -87,20 +88,24 @@ public class Planet : MonoBehaviour
 
     public void NodeEvaluation(Node node)
     {
-        int multiplier = (int) Mathf.Ceil((node.Ancestors.Count + node.Descendants.Count)*0.5f); //Swap position for Count Ancs + count descan * 0.5 bc of Quellen and senken who only have In or Out degree then round up by 0.5
-        Debug.Log("Node gewicht von: "+node.Name+" ist "+multiplier);                              
+        int multiplier = ((node.Ancestors.Count + node.Descendants.Count-1)/2 +1); //Swap position for Count Ancs + count descan * 0.5 bc of Quellen and senken who only have In or Out degree then round up by 0.5                             
         int attribute = (int)Enum.Parse(typeof(PlanetParam), node.Name);
 
         CreatedPlanet[attribute] += multiplier;
 
-        string planetDisplayed = Diff(CreatedPlanet, Planets);
+        string planetDisplayed = DiffRay(CreatedPlanet, Planets);
 
         SetPlanetSprite(planetDisplayed);
 
     }
 
+    public void PlanetReset()
+    {
+        CreatedPlanet = new int[(int)PlanetParam.Count];  //cleans up the planet
+    }
+
     //returns the planet which is closest to whatever the player created
-    public string Diff(int[] createdPlanet, Dictionary<string, int[]> planetArchetype)
+    public string DiffManhattan(int[] createdPlanet, Dictionary<string, int[]> planetArchetype)
     {
         int absDifference = 99;
         string archetype = "";
@@ -121,9 +126,48 @@ public class Planet : MonoBehaviour
         return archetype;
     }
 
+    public string DiffRay(int[] createdPlanet, Dictionary<string, int[]> planetArchetype)
+    {
+        int absDifference = 0;
+        string archetype = "";
+        foreach (KeyValuePair<string, int[]> valuePair in planetArchetype)
+        {
+            var closestPoint = ArrMult(valuePair.Value, ArrDotProduct(createdPlanet, valuePair.Value)); 
+            var distance = ArrSquareDistance(createdPlanet, closestPoint);
+            Debug.Log($"{valuePair.Key}: {distance}");
+            if(distance >= absDifference)     //if archetype with less difference is found. We want equl too, bc the latest change is valued more to us and the player
+            {
+                absDifference = distance;    //make that smaller difference the new reference value
+                archetype = valuePair.Key;          //remember which key has that least difference
+            }
+        }
+        return archetype;
+    }
+
+    public int ArrDotProduct(int[] factor1, int[] factor2)
+    {
+        int result = 0;
+
+        for(int i = 0; i < factor1.Length; i++)
+        {
+            result += factor1[i]*factor2[i];
+        }
+
+        return result;
+    }
+
+    public int[] ArrMult(int[] array, int factor)
+    {
+        return array.Select(value => value * factor).ToArray();  //Select takes each value of the array and the content of () makes each element of the array (named value) be itself times the factor 
+                                                                 //Actually returns a new array and the original is left compeltely in tact
+    }
+
+    public int ArrSquareDistance(int[] array1, int[] array2)
+    {
+        return array1.Zip(array2, (a,b) => (a-b)*(a-b)).Sum(); //creates a list of the squared differences of two arrays and then sums those together aka a^2 + b^2 + ... 
+    }
     public static void SetPlanetSprite(string planet)
     {
-        Debug.Log(planet);
         for(int i = 0; i < AvailablePlanets.Count ; i++)
         {
             

@@ -19,22 +19,28 @@ public class EdgeControl : MonoBehaviour
 
     private void Update() 
     {
+        Vector3 from = SourceNode.transform.position;
+        Vector3 to = default;
+
         if(SourceNode == null || (!BeingCreated && TargetNode == null)) //if one of both nodes is not there anymore,edge destroys itself
         {
             Destroy(gameObject);
             return;                         //no update. Edge broken
         }
-        Line.SetPosition(0, SourceNode.transform.position);
         if (!BeingCreated)                    //if being created is false, then the edge has a definite End aka the TargetNode
         {
-            Line.SetPosition(1, TargetNode.transform.position);
+            to = TargetNode.transform.position;
             if(!SourceNode.node.Descendants.Contains(TargetNode.node)) //otherwise we'll get 2000+ times the same descendant
             {
                 SourceNode.node.addDescendant(TargetNode.node);
             }
         }
         else                                                //while it is being created, then the other end points to the mousePointer
-            Line.SetPosition(1, MouseManager.GetMousePos().Z(0));
+            to = MouseManager.GetMousePos().Z(0);
+
+        AdjustLinePoints(ref to, ref from);
+        Line.SetPosition(0, from);
+        Line.SetPosition(1, to);
 
         if(Input.GetMouseButtonUp(1) && BeingCreated)       //right-MouseButton let go while Edge does not have End Point
         {
@@ -58,6 +64,15 @@ public class EdgeControl : MonoBehaviour
                 SourceNode.node.rmvDescendants(TargetNode.node);
             }
         }
+    }
+
+    //method to have the edges start at the edges of the nodes instead of the center
+    public void AdjustLinePoints(ref Vector3 to, ref Vector3 from) //ref makes it so that the Vector is a reference we point at. aka it gets changed always
+    {
+        Vector3 diff = to-from;
+        diff = diff.normalized * 0.75f; //same vector but with length of 0.75
+        to -= diff;
+        from += diff;
     }
 
     public bool IsOnEdge()
