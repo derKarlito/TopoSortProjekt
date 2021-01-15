@@ -9,6 +9,8 @@ public class Planet : MonoBehaviour
 
     private static SpriteRenderer Sprite;
 
+    private static Sprite[] PlanetSprites;
+
     public static string State = default;
 
     public static bool Final = false;
@@ -27,35 +29,54 @@ public class Planet : MonoBehaviour
 
     int[] CreatedPlanet = new int[(int)PlanetParam.Count]; 
     
-    public static Dictionary<string, int[]> Planets = new Dictionary<string, int[]>() //Has all the states with available sprites IDK YET I JUST NEED TEH TRY GET VALUE THING
+    public static Dictionary<string, int[]> Planets = new Dictionary<string, int[]>() //Has all the planets and their archetype stats
     {
         {"Desert", new[]{4, 0, 1, 0, 0}},
         {"Lava", new[]{6, 0, 0, 1, 3}},
         {"Earth", new[]{3, 2, 2, 1, 1}},
         {"Earth_Relief_1",new[]{5, 2, 2, 1, 1}},
-        {"Earth_Relief_2", new[]{69, 1337, 420, 69, 1312}},
         {"Wastes", new[]{2, 1, 0, 0, 0}},
         {"Mud", new[]{2, 4, 1, 2, 1}},
         {"Gas", new[]{0, 2, 0, 6, 5}},
-        {"Stone", new[]{2, 0, 0, 1, 0}}
-        /*
+        {"Stone", new[]{2, 0, 0, 1, 0}},
         {"Glass", new[]{4, 1, 0, 4, 0}},
         {"Ice", new[]{1, 6, 0, 4, 0}},
         {"Phytoplankton", new[]{1, 4, 3, 2, 4}},
         {"Ocean", new[]{1, 6, 1, 2, 4}},
         {"Toxic", new[]{3, 2, 0, 3, 0}},
         {"Fire", new[]{2, 0, 2, 6, 1}},
-        {"Jungle", new[]{2, 3, 6, 2, 2}},
+       /* {"Jungle", new[]{2, 3, 6, 2, 2}},
+        {"Earth_Relief_2", new[]{69, 1337, 420, 69, 1312}},
         {"Fire_Jungle", new[]{4, 3, 6, 2, 2}},
         {"Asteroids", new[]{5, 1, 0, 0, 6}},
-        {"Obsidian", new[]{6, 5, 0, 1, 0}}
-        */
+        {"Obsidian", new[]{6, 5, 0, 1, 0}} */
+    };
+
+    public static List<string> AvailablePlanets = new List<string>()
+    {
+        "Default",
+        "Stone",
+        "Glass",
+        "Mud",
+        "Ice",
+        "Wastes",
+        "Earth",
+        "Lava",
+        "Ocean",
+        "Fire",
+        "Earth_Relief_1",
+        "Toxic",
+        "Phytoplankton",
+        "Gas",
+        "Desert"
     };
 
     // Start is called before the first frame update
     void Start()
     {
         Sprite = GetComponentInChildren<SpriteRenderer>();
+
+        PlanetSprites = Resources.LoadAll<Sprite>("Sprites/Planets/spritesheet_planets");
     }
 
     // Update is called once per frame
@@ -63,171 +84,6 @@ public class Planet : MonoBehaviour
     {
         
     }
-
-    /*public static void NodeEvaluation(Node node)
-    {
-        int runs = 0;
-        Debug.Log("Evaluating node...");
-        if(State == default && runs == 0) //first node/working off of default planet
-        {
-            runs++;
-            switch (node.Name)
-            {
-                case "Plants":
-                    State = "Swamp";
-                    break;
-                case "Ground":
-                    State = "Stone";
-                    break;
-                case "Water":
-                    State = "Ice";
-                    goto case "final";
-                case "final":
-                    Final = true;
-                    break;
-            }
-        }
-        
-        foreach(Node ancestor in node.Ancestors)
-        {
-            if (ancestor.Name == node.Name) //handles double same node stuff that might just break the planet
-            {
-                runs++;
-                switch (node.Name)
-                {
-                    case "Ground":
-                        State = "Lava";
-                        break;
-                    case "Atomsphere":
-                        State = "Gas";
-                        goto case "final";
-                    case "Plants":
-                        State += "thick atmosphere";
-                        break;
-                    case "final":
-                        Final = true;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        if(State != default && runs == 0)
-        {
-            if(State == "Swamp" && runs == 0) //Handles all effects applieable to a "Swamp Planet"
-            {
-                runs++;
-                switch (node.Name)
-                {
-                    case "Water":
-                        State = "Mud";
-                        break;
-                    default:
-                        break;
-                }
-            }
-            if(State == "Stone" && runs == 0)
-            {
-                runs++;
-                switch (node.Name)
-                {
-                    case "Plants":
-                        State = "Desert";
-                        break;
-                    case "Water":
-                        State = "Mud";
-                        break;
-                }
-            }
-            if(State == "Lava" && runs == 0)
-            {
-                runs++;
-                switch (node.Name)
-                {
-                    case "Water":
-                        State = "Stone";
-                        break;
-                    case "Atmosphere":
-                        State = "Fire";
-                        goto case "final";
-                    case "Ground":
-                        State = "Asteroids";
-                        goto case "final";
-                    case "final":
-                        Final = true;
-                        break;
-                }
-            }
-            if(State == "Mud" && runs == 0)
-            {
-                runs++;
-                switch (node.Name)
-                {
-                    case "Plants":
-                        State = "Earth"; //OR "water" OR "islands with plants" wait for visual team input in this case
-                        break;
-                }
-            }
-            if(State.Contains("Earth") && runs == 0)
-            {
-                runs++;
-                switch (node.Name)
-                {
-                    case "Ground":
-                        Level++;
-                        if(Level > 3)
-                        {
-                            goto case "Water";
-                        }
-                        State += "_Relief_"+Level;
-                        break;
-                    case "Water":
-                        State = "Islands"; //unauthorized addition
-                        break;
-                }
-            }
-            if(State == "Islands" && runs == 0)
-            {
-                runs++;
-                switch (node.Name)
-                {
-                    case "Water":
-                        State = "Ocean";
-                        break;
-                    
-                }
-            }
-            if(State == "Ocean" && runs == 0) 
-            {
-                runs++;
-                switch(node.Name)
-                {
-                    case "Plants":
-                        State = "PhytoPlankton";
-                        goto case "final";
-                    case "final":
-                        Final = true;
-                        break;
-                }
-            }
-            if(State.Contains("thick atmosphere") && runs == 0)
-            {
-                runs++;
-                switch (node.Name)
-                {
-                    case "Plants":
-                        State = "Fire";
-                        goto case "final";
-                    case "final":
-                        Final = true;
-                        break;
-                }
-            }
-        }
-        PlanetCreation();
-    }
-    */
 
     public void NodeEvaluation(Node node)
     {
@@ -267,17 +123,16 @@ public class Planet : MonoBehaviour
 
     public static void SetPlanetSprite(string planet)
     {
-        Debug.Log("Planet being changed?");
-        
-        if(Resources.Load<Sprite>("Sprites/Planets/"+planet+"_Planet") != null)
+        Debug.Log(planet);
+        for(int i = 0; i < AvailablePlanets.Count ; i++)
         {
-            Sprite.sprite = Resources.Load<Sprite>("Sprites/Planets/"+planet+"_Planet"); 
-        }
-        else
-        {
-            Debug.Log("!!!!!!!!! Planet Not Found !!!!!!!!");
-            Debug.Log(planet);
-            Sprite.sprite = Resources.Load<Sprite>("Sprites/Planets/Default_Planet");
+            
+            if(AvailablePlanets[i] == planet)
+            {
+                Debug.Log(AvailablePlanets[i]);
+                Debug.Log(PlanetSprites[i].name);
+                Sprite.sprite = PlanetSprites[i];
+            }
         }
     }
 
