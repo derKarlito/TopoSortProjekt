@@ -25,6 +25,7 @@ namespace TopoSort
             bool onButton = MouseManager.MouseHover(Collider);
             if(Input.GetMouseButtonDown(0) && onButton)
             {
+                SoundManagerScript.PlaySound("playButton");
                 Debug.Log("Algorithm clicked");
                 GraphManager.isActive = false;
                 StartTopoSort(GraphManager.graph);
