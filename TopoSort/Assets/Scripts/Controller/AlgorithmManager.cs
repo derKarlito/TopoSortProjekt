@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Models;
+using TopoSort;
 using UnityEngine;
 
 public class AlgorithmManager //manages when nodes are hold
@@ -24,6 +25,12 @@ public class AlgorithmManager //manages when nodes are hold
         nodeHold = null;
         finishedNodes.Add(node);
         feedback.ColourProcess(finishedNodes);
+    }
+
+    public static void ColourGraph(Algorithm algorithm)
+    {
+        VisuellFeedback feedback = new VisuellFeedback();
+        feedback.ColourGraphState(algorithm);
     }
 
 

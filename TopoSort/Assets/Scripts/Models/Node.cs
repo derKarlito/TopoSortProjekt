@@ -9,6 +9,7 @@ namespace Models {
         public List<Node> Descendants = new List<Node>(); //immediate children of the node
         public List<Node> Ancestors = new List<Node>();   //Nodes need to be able to know what came before them for some impacts on the planet
         public int InDegree = 0; //Number of incomming edges default is no ancestors
+
         public Node(string name, List<Node> descendants){
             Name = name;
             Descendants = descendants;
@@ -52,7 +53,7 @@ namespace Models {
 
         public bool Equals(Node eNode)
         {
-            return Equals(Id, eNode.Id);
+            return (Id == eNode.Id);
         }
     }
 }
