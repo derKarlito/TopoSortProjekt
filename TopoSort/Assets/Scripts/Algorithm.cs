@@ -184,6 +184,7 @@ namespace TopoSort
 
                     Debug.Log("Algorithmus erfolgreich beendet");
                     ResetGraph();
+                    Planet.PlanetReset();
                 }
                 else                                                        // there are unsorted nodes
                 {
