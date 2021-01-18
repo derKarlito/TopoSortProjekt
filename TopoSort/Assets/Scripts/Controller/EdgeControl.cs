@@ -72,8 +72,11 @@ public class EdgeControl : MonoBehaviour
     public void AdjustLinePoints(ref Vector3 to, ref Vector3 from) //ref makes it so that the Vector is a reference we point at. aka it gets changed always
     {
         Vector3 diff = to-from;
-        diff = diff.normalized * 0.75f; //same vector but with length of 0.75
-        to -= diff;
+        diff = diff.normalized * 0.75f; //same vector but with length of 0.75 aka the radius of the node
+        if(TargetNode != null)
+        {
+            to -= diff;
+        }
         from += diff;
     }
 

@@ -28,10 +28,11 @@ public class Planet : MonoBehaviour
         Count
     }
 
-    int[] CreatedPlanet = new int[(int)PlanetParam.Count]; 
+    public int[] CreatedPlanet = new int[(int)PlanetParam.Count]; 
     
     public static Dictionary<string, int[]> Planets = new Dictionary<string, int[]>() //Has all the planets and their archetype stats
     {
+        {"Default", new[]{0, 0, 0, 0, 0}},
         {"Desert", new[]{4, 0, 1, 0, 0}},
         {"Lava", new[]{6, 0, 0, 1, 3}},
         {"Earth", new[]{3, 2, 2, 1, 1}},
@@ -92,6 +93,27 @@ public class Planet : MonoBehaviour
         int attribute = (int)Enum.Parse(typeof(PlanetParam), node.Name);
 
         CreatedPlanet[attribute] += multiplier;
+
+        string planetDisplayed = DiffRay(CreatedPlanet, Planets);
+
+        SetPlanetSprite(planetDisplayed);
+
+    }
+
+    public void RemoveNode(Node node)
+    {
+        int multiplier = ((node.Ancestors.Count + node.Descendants.Count-1)/2 +1); //Swap position for Count Ancs + count descan * 0.5 bc of Quellen and senken who only have In or Out degree then round up by 0.5                             
+        int attribute = (int)Enum.Parse(typeof(PlanetParam), node.Name);
+
+        CreatedPlanet[attribute] -= multiplier;
+
+        for(int i = 0; i < CreatedPlanet.Length; i++)
+        {
+            if(CreatedPlanet[i] < 0)                    //Prevents having negative values and displaying the opposite to the source planet
+            {
+                CreatedPlanet[i] = 0;
+            }
+        }
 
         string planetDisplayed = DiffRay(CreatedPlanet, Planets);
 
@@ -166,8 +188,27 @@ public class Planet : MonoBehaviour
     {
         return array1.Zip(array2, (a,b) => (a-b)*(a-b)).Sum(); //creates a list of the squared differences of two arrays and then sums those together aka a^2 + b^2 + ... 
     }
-    public static void SetPlanetSprite(string planet)
+
+
+    public void SetPlanetSprite(string planet)
     {
+        bool defaultCheck = true;
+
+        for(int i = 0 ; i < CreatedPlanet.Length; i++)
+        {
+            if(CreatedPlanet[i] > 0)
+            {
+                defaultCheck = false;
+                break;
+            }
+        }
+        if(defaultCheck)
+        {
+            Debug.Log("No values. Defualt Planet displayed");
+            Sprite.sprite = PlanetSprites[0];
+            return;
+        }
+
         for(int i = 0; i < AvailablePlanets.Count ; i++)
         {
             

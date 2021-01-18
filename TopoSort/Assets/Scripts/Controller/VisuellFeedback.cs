@@ -71,7 +71,7 @@ public class VisuellFeedback //check if algorithmmanager hold a node
             {
                 if (sorted.Id.ToString().Equals(node.name))
                 {
-                    spriteRenderer.color = new Color(0, 192, 64, 1);
+                    spriteRenderer.color = new Color(0, 255, 0, 1);
                 }
             }
 

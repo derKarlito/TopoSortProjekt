@@ -26,13 +26,13 @@ namespace TopoSort
         private Stack<AlgorithmState> StepStack;            // stores all the steps done
 
         // Flags
-        private bool Automatic;         // steps in a fixed interval specified by MAX_STEP_TIME    
-        private bool Prepared;          // is set to true, when the Graph and all needed Objects are prepared
-        private bool Changed;           // is set to true, when there were a state change
-        private bool Finished;          // is set to true, when the algorithm finishes successful
-        private bool Failed;            // is set to true, when the algorithm fails
+        public bool Automatic;         // steps in a fixed interval specified by MAX_STEP_TIME    
+        public bool Prepared;          // is set to true, when the Graph and all needed Objects are prepared
+        public bool Changed;           // is set to true, when there were a state change
+        public bool Finished;          // is set to true, when the algorithm finishes successful
+        public bool Failed;            // is set to true, when the algorithm fails
 
-        private float DeltaStep;                            // holds the time past since the last step
+        public float DeltaStep;                            // holds the time past since the last step
         public static float MAX_STEP_TIME = 1.0f;           // specifies the time between each step (seconds)
 
 
@@ -71,8 +71,8 @@ namespace TopoSort
             }
 
 
-
-            CheckFinished();                        // checks if the algorithm reached a finished state
+            
+            CheckFinished();                        // checks if the algorithm reached a finished stat
        
 
             if (Changed)                            
@@ -85,6 +85,7 @@ namespace TopoSort
 
                 AlgorithmManager.ColourGraph(this);     // colours the graph accordingly to the change
             }
+
         }
 
 
@@ -101,6 +102,7 @@ namespace TopoSort
                 Automatic = Automatic ? false : true;               // switches between true and false
                 if (!Prepared)
                 {
+                    SoundManagerScript.PlaySound("playButton");
                     PrepareAlgorithm(GraphManager.graph);           // Prepares the algorithm in case it is not already
                 }
 
@@ -110,6 +112,7 @@ namespace TopoSort
             onButton = MouseManager.MouseHover(ForwardCollider);
             if (Input.GetMouseButtonDown(0) && onButton)
             {
+                SoundManagerScript.PlaySound("forthButton");
 
                 if (!Prepared)
                 {
@@ -133,7 +136,7 @@ namespace TopoSort
             onButton = MouseManager.MouseHover(BackwardCollider);
             if (Input.GetMouseButtonDown(0) && onButton)
             { 
-
+                SoundManagerScript.PlaySound("backButton");
                 if ((Prepared && !Finished) && StepStack.Count > 0)     
                 {
                     if (Automatic)                                  
@@ -177,9 +180,10 @@ namespace TopoSort
 
                     AlignmentUtil alignment = new AlignmentUtil();
                     alignment.sorted = sorted;
-                    alignment.SortNotesInArrs();
+                    alignment.ImprovedGraphVisualisation();
 
                     Debug.Log("Algorithmus erfolgreich beendet");
+                    ResetGraph();
                 }
                 else                                                        // there are unsorted nodes
                 {
@@ -239,12 +243,14 @@ namespace TopoSort
             }
             if (Finished || Failed)
             {
-                Debug.Log("Der Algorithmus ist schon fertig.");
-                return;
+                Planet.PlanetReset();
+                ResetGraph();                                   //Gives another chance at executing the Graph
+                PrepareAlgorithm(GraphManager.graph);
             }
 
             AlgorithmState state = new AlgorithmState();
             Node current = SourceQueue.First.Value;             // gets the next source node in the queue
+            Planet.NodeEvaluation(current);
             SourceQueue.RemoveFirst();                          // remove node from the queue
             SortedNodes.AddLast(current);                       // add node to sorted list
 
@@ -274,6 +280,7 @@ namespace TopoSort
             AlgorithmState state = StepStack.Pop();             // get the current state
             SortedNodes.RemoveLast();                           // remove the last node from the sorted List
             SourceQueue.AddFirst(state.Current);                // put the node of the state at the beginning of the queue
+            Planet.RemoveNode(state.Current);
 
             foreach (Node desc in state.Current.Descendants)    // iterate through all the descendants
             {

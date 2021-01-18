@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosX: 0
   startPosY: 0
+  targetPosition: {x: 0, y: 0}
+  moveNode: 0
   isHeld: 0
   value: 0
   sprite: {fileID: 2756713054244761696}
