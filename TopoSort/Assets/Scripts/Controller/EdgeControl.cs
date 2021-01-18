@@ -48,8 +48,10 @@ public class EdgeControl : MonoBehaviour
             {
                 TargetNode = NodeManager.hoverControl;
                 BeingCreated = false;
-                if(TargetNode == SourceNode)  //Prevents Nodes being connected to themselves
-                    Destroy(gameObject);
+                if (TargetNode == SourceNode)
+                {
+                    Destroy(gameObject); //Prevents Nodes being connected to themselves
+                }
             }
             else   //if mouse is not hovering over a node the edge gets destroyed
             {
@@ -102,7 +104,7 @@ public class EdgeControl : MonoBehaviour
     private void OnDrawGizmos() //this helped visualize the precise measurements for the shrinking and the min-Distance
     {
         Vector2 sourcePos = SourceNode.transform.position;
-        Vector2 targetPos =  TargetNode.transform.position;
+        Vector2 targetPos = TargetNode != null ? TargetNode.transform.position : MouseManager.GetMousePos();       // To keep the console clean from NullRefs
 
         Vector2 StartToEnd = targetPos - sourcePos;
         StartToEnd.Normalize();                          //set Length to 1

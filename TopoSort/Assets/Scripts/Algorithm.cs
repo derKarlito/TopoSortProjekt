@@ -14,23 +14,314 @@ namespace TopoSort
 
         private Collider2D Collider;
         public Planet Planet; //gameobject to then get the script from
+        private Collider2D ForwardCollider;
+        private Collider2D BackwardCollider;
+
+
+
+        public LinkedList<Node> SourceQueue;                // contains all sources that should be processed next
+        public LinkedList<Node> SortedNodes;                // contains all the nodes sorted so far
+        public Dictionary<Node, int> InDegrees;             // holds the in degrees of all nodes
+        public AlgorithmState CurrentState;                 // holds the state, that's active
+        private Stack<AlgorithmState> StepStack;            // stores all the steps done
+
+        // Flags
+        private bool Automatic;         // steps in a fixed interval specified by MAX_STEP_TIME    
+        private bool Prepared;          // is set to true, when the Graph and all needed Objects are prepared
+        private bool Changed;           // is set to true, when there were a state change
+        private bool Finished;          // is set to true, when the algorithm finishes successful
+        private bool Failed;            // is set to true, when the algorithm fails
+
+        private float DeltaStep;                            // holds the time past since the last step
+        public static float MAX_STEP_TIME = 1.0f;           // specifies the time between each step (seconds)
+
+
         // Start is called before the first frame update
         void Start()
         {
-            Collider = GetComponentInChildren<Collider2D>();
+            Collider = this.gameObject.transform.Find("Play").GetComponent<Collider2D>(); // To precisely pick the collider of the Play button
+            ForwardCollider = this.gameObject.transform.Find("Forward").GetComponent<Collider2D>();
+            BackwardCollider = this.gameObject.transform.Find("Backward").GetComponent<Collider2D>();
+
+            StepStack = new Stack<AlgorithmState>();
+            SourceQueue = new LinkedList<Node>();
+            SortedNodes = new LinkedList<Node>();
+            InDegrees = new Dictionary<Node, int>();
+
+            ResetGraph();
+
         }
+
 
         void Update()
         {
-            bool onButton = MouseManager.MouseHover(Collider);
-            if(Input.GetMouseButtonDown(0) && onButton)
+            Changed = false;            
+
+            CheckAlgorithmControls();               // checks colliders
+
+            if (Automatic)                             
             {
-                SoundManagerScript.PlaySound("playButton");
-                Debug.Log("Algorithm clicked");
-                GraphManager.isActive = false;
-                StartTopoSort(GraphManager.graph);
+                DeltaStep += Time.deltaTime;
+
+                if (DeltaStep >= MAX_STEP_TIME)     
+                {
+                    DeltaStep = 0.0f;               // timer reset
+                    StepForward();                  // automatic step
+                }
+            }
+
+
+
+            CheckFinished();                        // checks if the algorithm reached a finished state
+       
+
+            if (Changed)                            
+            {
+
+                if (StepStack.Count > 0)
+                {
+                    this.CurrentState = StepStack.Peek();   
+                }
+
+                AlgorithmManager.ColourGraph(this);     // colours the graph accordingly to the change
             }
         }
+
+
+        /*
+         *  checks the colliders and reacts to them 
+         */
+        void CheckAlgorithmControls()
+        {
+            // Play/Pause Button
+            bool onButton = MouseManager.MouseHover(Collider);
+            if (Input.GetMouseButtonDown(0) && onButton)
+            {
+
+                Automatic = Automatic ? false : true;               // switches between true and false
+                if (!Prepared)
+                {
+                    PrepareAlgorithm(GraphManager.graph);           // Prepares the algorithm in case it is not already
+                }
+
+            }
+
+            // Forward Button
+            onButton = MouseManager.MouseHover(ForwardCollider);
+            if (Input.GetMouseButtonDown(0) && onButton)
+            {
+
+                if (!Prepared)
+                {
+                    PrepareAlgorithm(GraphManager.graph);           
+                }
+                else if (!Finished)
+                {
+                    if (Automatic)                                  // pauses the automatic stepping and avoids stepping one step further
+                    {
+                        Automatic = false;
+                    }
+                    else
+                    {
+                        StepForward();
+                    }
+                }
+
+            }
+
+            // Backward Button
+            onButton = MouseManager.MouseHover(BackwardCollider);
+            if (Input.GetMouseButtonDown(0) && onButton)
+            { 
+
+                if ((Prepared && !Finished) && StepStack.Count > 0)     
+                {
+                    if (Automatic)                                  
+                    {
+                        Automatic = false;
+                    }
+                    else
+                    {
+                        StepBackward();
+                    }
+                }
+
+            }
+
+            // Reset-Key / Stop
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Debug.Log("Reset");
+                ResetGraph();
+            }
+        }
+
+
+        /*
+         * checks if the Algorithm reached an end state and sets the flags
+         */
+        void CheckFinished()
+        {
+            if (SortedNodes.Count > 0 && SourceQueue.Count == 0 && !(Finished || Failed))
+            {
+                if (SortedNodes.Count == GraphManager.graph.Nodes.Count)    // all nodes are sorted   
+                {
+                    Finished = true;
+
+                    List<Node> sorted = new List<Node>();                   
+
+                    foreach (Node n in SortedNodes)                         // preparing sorted nodes for alignment util
+                    {
+                        sorted.Add(n);
+                    }
+
+                    AlignmentUtil alignment = new AlignmentUtil();
+                    alignment.sorted = sorted;
+                    alignment.SortNotesInArrs();
+
+                    Debug.Log("Algorithmus erfolgreich beendet");
+                }
+                else                                                        // there are unsorted nodes
+                {
+                    Failed = true;
+                    Debug.Log("Graph enthält einen Zyklus oder einen isolierten Knoten");
+                }
+
+                Automatic = false;
+            }
+        }
+
+
+        /*
+         *  fills source queue and builds the in degree table
+         */
+        void PrepareAlgorithm(Graph graph)
+        { 
+
+            foreach (Node node in graph.Nodes)                   // initializes the indegree table
+            {              
+                InDegrees.Add(node, 0);
+            }
+
+            foreach (Node node in graph.Nodes)                  // iterates through all nodes
+            {       
+                foreach (Node desc in node.Descendants)         // iterates through the descendants of a node and increments its indegree
+                {
+                    InDegrees[desc]++;
+                }
+            }
+
+            foreach (Node node in graph.Nodes)                  // iterates through the nodes to find sources in the final table
+            {
+                if (InDegrees[node] == 0)
+                {
+                    SourceQueue.AddLast(node);                  
+                }
+            }
+
+            Prepared = true;
+            Changed = true;
+            Finished = false;
+            AlignmentUtil.finished = false;  
+        }
+
+
+        /*
+         * Does one single iteration of the algorithm
+         */
+        public void StepForward()
+        {
+
+            if (!Prepared)
+            {
+                Debug.Log("Algorithmus ist noch nicht vorbereitet.");
+                return;
+            }
+            if (Finished || Failed)
+            {
+                Debug.Log("Der Algorithmus ist schon fertig.");
+                return;
+            }
+
+            AlgorithmState state = new AlgorithmState();
+            Node current = SourceQueue.First.Value;             // gets the next source node in the queue
+            SourceQueue.RemoveFirst();                          // remove node from the queue
+            SortedNodes.AddLast(current);                       // add node to sorted list
+
+            foreach (Node desc in current.Descendants)          // iterate through all descendants of a node
+            {
+                int deg = --InDegrees[desc];                    // decrement the indegree
+                if (deg == 0)                                   // if it's now 0 it has to be a source
+                {
+                    state.NewSources.Add(desc);
+                    SourceQueue.AddLast(desc);
+                }
+            }
+
+
+            state.Current = current;
+            StepStack.Push(state);                              // push the current state on the stack
+
+            Changed = true;
+        }
+
+
+        /*
+         *  Goes back to the last state
+         */
+        public void StepBackward()
+        {
+            AlgorithmState state = StepStack.Pop();             // get the current state
+            SortedNodes.RemoveLast();                           // remove the last node from the sorted List
+            SourceQueue.AddFirst(state.Current);                // put the node of the state at the beginning of the queue
+
+            foreach (Node desc in state.Current.Descendants)    // iterate through all the descendants
+            {
+                int deg = ++InDegrees[desc];                    // increment their indegree
+                if (deg == 1)                                   // if it's now 1 it has been a source before and was added to the source queue
+                {
+                    SourceQueue.RemoveLast();
+                }
+
+
+            }
+
+            Changed = true;
+        }
+
+
+        /*
+         *  Resets and clears everything
+         */
+        public void ResetGraph()
+        {
+            Automatic = false;
+            Changed = false;
+            Prepared = false;
+            Finished = false;
+            Failed = false;
+
+            this.CurrentState = null;
+
+            SourceQueue.Clear();
+            SortedNodes.Clear();
+            InDegrees.Clear();
+            StepStack.Clear();
+
+            AlignmentUtil.finished = false;
+            AlgorithmManager.ColourGraph(this);
+        }
+
+
+
+        public void AlgorithmSetup(Graph input)
+        {
+            Debug.Log("UNSORTED:");
+            WriteGraph(input);                              //writing unsorted graph first for clarity's sake in testing
+            StartTopoSort(input);
+            
+        }
+
         ///<summary>
         /// Main-Function.
         /// Takes the directed graph (list with Nodes)
@@ -40,8 +331,6 @@ namespace TopoSort
         public void StartTopoSort(Graph input)
         {
            // CheckForCycles(input); //Checks if graph has cycles, throws argument if so
-            Debug.Log("UNSORTED:");
-            WriteGraph(input);                              //writing unsorted graph first for clarity's sake in testing
             SortCoroutine(input);
             AlgorithmManager.EmptyList();
         }
@@ -73,6 +362,10 @@ namespace TopoSort
                 }
             }
             
+
+
+            AlignmentUtil.finished = false;
+
             while (q.Count != 0)
             {
                 Node Element = q.Dequeue();  //remove the first Node of the queue
@@ -107,6 +400,7 @@ namespace TopoSort
                 }
                
             }
+
             AlignmentUtil alignment = new AlignmentUtil();
             alignment.sorted = sorted;
             alignment.ImprovedGraphVisualisation();
@@ -180,8 +474,11 @@ namespace TopoSort
         
         private void WriteGraph(Graph input)
         {
-            if(input == null)
+            if (input == null)
+            {
                 Debug.Log("Invalid Graph");
+            }
+                
             foreach(Node node in input.Nodes)
             {
                 Debug.Log("Node " + node.Id +" Has " + node.Descendants.Count + " descendants." );

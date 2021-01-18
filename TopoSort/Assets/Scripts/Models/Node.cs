@@ -57,7 +57,7 @@ namespace Models {
 
         public bool Equals(Node eNode)
         {
-            return Equals(Id, eNode.Id);
+            return (Id == eNode.Id);
         }
     }
 }

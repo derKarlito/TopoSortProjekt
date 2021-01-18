@@ -31,7 +31,7 @@ public class NodeCreationControl : MonoBehaviour
         {
             var prefab = Resources.Load<NodeControl>("Models/Node");  //creates new Node prefab
             var node = Object.Instantiate(prefab);          //enables use of Node
-            node.name = (string.Empty+node.GetInstanceID());
+            node.name = (string.Empty + node.GetInstanceID());
 
             Vector3 pos = MouseManager.GetMousePos().Z(5);  //".Z" von VectorUtil extension-Method. Sets Z to 0 bc otherwise the node isn't in cam on creation
             node.transform.position = pos;
