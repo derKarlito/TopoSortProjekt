@@ -70,8 +70,7 @@ namespace TopoSort
             }
 
 
-
-            CheckFinished();                        // checks if the algorithm reached a finished state
+                       
        
 
             if (Changed)                            
@@ -236,12 +235,16 @@ namespace TopoSort
                 Debug.Log("Algorithmus ist noch nicht vorbereitet.");
                 return;
             }
+
+            CheckFinished();                                     // checks if the algorithm reached a finished state
+
             if (Finished || Failed)
             {
                 Debug.Log("Der Algorithmus ist schon fertig.");
                 return;
             }
 
+           
             AlgorithmState state = new AlgorithmState();
             Node current = SourceQueue.First.Value;             // gets the next source node in the queue
             SourceQueue.RemoveFirst();                          // remove node from the queue
