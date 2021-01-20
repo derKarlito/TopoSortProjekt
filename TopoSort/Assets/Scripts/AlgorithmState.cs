@@ -14,7 +14,8 @@ namespace TopoSort
         public Node Current;            // The current Node the algorithm is looking at  
         public List<Node> NewSources;   // holds the nodes that are new sources
 
-        public AlgorithmState() {
+        public AlgorithmState() 
+        {
             this.NewSources = new List<Node>();
         }
     }

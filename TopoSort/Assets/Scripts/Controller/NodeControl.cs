@@ -16,6 +16,7 @@ public class NodeControl : MonoBehaviour
     public SpriteRenderer sprite;
     Collider2D Collider;
     public Node node;
+    public TextMeshPro InDegreeDisplay;
     
     void Start()
     {
@@ -38,7 +39,7 @@ public class NodeControl : MonoBehaviour
             var currentPosition = gameObject.transform.position;
             this.gameObject.transform.position = Vector2.Lerp(currentPosition,targetPosition,t); // move node to target position
         }
-        
+        InDegreeDisplay.text = node.InDegree.ToString();
     }
 
     private void MouseSignal() 
