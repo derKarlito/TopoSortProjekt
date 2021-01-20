@@ -45,14 +45,24 @@ namespace Models {
         
         public void rmvDescendants(List<Node> descendant)
         {
-            int length = descendant.Count;
-            for(int i = length-1 ; i <= 0; i--)             //This used to be a foreach loop, which at its base, is valid, however
+            //int length = descendant.Count;
+            for(int i = 0 ; i < descendant.Count; i++)             //This used to be a foreach loop, which at its base, is valid, however
             {                                               //when a foreach loop iterates over a list which ('s size) is going to be modifed (like the removal of an element)
                 descendant[i].Ancestors.Remove(this);       //then it can't execute properly. That's why we quickly take the initial length of the list and then use that in a for loop
                 descendant[i].InDegree--;                   //removing each element from the end to the beginning
                 descendant.RemoveAt(i);                     //I'm unsure if it can be done the other way around but this way seems more logical and also using a for loop where the index decreases each time is always a nice flex
             }
             
+        }
+
+        public void rmvDescendantFromAncestors(Node node){
+            foreach(Node ancestorNode in node.Ancestors){
+                foreach(Node graphManagerNode in GraphManager.graph.Nodes){
+                    if(graphManagerNode.Descendants.Contains(node)){
+                        graphManagerNode.Descendants.Remove(node);
+                    }
+                }
+            }
         }
 
         public bool Equals(Node eNode)

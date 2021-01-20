@@ -42,6 +42,11 @@ namespace Models
 
         public void RmvNode(Node trem)                //Removes Node from Graph
         {
+            foreach(Node node in Nodes){
+                if(node.Descendants.Contains(trem)){
+                    node.Descendants.Remove(trem);
+                }
+            }
             Nodes.Remove(trem);
         }
 

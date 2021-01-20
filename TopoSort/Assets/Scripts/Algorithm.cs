@@ -202,7 +202,7 @@ namespace TopoSort
          */
         void PrepareAlgorithm(Graph graph)
         { 
-
+            InDegrees = new Dictionary<Node, int>();
             foreach (Node node in graph.Nodes)                   // initializes the indegree table
             {              
                 InDegrees.Add(node, 0);
