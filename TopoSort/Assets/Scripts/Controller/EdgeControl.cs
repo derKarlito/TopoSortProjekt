@@ -19,7 +19,7 @@ public class EdgeControl : MonoBehaviour
 
     private void Update() 
     {
-        Vector3 from = SourceNode.transform.position;
+        Vector3 from = SourceNode != null ? SourceNode.transform.position : default;
         Vector3 to = default;
 
         if(SourceNode == null || (!BeingCreated && TargetNode == null)) //if one of both nodes is not there anymore,edge destroys itself
