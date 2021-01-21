@@ -150,7 +150,7 @@ public class VisuellFeedback //check if algorithmmanager hold a node
                     }
                 }
             }
-        
+    
              for(int i = 0; i< Nodes.Length; i++) //Check + Färben der Nodes
             {
                 if(node.Id.ToString().Equals(Nodes[i].name)) // Object comparisons should use .Equals() instead of ==  

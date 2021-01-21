@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using System;
 using Models;
@@ -13,15 +14,15 @@ namespace TopoSort
     {
 
         private Collider2D Collider;
-        public Planet Planet; //gameobject to then get the script from
         private Collider2D ForwardCollider;
         private Collider2D BackwardCollider;
 
-
+        public TextMeshPro QueueText;
+        public Planet Planet;           //gameobject to then get the script from
 
         public LinkedList<Node> SourceQueue;                // contains all sources that should be processed next
         public LinkedList<Node> SortedNodes;                // contains all the nodes sorted so far
-        public Dictionary<Node, int> InDegrees;             // holds the in degrees of all nodes
+        public static Dictionary<Node, int> InDegrees;             // holds the in degrees of all nodes
         public AlgorithmState CurrentState;                 // holds the state, that's active
         private Stack<AlgorithmState> StepStack;            // stores all the steps done
 
@@ -35,6 +36,7 @@ namespace TopoSort
         public float DeltaStep;                            // holds the time past since the last step
         public static float MAX_STEP_TIME = 1.0f;           // specifies the time between each step (seconds)
 
+        public bool Testing; //Enables extra stats for testing. Only changeable from Editor
 
         // Start is called before the first frame update
         void Start()
@@ -70,11 +72,6 @@ namespace TopoSort
                 }
             }
 
-
-            
-            CheckFinished();                        // checks if the algorithm reached a finished stat
-       
-
             if (Changed)                            
             {
 
@@ -85,7 +82,6 @@ namespace TopoSort
 
                 AlgorithmManager.ColourGraph(this);     // colours the graph accordingly to the change
             }
-
         }
 
 
@@ -228,6 +224,8 @@ namespace TopoSort
             Changed = true;
             Finished = false;
             AlignmentUtil.finished = false;  
+
+            TextUpdate();
         }
 
 
@@ -242,6 +240,13 @@ namespace TopoSort
                 Debug.Log("Algorithmus ist noch nicht vorbereitet.");
                 return;
             }
+
+            CheckFinished();                        // checks if the algorithm reached a finished stat
+            if(Finished)        //attempt of getting out of NullRefExcep but-- kinda doesnt work
+            {
+                return;
+            }
+
             if (Finished || Failed)
             {
                 Planet.PlanetReset();
@@ -270,6 +275,7 @@ namespace TopoSort
             StepStack.Push(state);                              // push the current state on the stack
 
             Changed = true;
+            TextUpdate();
         }
 
 
@@ -295,6 +301,7 @@ namespace TopoSort
             }
 
             Changed = true;
+            TextUpdate();
         }
 
 
@@ -320,7 +327,77 @@ namespace TopoSort
             AlgorithmManager.ColourGraph(this);
         }
 
+        public void TextUpdate()
+        {
+            string queueText = default;
+            string sortedText = default;
+            string german = default;
+            foreach (Node source in SourceQueue)
+            {
+                switch (source.Name)
+                {
+                    case "Water":
+                        german = "Wasser";
+                        break;
+                    case "Ground":
+                        german = "Tektonik";
+                        break;
+                    case "Plants":
+                        german = "Pflanzen";
+                        break;
+                    case "Moon":
+                        german = "Mond";
+                        break;
+                    case "Atmosphere":
+                        german = "Atmosphäre";
+                        break; 
+                    default:
+                        german = source.Name;
+                        break;
+                }
+                queueText += german + " | ";
+            }
+            foreach (Node sorted in SortedNodes)
+            {
+                switch (sorted.Name)
+                {
+                    case "Water":
+                        german = "Wasser";
+                        break;
+                    case "Ground":
+                        german = "Tektonik";
+                        break;
+                    case "Plants":
+                        german = "Pflanzen";
+                        break;
+                    case "Moon":
+                        german = "Mond";
+                        break;
+                    case "Atmosphere":
+                        german = "Atmosphäre";
+                        break; 
+                    default:
+                        german = sorted.Name;
+                        break;
+                }
+                sortedText += german + " -> ";
+            }
 
+            if(Testing)
+            {
+                string planetStats = "Planet\n[";
+                for(int i = 0; i < Planet.CreatedPlanet.Length; i++)
+                {
+                    if(i != Planet.CreatedPlanet.Length-1)
+                        planetStats += Planet.CreatedPlanet[i]+", ";
+                    else
+                        planetStats += Planet.CreatedPlanet[i]+"]";
+                }
+                QueueText.text = "Queue:\n"+queueText+"\n-------------"+sortedText+"\n-------------"+planetStats;
+            }
+            else
+                QueueText.text = "Queue:\n"+queueText+"\n-------------"+sortedText;
+        }
 
         public void AlgorithmSetup(Graph input)
         {

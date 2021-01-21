@@ -12,6 +12,8 @@ public class Planet : MonoBehaviour
 
     private static Sprite[] PlanetSprites;
 
+    private static Sprite[] MoonSprites;
+
     public static string State = default;
 
     public static bool Final = false;
@@ -47,10 +49,10 @@ public class Planet : MonoBehaviour
         {"Ocean", new[]{1, 6, 1, 2, 4}},
         {"Toxic", new[]{3, 2, 0, 3, 0}},
         {"Fire", new[]{2, 0, 2, 6, 1}},
+        {"Asteroids", new[]{5, 1, 0, 0, 6}},
        /* {"Jungle", new[]{2, 3, 6, 2, 2}},
         {"Earth_Relief_2", new[]{69, 1337, 420, 69, 1312}},
         {"Fire_Jungle", new[]{4, 3, 6, 2, 2}},
-        {"Asteroids", new[]{5, 1, 0, 0, 6}},
         {"Obsidian", new[]{6, 5, 0, 1, 0}} */
     };
 
@@ -70,7 +72,8 @@ public class Planet : MonoBehaviour
         "Toxic",
         "Phytoplankton",
         "Gas",
-        "Desert"
+        "Desert",
+        "Asteroids"
     };
 
     // Start is called before the first frame update
@@ -79,6 +82,9 @@ public class Planet : MonoBehaviour
         Sprite = GetComponentInChildren<SpriteRenderer>();
 
         PlanetSprites = Resources.LoadAll<Sprite>("Sprites/Planets/spritesheet_planets");
+        MoonSprites = Resources.LoadAll<Sprite>("Sprites/Planets/Moons");
+
+        PrepareMoons();
     }
 
     // Update is called once per frame
@@ -97,6 +103,59 @@ public class Planet : MonoBehaviour
         string planetDisplayed = DiffRay(CreatedPlanet, Planets);
 
         SetPlanetSprite(planetDisplayed);
+
+        if(node.Name == "Moon" && planetDisplayed != "Asteroids");
+        {
+            Moon.SetAllActive(true);
+            AddMoon();
+        }
+
+    }
+
+    public void PrepareMoons()
+    {
+        var index = 0;
+        var origin = this.transform.position;
+        var radius = Sprite.transform.localScale.x/2 + 0.75;
+        // create nodes
+        for(index = 0 ; index < MoonSprites.Length; index++)
+        {
+            //create child with spriterenderer with moon
+            GameObject moonObject = new GameObject("Moon"+index);
+            moonObject.transform.parent = this.transform;
+            moonObject.AddComponent<SpriteRenderer>();
+            moonObject.AddComponent<Moon>();
+            
+
+            // set position of the new gameobject
+            var new_x = origin.x + radius * (float)(Mathf.Cos(2 * index * Mathf.PI / MoonSprites.Length));
+            var new_y = origin.y + radius * (float)(Mathf.Sin(2 * index * Mathf.PI / MoonSprites.Length));
+            
+            moonObject.transform.position = new Vector2((float)new_x, (float)new_y);
+        }
+    }
+
+    public void AddMoon()
+    {
+        System.Random random = new System.Random();
+        int index = random.Next(12); //random value for the placement of the moon
+        SpriteRenderer moonSprite = GameObject.Find("Moon"+index).GetComponentInChildren<SpriteRenderer>();
+        index = random.Next(12); //another random value for the sprite of the moon
+        moonSprite.sprite = MoonSprites[index];
+        moonSprite.transform.localScale += new Vector3(3,3,0);
+    }
+
+    public void RemoveMoon()
+    {
+        for(int i = 0; i < MoonSprites.Length; i++)
+        {
+            SpriteRenderer localMoonSprite = GameObject.Find("Moon"+i).GetComponentInChildren<SpriteRenderer>();
+            if(localMoonSprite.sprite != null)
+            {
+                localMoonSprite.sprite = null;
+                break;
+            }
+        }
 
     }
 
@@ -118,6 +177,11 @@ public class Planet : MonoBehaviour
         string planetDisplayed = DiffRay(CreatedPlanet, Planets);
 
         SetPlanetSprite(planetDisplayed);
+
+        if(node.Name == "Moon")
+        {
+            RemoveMoon();
+        }
 
     }
 
@@ -209,13 +273,13 @@ public class Planet : MonoBehaviour
             return;
         }
 
+        Moon.SetAllActive(planet != "Asteroids");
+
         for(int i = 0; i < AvailablePlanets.Count ; i++)
         {
             
             if(AvailablePlanets[i] == planet)
             {
-                Debug.Log(AvailablePlanets[i]);
-                Debug.Log(PlanetSprites[i].name);
                 Sprite.sprite = PlanetSprites[i];
             }
         }

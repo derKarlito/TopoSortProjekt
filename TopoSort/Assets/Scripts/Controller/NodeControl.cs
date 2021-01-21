@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Models;
 using TMPro;
 using UnityEngine;
+using TopoSort;
 
 public class NodeControl : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class NodeControl : MonoBehaviour
     public SpriteRenderer sprite;
     Collider2D Collider;
     public Node node;
+    public TextMeshPro InDegreeDisplay;
     
     void Start()
     {
@@ -38,7 +40,14 @@ public class NodeControl : MonoBehaviour
             var currentPosition = gameObject.transform.position;
             this.gameObject.transform.position = Vector2.Lerp(currentPosition,targetPosition,t); // move node to target position
         }
-        
+        if(Algorithm.InDegrees.Count != 0)
+        {
+            InDegreeDisplay.text = Algorithm.InDegrees[node].ToString();
+        }
+        else
+        {
+            InDegreeDisplay.text = node.InDegree.ToString();
+        }
     }
 
     private void MouseSignal() 
