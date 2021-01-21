@@ -197,7 +197,7 @@ namespace TopoSort
          */
         void PrepareAlgorithm(Graph graph)
         { 
-
+            InDegrees = new Dictionary<Node, int>();
             foreach (Node node in graph.Nodes)                   // initializes the indegree table
             {              
                 InDegrees.Add(node, 0);
@@ -207,7 +207,10 @@ namespace TopoSort
             {       
                 foreach (Node desc in node.Descendants)         // iterates through the descendants of a node and increments its indegree
                 {
-                    InDegrees[desc]++;
+                    if(InDegrees.ContainsKey(desc))
+                    {
+                        InDegrees[desc]++;
+                    }
                 }
             }
 
@@ -262,11 +265,16 @@ namespace TopoSort
 
             foreach (Node desc in current.Descendants)          // iterate through all descendants of a node
             {
-                int deg = --InDegrees[desc];                    // decrement the indegree
-                if (deg == 0)                                   // if it's now 0 it has to be a source
-                {
-                    state.NewSources.Add(desc);
-                    SourceQueue.AddLast(desc);
+                try{
+                    int deg = --InDegrees[desc];                    // decrement the indegree
+                    if (deg == 0)                                   // if it's now 0 it has to be a source
+                    {
+                        state.NewSources.Add(desc);
+                        SourceQueue.AddLast(desc);
+                    }
+                }
+                catch(KeyNotFoundException){
+                    
                 }
             }
 
