@@ -830,7 +830,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d5de3bb883c34e74fb61e0c1c3604d1e,
+      objectReference: {fileID: -7957033694320667538, guid: 80dda1c7b8a55ed4d81d688b01a3fcff,
         type: 3}
     - target: {fileID: 2080082266471826245, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
@@ -842,20 +842,25 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_text
+      value: Moon
+      objectReference: {fileID: 0}
     - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.79443586
+      value: 0.98041326
       objectReference: {fileID: 0}
     - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.79443586
+      value: 0.98041326
       objectReference: {fileID: 0}
     - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.79443586
+      value: 0.98041326
       objectReference: {fileID: 0}
     - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
@@ -922,8 +927,25 @@ PrefabInstance:
       propertyPath: Planet
       value: 
       objectReference: {fileID: 1805122702}
+    - target: {fileID: 7340895057746846737, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: ToolTip
+      value: 
+      objectReference: {fileID: 782916127}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f03c5d0408f74c48beaaaf00e20b39a, type: 3}
+--- !u!114 &472992878 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1453432769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &547419952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,7 +1125,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 7367ba625d2f99a4c9391d5f9248ff54,
+      objectReference: {fileID: 2635886150028723114, guid: 80dda1c7b8a55ed4d81d688b01a3fcff,
         type: 3}
     - target: {fileID: 2080082266471826245, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
@@ -1114,6 +1136,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_text
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
@@ -1200,6 +1227,11 @@ PrefabInstance:
       propertyPath: Planet
       value: 
       objectReference: {fileID: 1805122702}
+    - target: {fileID: 7340895057746846737, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: ToolTip
+      value: 
+      objectReference: {fileID: 668013051}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f03c5d0408f74c48beaaaf00e20b39a, type: 3}
 --- !u!1 &649567789
@@ -1284,6 +1316,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &668013051 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+    type: 3}
+  m_PrefabInstance: {fileID: 632618850}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &725973791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,6 +1416,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &782916127 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+    type: 3}
+  m_PrefabInstance: {fileID: 393963709}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &799704574
 GameObject:
   m_ObjectHideFlags: 0
@@ -2591,6 +2647,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlantNodeCreationButtons
       objectReference: {fileID: 0}
+    - target: {fileID: 2080082266471826245, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 5682984980690573252, guid: 80dda1c7b8a55ed4d81d688b01a3fcff,
+        type: 3}
+    - target: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_text
+      value: Plant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2651,8 +2728,30 @@ PrefabInstance:
       propertyPath: Planet
       value: 
       objectReference: {fileID: 1805122702}
+    - target: {fileID: 7340895057746846737, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: NodeValue
+      value: Plants
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340895057746846737, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: ToolTip
+      value: 
+      objectReference: {fileID: 472992878}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f03c5d0408f74c48beaaaf00e20b39a, type: 3}
+--- !u!114 &1453729639 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+    type: 3}
+  m_PrefabInstance: {fileID: 420751550203341805}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1496864313
 GameObject:
   m_ObjectHideFlags: 0
@@ -2845,6 +2944,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62d8e26d41365e84eaa379b6be611c5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1644186485 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1976982031}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1805122700
@@ -3114,7 +3225,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 6e7f0a703be53094eb2473148f100ed7,
+      objectReference: {fileID: 228121390952367896, guid: 80dda1c7b8a55ed4d81d688b01a3fcff,
         type: 3}
     - target: {fileID: 2080082266471826245, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
@@ -3125,6 +3236,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_text
+      value: Atmo\nsphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_margin.z
+      value: 2.2954183
       objectReference: {fileID: 0}
     - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
@@ -3206,6 +3327,11 @@ PrefabInstance:
       propertyPath: Planet
       value: 
       objectReference: {fileID: 1805122702}
+    - target: {fileID: 7340895057746846737, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: ToolTip
+      value: 
+      objectReference: {fileID: 1644186485}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f03c5d0408f74c48beaaaf00e20b39a, type: 3}
 --- !u!1 &2047878701
@@ -3462,36 +3588,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterNodeCreationButton
       objectReference: {fileID: 0}
-    - target: {fileID: 2080082266471826245, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+    - target: {fileID: 2557107625222224093, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8a8f72f0aa94bcf4a9847771d19e605c,
-        type: 3}
-    - target: {fileID: 2080082266471826245, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2080082266471826245, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.7890288
-      objectReference: {fileID: 0}
-    - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.7890288
-      objectReference: {fileID: 0}
-    - target: {fileID: 3235470457095417125, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.7890288
+      propertyPath: m_text
+      value: Water
       objectReference: {fileID: 0}
     - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
@@ -3510,11 +3610,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
-        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -3530,18 +3625,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7340895057746846737, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+    - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
-      propertyPath: NodeValue
-      value: Water
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7246160567064251713, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7340895057746846737, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
         type: 3}
       propertyPath: Planet
       value: 
       objectReference: {fileID: 1805122702}
+    - target: {fileID: 7340895057746846737, guid: 2f03c5d0408f74c48beaaaf00e20b39a,
+        type: 3}
+      propertyPath: ToolTip
+      value: 
+      objectReference: {fileID: 1453729639}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f03c5d0408f74c48beaaaf00e20b39a, type: 3}

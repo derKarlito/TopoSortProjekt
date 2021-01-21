@@ -13,6 +13,7 @@ public class NodeCreationControl : MonoBehaviour
     private static Sprite[] NodeSprites;
     public Planet Planet;
     public TextMeshPro ActivePlanetStat;
+    public TextMeshPro ToolTip;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,8 @@ public class NodeCreationControl : MonoBehaviour
         Collider = GetComponentInChildren<Collider2D>();
         NodeSprites = Resources.LoadAll<Sprite>("Sprites/Nodes/node_sprites");
         ActivePlanetStat = GetComponentInChildren<TextMeshPro>();
+        //ToolTip = GameObject.FindWithTag("ToolTip").GetComponent<TextMeshPro>();
+        ToolTip.text = "";
     }
 
     // Update is called once per frame
@@ -30,10 +33,12 @@ public class NodeCreationControl : MonoBehaviour
         if(onInventory)
         {
             InventoryManager.EnterHover(this);
+            SetToolTip();
         }
         else
         {
             InventoryManager.ExitHover(this);
+            DeleteToolTip();
         }
         if(Input.GetMouseButtonDown(0) && onInventory)
         {
@@ -74,5 +79,24 @@ public class NodeCreationControl : MonoBehaviour
         int attribute = (int)Enum.Parse(typeof(Planet.PlanetParam), NodeValue);
 
         ActivePlanetStat.text = Planet.CreatedPlanet[attribute].ToString();
+    }
+
+    public void SetToolTip()
+    {
+        
+        ToolTip.transform.position = MouseManager.GetMousePos().Z(-2);
+        ToolTip.transform.position += new Vector3 (0.5f, -0.2f, 0);
+        if(NodeValue == "Atmosphere")
+        {
+            ToolTip.text = "Atmo\nsphere";
+        }
+        else
+        {
+            ToolTip.text = NodeValue;
+        }
+    }
+    public void DeleteToolTip()
+    {
+        ToolTip.text = "";
     }
 }

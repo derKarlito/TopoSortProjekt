@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Edge
   - Node
+  - ToolTip
   layers:
   - Default
   - TransparentFX
