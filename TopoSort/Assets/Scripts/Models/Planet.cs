@@ -104,7 +104,7 @@ public class Planet : MonoBehaviour
 
         SetPlanetSprite(planetDisplayed);
 
-        if(node.Name == "Moon" && planetDisplayed != "Asteroids");
+        if(node.Name == "Moon" && planetDisplayed != "Asteroids")
         {
             Moon.SetAllActive(true);
             AddMoon();
