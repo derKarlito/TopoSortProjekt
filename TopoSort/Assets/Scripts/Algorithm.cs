@@ -179,7 +179,6 @@ namespace TopoSort
                     alignment.ImprovedGraphVisualisation();
 
                     Debug.Log("Algorithmus erfolgreich beendet");
-                    ResetGraph();
                     Planet.PlanetReset();
                 }
                 else                                                        // there are unsorted nodes
@@ -208,7 +207,10 @@ namespace TopoSort
             {       
                 foreach (Node desc in node.Descendants)         // iterates through the descendants of a node and increments its indegree
                 {
-                    InDegrees[desc]++;
+                    if(InDegrees.ContainsKey(desc))
+                    {
+                        InDegrees[desc]++;
+                    }
                 }
             }
 
@@ -244,6 +246,7 @@ namespace TopoSort
             CheckFinished();                        // checks if the algorithm reached a finished stat
             if(Finished)        //attempt of getting out of NullRefExcep but-- kinda doesnt work
             {
+                ResetGraph();
                 return;
             }
 
@@ -262,11 +265,16 @@ namespace TopoSort
 
             foreach (Node desc in current.Descendants)          // iterate through all descendants of a node
             {
-                int deg = --InDegrees[desc];                    // decrement the indegree
-                if (deg == 0)                                   // if it's now 0 it has to be a source
-                {
-                    state.NewSources.Add(desc);
-                    SourceQueue.AddLast(desc);
+                try{
+                    int deg = --InDegrees[desc];                    // decrement the indegree
+                    if (deg == 0)                                   // if it's now 0 it has to be a source
+                    {
+                        state.NewSources.Add(desc);
+                        SourceQueue.AddLast(desc);
+                    }
+                }
+                catch(KeyNotFoundException){
+                    
                 }
             }
 

@@ -76,6 +76,9 @@ public class NodeControl : MonoBehaviour
                 if(node.Descendants.Count != 0)
                     node.rmvDescendants(node.Descendants);        //Removes all Descendants
 
+                if(node.Ancestors.Count != 0)
+                    node.rmvAncestors(node.Ancestors);
+
                 GraphManager.graph.RmvNode(node);            //Removes Node from Graph
                 Destroy(gameObject);                         //Destroys this Object
             }

@@ -25,6 +25,9 @@ public class EdgeControl : MonoBehaviour
         if(SourceNode == null || (!BeingCreated && TargetNode == null)) //if one of both nodes is not there anymore,edge destroys itself
         {
             Destroy(gameObject);
+            if(SourceNode == null)
+                TargetNode.node.InDegree--;
+
             return;                         //no update. Edge broken
         }
         if (!BeingCreated)                    //if being created is false, then the edge has a definite End aka the TargetNode
