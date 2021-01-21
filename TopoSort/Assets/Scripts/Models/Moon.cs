@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Moon : MonoBehaviour
 {
-    static List<Moon> Moons = new List<Moon>();
+    public static List<Moon> Moons = new List<Moon>();
     
     void Awake()
     {
@@ -21,6 +21,10 @@ public class Moon : MonoBehaviour
         foreach(Moon m in Moons)
         {
             m.gameObject.SetActive(active);
+        }
+        if(!active)
+        {
+            Planet.RemoveAllMoons();
         }
     }
 }

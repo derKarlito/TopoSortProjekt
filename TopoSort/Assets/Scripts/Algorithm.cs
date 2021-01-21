@@ -33,10 +33,9 @@ namespace TopoSort
         public bool Finished;          // is set to true, when the algorithm finishes successful
         public bool Failed;            // is set to true, when the algorithm fails
 
-        public float DeltaStep;                            // holds the time past since the last step
+        public float DeltaStep;                             // holds the time past since the last step
         public static float MAX_STEP_TIME = 1.0f;           // specifies the time between each step (seconds)
-
-        public bool Testing; //Enables extra stats for testing. Only changeable from Editor
+        public int PosInGraph;                              // holds the pos of the node in the graph counting upward
 
         // Start is called before the first frame update
         void Start()
@@ -49,6 +48,8 @@ namespace TopoSort
             SourceQueue = new LinkedList<Node>();
             SortedNodes = new LinkedList<Node>();
             InDegrees = new Dictionary<Node, int>();
+
+            PosInGraph = 0;
 
             ResetGraph();
 
@@ -99,6 +100,8 @@ namespace TopoSort
                 if (!Prepared)
                 {
                     SoundManagerScript.PlaySound("playButton");
+                    Planet.RemoveAllMoons();
+                    Planet.PlanetReset();
                     PrepareAlgorithm(GraphManager.graph);           // Prepares the algorithm in case it is not already
                 }
 
@@ -179,7 +182,7 @@ namespace TopoSort
                     alignment.ImprovedGraphVisualisation();
 
                     Debug.Log("Algorithmus erfolgreich beendet");
-                    Planet.PlanetReset();
+                    
                 }
                 else                                                        // there are unsorted nodes
                 {
@@ -259,10 +262,12 @@ namespace TopoSort
 
             AlgorithmState state = new AlgorithmState();
             Node current = SourceQueue.First.Value;             // gets the next source node in the queue
+            PosInGraph++;
+            current.position = PosInGraph;
             Planet.NodeEvaluation(current);
             SourceQueue.RemoveFirst();                          // remove node from the queue
             SortedNodes.AddLast(current);                       // add node to sorted list
-
+            
             foreach (Node desc in current.Descendants)          // iterate through all descendants of a node
             {
                 try{
@@ -326,6 +331,8 @@ namespace TopoSort
 
             this.CurrentState = null;
 
+            PosInGraph = 0;
+
             SourceQueue.Clear();
             SortedNodes.Clear();
             InDegrees.Clear();
@@ -339,10 +346,15 @@ namespace TopoSort
         {
             string queueText = default;
             string sortedText = default;
+            string planetName = default;
             string german = default;
-            foreach (Node source in SourceQueue)
+            List<Node> tempSortedNodes = new List<Node>(SortedNodes);
+            List<Node> tempSourceQueue = new List<Node>(SourceQueue);
+
+            // Counting + translating of Source Nodes
+            for(int i = 0; i < tempSourceQueue.Count; i++)
             {
-                switch (source.Name)
+                switch (tempSourceQueue[i].Name)
                 {
                     case "Water":
                         german = "Wasser";
@@ -360,51 +372,113 @@ namespace TopoSort
                         german = "Atmosphäre";
                         break; 
                     default:
-                        german = source.Name;
+                        german = tempSourceQueue[i].Name;
                         break;
                 }
-                queueText += german + " | ";
+                if(i < tempSourceQueue.Count - 1)
+                {
+                    queueText += german + " | ";
+                }
+                else
+                {
+                    queueText += german;
+                }
             }
-            foreach (Node sorted in SortedNodes)
+            
+            // Counting + translating of Sorted Nodes
+            for(int i = 0; i < tempSortedNodes.Count; i++)
             {
-                switch (sorted.Name)
+                switch (tempSortedNodes[i].Name)
+                    {
+                        case "Water":
+                            german = "Wasser";
+                            break;
+                        case "Ground":
+                            german = "Tektonik";
+                            break;
+                        case "Plants":
+                            german = "Pflanzen";
+                            break;
+                        case "Moon":
+                            german = "Mond";
+                            break;
+                        case "Atmosphere":
+                            german = "Atmosphäre";
+                            break; 
+                        default:
+                            german = tempSortedNodes[i].Name;
+                            break;
+                    }
+                if(i < tempSortedNodes.Count-1)
                 {
-                    case "Water":
-                        german = "Wasser";
-                        break;
-                    case "Ground":
-                        german = "Tektonik";
-                        break;
-                    case "Plants":
-                        german = "Pflanzen";
-                        break;
-                    case "Moon":
-                        german = "Mond";
-                        break;
-                    case "Atmosphere":
-                        german = "Atmosphäre";
-                        break; 
-                    default:
-                        german = sorted.Name;
-                        break;
+                    sortedText += german + " -> ";
                 }
-                sortedText += german + " -> ";
+                else
+                {
+                    sortedText += german;
+                }
             }
 
-            if(Testing)
+            // Reading + Translating of the PlanetState
+            switch (Planet.State)
             {
-                string planetStats = "Planet\n[";
-                for(int i = 0; i < Planet.CreatedPlanet.Length; i++)
-                {
-                    if(i != Planet.CreatedPlanet.Length-1)
-                        planetStats += Planet.CreatedPlanet[i]+", ";
-                    else
-                        planetStats += Planet.CreatedPlanet[i]+"]";
-                }
-                QueueText.text = "Queue:\n"+queueText+"\n-------------"+sortedText+"\n-------------"+planetStats;
+                case "Default":
+                    german = "Leerer Planet";
+                    break;
+                case "Desert":
+                    german = "Wüstenplanet";
+                    break;
+                case "Lava":
+                    german = "Lavaplanet";
+                    break;
+                case "Earth":
+                    german = "Erdplanet";
+                    break;
+                case "Earth_Relief_1":
+                    german = "Hügliger Planet";
+                    break;
+                case "Wastes":
+                    german = "Planet der Ödnis";
+                    break;
+                case "Mud":
+                    german = "Schlammplanet";
+                    break;
+                case "Gas":
+                    german = "Gasplanet";
+                    break;
+                case "Stone":
+                    german = "Gesteinsplanet";
+                    break;
+                case "Glass":
+                    german = "Glassplanet";
+                    break;
+                case "Ice":
+                    german = "Eisplanet";
+                    break;
+                case "Phytoplankton":
+                    german = "Phytoplanktonplanet";
+                    break;
+                case "Ocean":
+                    german = "Ozeanplanet";
+                    break;
+                case "Toxic":
+                    german = "Giftiger Planet";
+                    break;
+                case "Fire":
+                    german = "Feuerplanet";
+                    break;
+                case "Asteroids":
+                    german = "Asteroidenfeld";
+                    break;
+                default:
+                    german = Planet.State;
+                    break;
             }
+            planetName = german;
+            if(queueText != null)
+                QueueText.text = "Warteschlange:\n"+queueText+"\n-------------"+sortedText+"\n-------------"+planetName;
             else
-                QueueText.text = "Queue:\n"+queueText+"\n-------------"+sortedText;
+                QueueText.text = "Sortierung:\n"+sortedText+"\n-------------Ergebnis:\n"+planetName;
         }
 
         public void AlgorithmSetup(Graph input)

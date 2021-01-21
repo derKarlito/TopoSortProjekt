@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundManagerScript : MonoBehaviour
 {
     public static AudioClip playButtonSound, forthButtonSound, backButtonSound;
-    static AudioSource audioSrc;
+    public static AudioSource AudioSrc;
 
     // Start is called before the first frame update
     void Start()
@@ -14,7 +14,7 @@ public class SoundManagerScript : MonoBehaviour
         forthButtonSound = Resources.Load<AudioClip>("Sounds/forthButton");
         backButtonSound = Resources.Load<AudioClip>("Sounds/backButton");
 
-        audioSrc = GetComponent<AudioSource> ();
+        AudioSrc = GetComponent<AudioSource> ();
     }
 
     // Update is called once per frame
@@ -28,13 +28,13 @@ public class SoundManagerScript : MonoBehaviour
         switch(clip)
         {
             case "playButton":
-            audioSrc.PlayOneShot (playButtonSound);
+            AudioSrc.PlayOneShot (playButtonSound);
             break;
             case "forthButton":
-            audioSrc.PlayOneShot (forthButtonSound);
+            AudioSrc.PlayOneShot (forthButtonSound);
             break;
             case "backButton":
-            audioSrc.PlayOneShot (backButtonSound);
+            AudioSrc.PlayOneShot (backButtonSound);
             break;
         }
     }

@@ -95,20 +95,21 @@ public class Planet : MonoBehaviour
 
     public void NodeEvaluation(Node node)
     {
-        int multiplier = ((node.Ancestors.Count + node.Descendants.Count-1)/2 +1); //Swap position for Count Ancs + count descan * 0.5 bc of Quellen and senken who only have In or Out degree then round up by 0.5                             
+        int maxBase = 6;    //maximum Bonus given to the first node in the graph
+        int multiplier = Mathf.Clamp(maxBase-node.position, 1, maxBase);//+((node.Ancestors.Count + node.Descendants.Count-1)/2 +1); //Swap position for Count Ancs + count descan * 0.5 bc of Quellen and senken who only have In or Out degree then round up by 0.5                             
         int attribute = (int)Enum.Parse(typeof(PlanetParam), node.Name);
 
         CreatedPlanet[attribute] += multiplier;
 
-        string planetDisplayed = DiffRay(CreatedPlanet, Planets);
+        State = DiffManhattan(CreatedPlanet, Planets);
 
-        SetPlanetSprite(planetDisplayed);
-
-        if(node.Name == "Moon" && planetDisplayed != "Asteroids")
+        if(node.Name == "Moon" && State != "Asteroids")
         {
             Moon.SetAllActive(true);
             AddMoon();
         }
+
+        SetPlanetSprite(State);
 
     }
 
@@ -142,7 +143,7 @@ public class Planet : MonoBehaviour
         SpriteRenderer moonSprite = GameObject.Find("Moon"+index).GetComponentInChildren<SpriteRenderer>();
         index = random.Next(12); //another random value for the sprite of the moon
         moonSprite.sprite = MoonSprites[index];
-        moonSprite.transform.localScale += new Vector3(3,3,0);
+        moonSprite.transform.localScale = new Vector3(4,4,0);
     }
 
     public void RemoveMoon()
@@ -156,12 +157,13 @@ public class Planet : MonoBehaviour
                 break;
             }
         }
-
+        Moon.Moons.RemoveAt(0);
     }
 
     public void RemoveNode(Node node)
     {
-        int multiplier = ((node.Ancestors.Count + node.Descendants.Count-1)/2 +1); //Swap position for Count Ancs + count descan * 0.5 bc of Quellen and senken who only have In or Out degree then round up by 0.5                             
+        int maxBase = 6;    //maximum Bonus given to the first node in the graph
+        int multiplier = Mathf.Clamp(maxBase-node.position, 0, maxBase)+((node.Ancestors.Count + node.Descendants.Count-1)/2 +1); //Swap position for Count Ancs + count descan * 0.5 bc of Quellen and senken who only have In or Out degree then round up by 0.5                             
         int attribute = (int)Enum.Parse(typeof(PlanetParam), node.Name);
 
         CreatedPlanet[attribute] -= multiplier;
@@ -176,18 +178,32 @@ public class Planet : MonoBehaviour
 
         string planetDisplayed = DiffRay(CreatedPlanet, Planets);
 
-        SetPlanetSprite(planetDisplayed);
-
-        if(node.Name == "Moon")
+        if(node.Name == "Moon" && planetDisplayed != "Asteroids")
         {
+            Moon.SetAllActive(true);
             RemoveMoon();
         }
+
+        SetPlanetSprite(planetDisplayed);
 
     }
 
     public void PlanetReset()
     {
         CreatedPlanet = new int[(int)PlanetParam.Count];  //cleans up the planet
+    }
+
+    public static void RemoveAllMoons()
+    {
+        for(int i = 0; i < MoonSprites.Length; i++)
+        {
+            SpriteRenderer localMoonSprite = GameObject.Find("Moon"+i).GetComponentInChildren<SpriteRenderer>();
+            if(localMoonSprite.sprite != null)
+            {
+                localMoonSprite.sprite = null;
+            }
+        }
+        Moon.Moons.Clear();
     }
 
     //returns the planet which is closest to whatever the player created
@@ -202,12 +218,14 @@ public class Planet : MonoBehaviour
             {
                 localDifference += Mathf.Abs(createdPlanet[i] - valuePair.Value[i]);
             }
+            Debug.Log($"{valuePair.Key}: {localDifference}");
             if(localDifference <= absDifference)     //if archetype with less difference is found. We want equl too, bc the latest change is valued more to us and the player
             {
                 absDifference = localDifference;    //make that smaller difference the new reference value
                 archetype = valuePair.Key;          //remember which key has that least difference
             }
         }
+        Debug.Log($"{archetype}: {absDifference}");
         
         return archetype;
     }
