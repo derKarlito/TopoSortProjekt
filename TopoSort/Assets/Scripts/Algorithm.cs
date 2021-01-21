@@ -179,7 +179,6 @@ namespace TopoSort
                     alignment.ImprovedGraphVisualisation();
 
                     Debug.Log("Algorithmus erfolgreich beendet");
-                    ResetGraph();
                     Planet.PlanetReset();
                 }
                 else                                                        // there are unsorted nodes
@@ -244,6 +243,7 @@ namespace TopoSort
             CheckFinished();                        // checks if the algorithm reached a finished stat
             if(Finished)        //attempt of getting out of NullRefExcep but-- kinda doesnt work
             {
+                ResetGraph();
                 return;
             }
 
