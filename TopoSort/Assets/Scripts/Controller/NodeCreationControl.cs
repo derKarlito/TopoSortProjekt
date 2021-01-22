@@ -83,16 +83,17 @@ public class NodeCreationControl : MonoBehaviour
 
     public void SetToolTip()
     {
-        
+        string german = default;
+        Localisation.Translator.TryGetValue(NodeValue, out german);
         ToolTip.transform.position = MouseManager.GetMousePos().Z(-2);
         ToolTip.transform.position += new Vector3 (0.5f, -0.2f, 0);
-        if(NodeValue == "Atmosphere")
+        if(german == "Atmosphäre")
         {
-            ToolTip.text = "Atmo\nsphere";
+            ToolTip.text = "Atmo\nsphäre";
         }
         else
         {
-            ToolTip.text = NodeValue;
+            ToolTip.text = german;
         }
     }
     public void DeleteToolTip()

@@ -14,11 +14,7 @@ public class Planet : MonoBehaviour
 
     private static Sprite[] MoonSprites;
 
-    public static string State = default;
-
-    public static bool Final = false;
-
-    public static int Level = 0;
+    public static string State = "Default";
 
     public enum PlanetParam //Enum listing all possible Planet attributes. Last item MUST be count, for array length
     {
@@ -83,7 +79,7 @@ public class Planet : MonoBehaviour
 
         PlanetSprites = Resources.LoadAll<Sprite>("Sprites/Planets/spritesheet_planets");
         MoonSprites = Resources.LoadAll<Sprite>("Sprites/Planets/Moons");
-
+        
         PrepareMoons();
     }
 
@@ -108,6 +104,8 @@ public class Planet : MonoBehaviour
             Moon.SetAllActive(true);
             AddMoon();
         }
+
+        Atmosphere.AddNode(node);
 
         SetPlanetSprite(State);
 
@@ -184,6 +182,8 @@ public class Planet : MonoBehaviour
             RemoveMoon();
         }
 
+        Atmosphere.RemoveNode(node);
+
         SetPlanetSprite(planetDisplayed);
 
     }
@@ -191,6 +191,7 @@ public class Planet : MonoBehaviour
     public void PlanetReset()
     {
         CreatedPlanet = new int[(int)PlanetParam.Count];  //cleans up the planet
+        Atmosphere.ResetAtmosphere();
     }
 
     public static void RemoveAllMoons()
@@ -218,14 +219,14 @@ public class Planet : MonoBehaviour
             {
                 localDifference += Mathf.Abs(createdPlanet[i] - valuePair.Value[i]);
             }
-            Debug.Log($"{valuePair.Key}: {localDifference}");
+            //Debug.Log($"{valuePair.Key}: {localDifference}");
             if(localDifference <= absDifference)     //if archetype with less difference is found. We want equl too, bc the latest change is valued more to us and the player
             {
                 absDifference = localDifference;    //make that smaller difference the new reference value
                 archetype = valuePair.Key;          //remember which key has that least difference
             }
         }
-        Debug.Log($"{archetype}: {absDifference}");
+        //Debug.Log($"{archetype}: {absDifference}");
         
         return archetype;
     }
@@ -286,12 +287,18 @@ public class Planet : MonoBehaviour
         }
         if(defaultCheck)
         {
-            Debug.Log("No values. Defualt Planet displayed");
             Sprite.sprite = PlanetSprites[0];
             return;
         }
 
-        Moon.SetAllActive(planet != "Asteroids");
+        Atmosphere.SetAtmosphere(Atmosphere.GetAtmosphere());
+
+        if(planet == "Asteroids")
+        {
+            Moon.SetAllActive(false);
+            Atmosphere.SetAtmosphereActive(false);
+        }
+        
 
         for(int i = 0; i < AvailablePlanets.Count ; i++)
         {

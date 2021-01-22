@@ -301,6 +301,7 @@ namespace TopoSort
             SortedNodes.RemoveLast();                           // remove the last node from the sorted List
             SourceQueue.AddFirst(state.Current);                // put the node of the state at the beginning of the queue
             Planet.RemoveNode(state.Current);
+            PosInGraph--;
 
             foreach (Node desc in state.Current.Descendants)    // iterate through all the descendants
             {
@@ -338,6 +339,8 @@ namespace TopoSort
             InDegrees.Clear();
             StepStack.Clear();
 
+            Planet.PlanetReset();
+
             AlignmentUtil.finished = false;
             AlgorithmManager.ColourGraph(this);
         }
@@ -354,27 +357,7 @@ namespace TopoSort
             // Counting + translating of Source Nodes
             for(int i = 0; i < tempSourceQueue.Count; i++)
             {
-                switch (tempSourceQueue[i].Name)
-                {
-                    case "Water":
-                        german = "Wasser";
-                        break;
-                    case "Ground":
-                        german = "Tektonik";
-                        break;
-                    case "Plants":
-                        german = "Pflanzen";
-                        break;
-                    case "Moon":
-                        german = "Mond";
-                        break;
-                    case "Atmosphere":
-                        german = "Atmosphäre";
-                        break; 
-                    default:
-                        german = tempSourceQueue[i].Name;
-                        break;
-                }
+                Localisation.Translator.TryGetValue(tempSourceQueue[i].Name, out german);
                 if(i < tempSourceQueue.Count - 1)
                 {
                     queueText += german + " | ";
@@ -388,27 +371,7 @@ namespace TopoSort
             // Counting + translating of Sorted Nodes
             for(int i = 0; i < tempSortedNodes.Count; i++)
             {
-                switch (tempSortedNodes[i].Name)
-                    {
-                        case "Water":
-                            german = "Wasser";
-                            break;
-                        case "Ground":
-                            german = "Tektonik";
-                            break;
-                        case "Plants":
-                            german = "Pflanzen";
-                            break;
-                        case "Moon":
-                            german = "Mond";
-                            break;
-                        case "Atmosphere":
-                            german = "Atmosphäre";
-                            break; 
-                        default:
-                            german = tempSortedNodes[i].Name;
-                            break;
-                    }
+                Localisation.Translator.TryGetValue(tempSortedNodes[i].Name, out german);
                 if(i < tempSortedNodes.Count-1)
                 {
                     sortedText += german + " -> ";
@@ -420,61 +383,10 @@ namespace TopoSort
             }
 
             // Reading + Translating of the PlanetState
-            switch (Planet.State)
-            {
-                case "Default":
-                    german = "Leerer Planet";
-                    break;
-                case "Desert":
-                    german = "Wüstenplanet";
-                    break;
-                case "Lava":
-                    german = "Lavaplanet";
-                    break;
-                case "Earth":
-                    german = "Erdplanet";
-                    break;
-                case "Earth_Relief_1":
-                    german = "Hügliger Planet";
-                    break;
-                case "Wastes":
-                    german = "Planet der Ödnis";
-                    break;
-                case "Mud":
-                    german = "Schlammplanet";
-                    break;
-                case "Gas":
-                    german = "Gasplanet";
-                    break;
-                case "Stone":
-                    german = "Gesteinsplanet";
-                    break;
-                case "Glass":
-                    german = "Glassplanet";
-                    break;
-                case "Ice":
-                    german = "Eisplanet";
-                    break;
-                case "Phytoplankton":
-                    german = "Phytoplanktonplanet";
-                    break;
-                case "Ocean":
-                    german = "Ozeanplanet";
-                    break;
-                case "Toxic":
-                    german = "Giftiger Planet";
-                    break;
-                case "Fire":
-                    german = "Feuerplanet";
-                    break;
-                case "Asteroids":
-                    german = "Asteroidenfeld";
-                    break;
-                default:
-                    german = Planet.State;
-                    break;
-            }
+            Localisation.Translator.TryGetValue(Planet.State, out german);
             planetName = german;
+
+            //Formatting it into a nice output
             if(queueText != null)
                 QueueText.text = "Warteschlange:\n"+queueText+"\n-------------"+sortedText+"\n-------------"+planetName;
             else
