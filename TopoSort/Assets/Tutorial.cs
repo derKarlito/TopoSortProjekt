@@ -72,6 +72,10 @@ public class Tutorial : MonoBehaviour
         DarkCanvas = DarkCanvas.Instance;
         LoadTexts();
         HighlightedObjects = GameObject.FindGameObjectsWithTag("Highlighted");
+        for(int i = 0; i < HighlightedObjects.Length; i++)
+        {
+            Debug.Log(HighlightedObjects[i].name);
+        }
     }
 
     // Update is called once per frame
@@ -89,6 +93,11 @@ public class Tutorial : MonoBehaviour
             {
                 StopTutorial();
             }
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            isActive = false;
+            StopTutorial();
         }
     }
 
@@ -153,68 +162,7 @@ public class Tutorial : MonoBehaviour
         switch (SlideNumber)
         {
             case 0:
-            case 1:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==2)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
-                break;
-            case 2:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==0)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
-                break;
-            case 3:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==3)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
-                break;
-
-            case 4:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==4)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
-                break;    
-            case 5:
+            case 1: //talk abt nodes + inventory
                 for(int i = 0; i < HighlightedObjects.Length; i++)
                 {
                     if(i==1)
@@ -229,7 +177,68 @@ public class Tutorial : MonoBehaviour
                     }
                 }
                 break;
-            case 6:
+            case 2: //Control
+                for(int i = 0; i < HighlightedObjects.Length; i++)
+                {
+                    if(i==4)
+                    {
+                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                        sortingGroup.sortingLayerName = "Highlighted";
+                    }
+                    else
+                    {
+                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                        sortingGroup.sortingLayerName = "Default";
+                    }
+                }
+                break;
+            case 3: //Editor
+                for(int i = 0; i < HighlightedObjects.Length; i++)
+                {
+                    if(i==2)
+                    {
+                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                        sortingGroup.sortingLayerName = "Highlighted";
+                    }
+                    else
+                    {
+                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                        sortingGroup.sortingLayerName = "Default";
+                    }
+                }
+                break;
+
+            case 4: //Console
+                for(int i = 0; i < HighlightedObjects.Length; i++)
+                {
+                    if(i==3)
+                    {
+                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                        sortingGroup.sortingLayerName = "Highlighted";
+                    }
+                    else
+                    {
+                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                        sortingGroup.sortingLayerName = "Default";
+                    }
+                }
+                break;    
+            case 5: //Settings
+                for(int i = 0; i < HighlightedObjects.Length; i++)
+                {
+                    if(i==0)
+                    {
+                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                        sortingGroup.sortingLayerName = "Highlighted";
+                    }
+                    else
+                    {
+                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                        sortingGroup.sortingLayerName = "Default";
+                    }
+                }
+                break;
+            case 6: //Planet
                 for(int i = 0; i < HighlightedObjects.Length; i++)
                 {
                     if(i==5)

@@ -18,7 +18,7 @@ public class Atmosphere : MonoBehaviour
     
     public static Dictionary<string, List<string>> Requirements = new Dictionary<string, List<string>>()
     {
-        {"Duster", new List<string> {"Ground", "Atmosphere", "Ground"}},
+        {"Duster", new List<string> {"Atmosphere", "Ground"}},
         {"Toxic Atmosphere", new List<string> {"Atmosphere", "Atmosphere", "Atmosphere"}},
         {"Toxic Fog", new List<string> {"Atmosphere", "Water", "Atmosphere"}},
         {"Thin Atmosphere", new List<string>{"Plants", "Water", "Plants"}},
