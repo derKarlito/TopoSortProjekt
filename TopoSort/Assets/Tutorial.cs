@@ -143,7 +143,7 @@ public class Tutorial : MonoBehaviour
         Debug.Log(SlideNumber);
     }
 
-    private void LoadTexts()
+    private void  LoadTexts()
     {
         TutorialTexts = new string[]
         {   
@@ -159,102 +159,48 @@ public class Tutorial : MonoBehaviour
 
     private void DetermineScreenHighlights()
     {
+        int litIndex = -1;
+        
+        
         switch (SlideNumber)
         {
             case 0:
             case 1: //talk abt nodes + inventory
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==1)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+                litIndex = 1;
                 break;
             case 2: //Control
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==4)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+                litIndex = 4;
                 break;
             case 3: //Editor
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==2)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+                litIndex = 2;
                 break;
-
             case 4: //Console
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==3)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
-                break;    
+                litIndex = 3;
+                break;
             case 5: //Settings
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==0)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+                litIndex = 0;
                 break;
             case 6: //Planet
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==5)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+                litIndex = 5;
                 break;
             default:
                 break;
         }
+
+        for(int i = 0; i < HighlightedObjects.Length; i++)
+        {
+            if(i==litIndex)
+            {
+                SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                sortingGroup.sortingLayerName = "Highlighted";
+            }
+            else
+            {
+                SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                sortingGroup.sortingLayerName = "Default";
+            }
+        }
+        
+        
     }
 }
