@@ -51,6 +51,7 @@ namespace TopoSort
 
             PosInGraph = 0;
 
+            TextUpdate();
             ResetGraph();
 
         }
@@ -350,6 +351,7 @@ namespace TopoSort
             string queueText = default;
             string sortedText = default;
             string planetName = default;
+            string atmosphereName = default;
             string german = default;
             List<Node> tempSortedNodes = new List<Node>(SortedNodes);
             List<Node> tempSourceQueue = new List<Node>(SourceQueue);
@@ -357,7 +359,10 @@ namespace TopoSort
             // Counting + translating of Source Nodes
             for(int i = 0; i < tempSourceQueue.Count; i++)
             {
-                Localisation.Translator.TryGetValue(tempSourceQueue[i].Name, out german);
+                if(Localisation.isGermanActive)
+                    Localisation.Translator.TryGetValue(tempSourceQueue[i].Name, out german);
+                else
+                    german = tempSourceQueue[i].Name;
                 if(i < tempSourceQueue.Count - 1)
                 {
                     queueText += german + " | ";
@@ -371,7 +376,10 @@ namespace TopoSort
             // Counting + translating of Sorted Nodes
             for(int i = 0; i < tempSortedNodes.Count; i++)
             {
-                Localisation.Translator.TryGetValue(tempSortedNodes[i].Name, out german);
+                if(Localisation.isGermanActive)
+                    Localisation.Translator.TryGetValue(tempSortedNodes[i].Name, out german);
+                else
+                    german = tempSortedNodes[i].Name;
                 if(i < tempSortedNodes.Count-1)
                 {
                     sortedText += german + " -> ";
@@ -383,14 +391,44 @@ namespace TopoSort
             }
 
             // Reading + Translating of the PlanetState
-            Localisation.Translator.TryGetValue(Planet.State, out german);
+            if(Localisation.isGermanActive)
+                Localisation.Translator.TryGetValue(Planet.State, out german);
+            else
+                german = Planet.State;
             planetName = german;
 
+            if(Atmosphere.State != null)
+            {
+                if(Localisation.isGermanActive)
+                    Localisation.Translator.TryGetValue(Atmosphere.State, out german);
+                else
+                    german = Atmosphere.State;
+                atmosphereName = german;
+            }
+
             //Formatting it into a nice output
-            if(queueText != null)
-                QueueText.text = "Warteschlange:\n"+queueText+"\n-------------"+sortedText+"\n-------------"+planetName;
+            if(Localisation.isGermanActive)
+            {
+                if(queueText != null && atmosphereName != null)
+                    QueueText.text = "Warteschlange:\n"+queueText+"\n-------------"+sortedText+"\n-------------"+planetName+" mit "+atmosphereName;
+                else if(queueText == null && atmosphereName != null)
+                    QueueText.text = "Sortierung:\n"+sortedText+"\n-------------Ergebnis:\n"+planetName+" mit "+atmosphereName;
+                else if(queueText == null && atmosphereName == null)
+                    QueueText.text = "Sortierung:\n"+sortedText+"\n-------------Ergebnis:\n"+planetName;
+                else if(queueText != null && atmosphereName == null)
+                    QueueText.text = "Warteschlange:\n"+queueText+"\n-------------"+sortedText+"\n-------------"+planetName;
+            }
             else
-                QueueText.text = "Sortierung:\n"+sortedText+"\n-------------Ergebnis:\n"+planetName;
+            {
+                if(queueText != null && atmosphereName != null)
+                    QueueText.text = "Queue:\n"+queueText+"\n-------------"+sortedText+"\n-------------"+planetName+" with "+atmosphereName;
+                else if(queueText == null && atmosphereName != null)
+                    QueueText.text = "Sequence:\n"+sortedText+"\n-------------Result:\n"+planetName+" with "+atmosphereName;
+                else if(queueText == null && atmosphereName == null)
+                    QueueText.text = "Sequence:\n"+sortedText+"\n-------------Result:\n"+planetName;
+                else if(queueText != null && atmosphereName == null)
+                    QueueText.text = "Queue:\n"+queueText+"\n-------------"+sortedText+"\n-------------"+planetName;
+            }
         }
 
         public void AlgorithmSetup(Graph input)

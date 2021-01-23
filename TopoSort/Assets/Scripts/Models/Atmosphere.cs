@@ -10,32 +10,34 @@ public class Atmosphere : MonoBehaviour
     
     public static Atmosphere AtmosphereInstance;
 
+    public static string State;
+
     private static Sprite[] OverlaySprites;
 
     public static List<string> RequiredNodes = new List<string>();
     
     public static Dictionary<string, List<string>> Requirements = new Dictionary<string, List<string>>()
     {
-        {"Sandsturm", new List<string> {"Ground", "Atmosphere", "Ground"}},
-        {"Giftatmo", new List<string> {"Atmosphere", "Atmosphere", "Atmosphere"}},
-        {"Giftnebel", new List<string> {"Atmosphere", "Water", "Atmosphere"}},
-        {"Dünne Atmo", new List<string>{"Plants", "Water", "Plants"}},
+        {"Duster", new List<string> {"Ground", "Atmosphere", "Ground"}},
+        {"Toxic Atmosphere", new List<string> {"Atmosphere", "Atmosphere", "Atmosphere"}},
+        {"Toxic Fog", new List<string> {"Atmosphere", "Water", "Atmosphere"}},
+        {"Thin Atmosphere", new List<string>{"Plants", "Water", "Plants"}},
         {"Hurricanes", new List<string>{"Water", "Atmosphere", "Water"}},
-        {"Wolken", new List<string> {"Ground", "Atmosphere"}},
-        {"Asteroidengürtel", new List<string>{"Moon", "Moon", "Moon", "Ground"}},
-        {"Ringe", new List<string>{"Moon", "Moon", "Moon", "Atmosphere"}}
+        {"Clouds", new List<string> {"Ground", "Atmosphere"}},
+        {"Asteroid Belt", new List<string>{"Moon", "Moon", "Moon", "Ground"}},
+        {"Rings", new List<string>{"Moon", "Moon", "Moon", "Atmosphere"}}
     };
 
     public static List<string> AvailableAtomspheres = new List<string>()
     {
-        "Asteroidengürtel",
-        "Ringe",
-        "Dünne Atmo",
-        "Sandsturm",
-        "Giftatmo",
+        "Asteroid Belt",
+        "Rings",
+        "Thin Atmosphere",
+        "Duster",
+        "Toxic Atmosphere",
         "Hurricanes",
-        "Wolken",
-        "Giftnebel"
+        "Clouds",
+        "Toxic Fog"
     };
 
 
@@ -116,6 +118,7 @@ public class Atmosphere : MonoBehaviour
 
     public static void SetAtmosphere(string atmosphere)
     {
+        State = atmosphere;
         for(int i = 0; i < AvailableAtomspheres.Count ; i++)
         {
             

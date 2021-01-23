@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TopoSort;
 
-public class Localisation
+public class Localisation : MonoBehaviour
 {
+    public static bool isGermanActive = true;
+
+    public Collider2D Collider;
+
+    public Algorithm Algorithm;
+
     public static Dictionary<string, string> Translator = new Dictionary<string, string>()
     {
         {"Water", "Wasser"},
@@ -26,6 +33,29 @@ public class Localisation
         {"Ocean", "Ozeanplanet"},
         {"Toxic", "Gifitger Planet"},
         {"Fire", "Feuerplanet"},
-        {"Asteroids", "AsteroidenFeld"}
+        {"Asteroids", "AsteroidenFeld"},
+        {"Duster", "Sandsturm"},
+        {"Toxic Atmosphere", "Giftatmosphäre"},
+        {"Toxic Fog", "Giftnebel"},
+        {"Thin Atmosphere", "Dünner Atmosphäre"},
+        {"Hurricanes", "Orkanen"},
+        {"Clouds", "Wolken"},
+        {"Asteroid Belt", "Asteroidengürtel"},
+        {"Rings", "Ringen"}
     };
+
+    private void Start() 
+    {
+        Collider = GetComponentInChildren<Collider2D>();    
+    }
+
+    private void Update() 
+    {
+        bool onButton = MouseManager.MouseHover(Collider);
+        if(Input.GetMouseButtonDown(0) && onButton)
+        {
+            isGermanActive = !isGermanActive;
+            Algorithm.TextUpdate();
+        }
+    }
 }

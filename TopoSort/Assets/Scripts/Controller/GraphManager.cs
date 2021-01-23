@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using Models;
 using UnityEngine;
+using TopoSort;
 
 public class GraphManager : MonoBehaviour
 {
     public static Graph graph;
     public static bool isActive;
     public static List<Node> SafetyList = new List<Node>();
+
+    public static Algorithm Algorithm;
 
     void Start()
     {
@@ -33,6 +36,7 @@ public class GraphManager : MonoBehaviour
             var nodeControl = currentNodeObject.GetComponent<NodeControl>();
             nodeControl.targetPosition = new Vector2 (0,0);
         }
+        Algorithm.ResetGraph();
         graph = new Graph(SafetyList);
     }
 }

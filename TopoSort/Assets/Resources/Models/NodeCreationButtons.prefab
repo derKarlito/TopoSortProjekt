@@ -348,6 +348,7 @@ GameObject:
   - component: {fileID: 6499624704589141305}
   - component: {fileID: 6481494401708094228}
   - component: {fileID: 2557107625222224093}
+  - component: {fileID: 2596562432654564706}
   m_Layer: 0
   m_Name: ToolTip
   m_TagString: ToolTip
@@ -504,7 +505,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 1.9733814, w: 4.5555077}
+  m_margin: {x: 0, y: 0, z: 0.7207972, w: 4.5555077}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -512,6 +513,17 @@ MonoBehaviour:
   m_maskType: 0
   _SortingLayerID: 0
   _SortingOrder: 0
+--- !u!210 &2596562432654564706
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3556301654463844468}
+  m_Enabled: 1
+  m_SortingLayerID: -904915743
+  m_SortingLayer: 1
+  m_SortingOrder: 0
 --- !u!1 &3701216630423236734
 GameObject:
   m_ObjectHideFlags: 0
