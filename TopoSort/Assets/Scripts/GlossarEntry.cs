@@ -14,6 +14,22 @@ namespace TopoSort
             this.Synonyms = synonyms;
             this.Explanation = explanation;
         }
+
+
+        public string GetTitle()
+        {
+            return this.Term;
+        }
+
+        public string GetExplanation()
+        {
+            return this.Explanation;
+        }
+        
+        public string[] GetSynonyms()
+        {
+            return this.Synonyms;
+        }
         
         
     }

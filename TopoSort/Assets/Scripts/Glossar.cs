@@ -1,25 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 using TopoSort;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Glossar : MonoBehaviour
 {
     private Dictionary<string, GlossarEntry> Entries = new Dictionary<string, GlossarEntry>();
-
+    private static Glossar Instance;
+    private GameObject InfoText, TitleText, Synonyms;
+    
     private string[] Terms =
     {
         "Graph",
         "Knoten",
-        "Kanten",
-        "gerichteter Graph",
-        "gerichtete Kanten",
-        "Topologische Sortierung"
+        "Kante",
+        "Knotengrad",
+        "Sortierung",
+        "Algorithmus",
+        "Kahn Algorithmus"
     };
 
     // just there to fill the entry with test values
-    private void loadEntries()
+    private void LoadEntries()
     {
         for (int i = 0; i < Terms.Length; i++)
         {
@@ -29,7 +35,7 @@ public class Glossar : MonoBehaviour
                 syns[j] = "" + j;
             }
 
-            string expl = "" + testFunc((i + 1));
+            string expl = "" + TestFunc((i + 1));
             
             
             GlossarEntry entry = new GlossarEntry(Terms[i], syns, expl);
@@ -37,12 +43,13 @@ public class Glossar : MonoBehaviour
             Debug.Log(string.Format("Added Entry: [{0}, {1}]", Terms[i], expl));
             
             Entries.Add(Terms[i], entry);
+            
         }
     }
 
     
     // just there to fill the explanation with some test values
-    private int testFunc(int i)
+    private int TestFunc(int i)
     {
         int res = 0;
         int f1 = 0;
@@ -61,9 +68,39 @@ public class Glossar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        loadEntries();
+        Glossar.Instance = this;
+        LoadEntries();
+        
+        InfoText = this.transform.Find("Infotext").gameObject;
+        TitleText = this.transform.Find("Title").gameObject;
+        Synonyms = this.transform.Find("Synonyms").gameObject;
     }
 
+    public void SetTexts(string key)
+    {
+        TitleText.GetComponent<TextMeshProUGUI>().text = this.Entries[key].GetTitle();
+        InfoText.GetComponent<TextMeshProUGUI>().text = this.Entries[key].GetExplanation();
+
+        string syns = "";
+
+        for (int i = 0; i < this.Entries[key].GetSynonyms().Length; i++)
+        {
+            if (i > 0)
+            {
+                syns += ", ";
+            }
+
+            syns += this.Entries[key].GetSynonyms()[i];
+        }
+
+        Synonyms.GetComponent<TextMeshProUGUI>().text = syns;
+    }
+
+    public static Glossar GetInstance()
+    {
+        return Glossar.Instance;
+    }
+    
     // Update is called once per frame
     void Update()
     {
