@@ -12,7 +12,7 @@ public class VisuellFeedback //check if algorithmmanager hold a node
     public static GameObject[] Edges;
     public LineRenderer edge;
     public static List<UnityEngine.Component> edgeScripts = new List<UnityEngine.Component>();
-    public static float opacity = 0.5f;
+    public static float Opacity = 0.5f;
 
     public VisuellFeedback()
     {
@@ -41,6 +41,93 @@ public class VisuellFeedback //check if algorithmmanager hold a node
             }
         }
     }
+
+
+
+    public void ColourGraphState(Algorithm algorithm)
+    {
+
+        foreach (GameObject node in Nodes)                                          // iterates through every node object on the screen
+        {
+            var spriteRenderer = node.GetComponentInChildren<SpriteRenderer>();     
+
+            spriteRenderer.color = new Color(255, 255, 255, 1);                     // sets default colouring
+
+            if (AlignmentUtil.finished)                                             // Green when finished and aligned
+            {
+                spriteRenderer.color = new Color(0, 255, 0, 1f);
+                continue;
+            }
+
+            foreach (Node source in algorithm.SourceQueue)                          // colours the sources
+            {
+                if (source.Id.ToString().Equals(node.name))
+                {                                                                                                                                           
+                    spriteRenderer.color = new Color(192, 64, 0, 1);                   
+                }                                                                                                                                                  
+            }
+
+            foreach (Node sorted in algorithm.SortedNodes)                          // colours the nodes already sorted
+            {
+                if (sorted.Id.ToString().Equals(node.name))
+                {
+                    spriteRenderer.color = new Color(0, 255, 0, 1);
+                }
+            }
+
+            if (algorithm.CurrentState != null) {                       
+                if (algorithm.CurrentState.Current.Id.ToString().Equals(node.name)) // colours the node the algorithm is currently looking at
+                {
+                    spriteRenderer.color = new Color(192, 0, 0, 1);
+                }
+            }
+        }
+
+        foreach (GameObject edge in Edges)                                          // iterates through every edge object on the screen
+        {
+
+            EdgeControl script = edge.GetComponent<EdgeControl>();
+            var lineRenderer = edge.GetComponent<LineRenderer>();
+            Color color = lineRenderer.material.color;
+
+            lineRenderer.material.color = new Color(color.r, color.g, color.b, 1f);
+
+
+            if (AlignmentUtil.finished)
+            {
+                lineRenderer.material.color = new Color(color.r, color.g, color.b, 1f);
+                continue;
+            }
+
+            foreach (Node source in algorithm.SourceQueue)                          // colours the edges coming from the sources
+            {
+                if (script.SourceNode.node.Equals(source))
+                {
+                    lineRenderer.material.color = new Color(color.r, color.g, color.b, 0.75f);
+                }
+            }
+
+            foreach (Node sorted in algorithm.SortedNodes)                          // colours the edges coming from already sorted nodes
+            {
+                if (script.SourceNode.node.Equals(sorted))
+                {
+                    lineRenderer.material.color = new Color(color.r, color.g, color.b, Opacity);
+                }
+            }
+
+            if (algorithm.CurrentState != null)
+            {
+                if (script.SourceNode.node.Equals(algorithm.CurrentState.Current))       // colours the edges of the current viewed node
+                {
+                    lineRenderer.material.color = new Color(color.r, color.g, color.b, Opacity);
+                }
+            }
+
+        }
+
+    }
+
+
     public void ColourProcess(List<Node> nodes)
     {
         foreach(Node node in nodes)
@@ -59,14 +146,14 @@ public class VisuellFeedback //check if algorithmmanager hold a node
                     }
                     else
                     {
-                        lineRenderer.material.color = new Color(lineRenderer.material.color.r,lineRenderer.material.color.g,lineRenderer.material.color.b,opacity);
+                        lineRenderer.material.color = new Color(lineRenderer.material.color.r,lineRenderer.material.color.g,lineRenderer.material.color.b,Opacity);
                     }
                 }
             }
-        
+    
              for(int i = 0; i< Nodes.Length; i++) //Check + Färben der Nodes
             {
-                if(node.Id.ToString() == Nodes[i].name)
+                if(node.Id.ToString().Equals(Nodes[i].name)) // Object comparisons should use .Equals() instead of ==  
                 {
                     var spriteRenderer = Nodes[i].GetComponentInChildren<SpriteRenderer>();
                     if(AlignmentUtil.finished)
@@ -75,13 +162,31 @@ public class VisuellFeedback //check if algorithmmanager hold a node
                     }
                     else
                     {
-                        spriteRenderer.color = new Color(0,255,0, opacity);
+                        spriteRenderer.color = new Color(0,255,0, Opacity);
                     }
                 }
             }
         
         }
     }
+
+    public static void ColourRevert(List<Node> nodes)
+    {
+        foreach(Node node in nodes)
+        {
+            for(int i = 0; i< Nodes.Length; i++) //Check + Färben der Nodes
+            {
+                if(node.Id.ToString() == Nodes[i].name)
+                {
+                    var spriteRenderer = Nodes[i].GetComponentInChildren<SpriteRenderer>();
+                    spriteRenderer.color = new Color (255, 255, 255, 1);
+                }
+            }
+        
+        }
+    }
+
+
    /* public void visualfeedback()
     {
         

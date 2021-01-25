@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Models;
 using TMPro;
 using UnityEngine;
+using TopoSort;
 
 public class NodeControl : MonoBehaviour
 {
@@ -13,9 +14,10 @@ public class NodeControl : MonoBehaviour
     public bool moveNode = false;
     public bool isHeld = false;
     public int value = 0;
-    public SpriteRenderer sprite;    
+    public SpriteRenderer sprite;
     Collider2D Collider;
     public Node node;
+    public TextMeshPro InDegreeDisplay;
     
     void Start()
     {
@@ -32,10 +34,19 @@ public class NodeControl : MonoBehaviour
 
             this.gameObject.transform.localPosition = new Vector3(mousePos.x - startPosX, mousePos.y - startPosY, 0);
         }       
-        if(moveNode){
+        if(!GraphManager.isActive && targetPosition != new Vector2 (0,0) )
+        {
             var t = Time.deltaTime;
             var currentPosition = gameObject.transform.position;
             this.gameObject.transform.position = Vector2.Lerp(currentPosition,targetPosition,t); // move node to target position
+        }
+        if(Algorithm.InDegrees.Count != 0)
+        {
+            InDegreeDisplay.text = Algorithm.InDegrees[node].ToString();
+        }
+        else
+        {
+            InDegreeDisplay.text = node.InDegree.ToString();
         }
     }
 
@@ -44,6 +55,10 @@ public class NodeControl : MonoBehaviour
         bool onNode = MouseManager.MouseHover(Collider);        
         if (Input.GetMouseButtonDown(0) && onNode)  //left mouse button drags the node on the screen
         {
+            if(!GraphManager.isActive)
+            {
+                GraphManager.RegainControl();
+            }
             Vector3 mousePos;
             mousePos = Input.mousePosition;
             mousePos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -60,6 +75,10 @@ public class NodeControl : MonoBehaviour
             {
                 if(node.Descendants.Count != 0)
                     node.rmvDescendants(node.Descendants);        //Removes all Descendants
+
+                if(node.Ancestors.Count != 0)
+                    node.rmvAncestors(node.Ancestors);
+
                 GraphManager.graph.RmvNode(node);            //Removes Node from Graph
                 Destroy(gameObject);                         //Destroys this Object
             }

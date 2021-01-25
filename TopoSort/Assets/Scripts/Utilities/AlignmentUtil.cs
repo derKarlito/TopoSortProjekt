@@ -48,6 +48,7 @@ namespace TopoSort {
                 }
             }
             finished = true;
+            GraphManager.isActive = false;
             VisuellFeedback feedback = new VisuellFeedback();
             feedback.ColourProcess(sorted);
         }
@@ -56,7 +57,6 @@ namespace TopoSort {
             var nodeControl = currentNodeObject.GetComponent<NodeControl>();
             nodeControl.targetPosition = new Vector2(currentPosX,currentPosY);
             nodeControl.moveNode = true; 
-                 
         }
         public void SortNotesInArrs(){
             List<List<Node>> colums = new List<List<Node>>(); // List of Columns (Idx 0 first column idx 1 second etc.)
