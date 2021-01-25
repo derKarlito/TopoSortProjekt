@@ -71,14 +71,21 @@ public class NodeCreationControl : MonoBehaviour
 
     public void UpdatePlanetStat()
     {
-        if(Planet.CreatedPlanet == null)
+        var zeroArray = new int[Planet.CreatedPlanet.Length];
+        for(int i = 0; i < zeroArray.Length; i++)
+        {
+            zeroArray[i] = 0;
+        }
+        if(Planet.CreatedPlanet == null || Enumerable.SequenceEqual(Planet.CreatedPlanet, zeroArray))
         {
             return;
         }
         
+        var planetStats = Planet.CreatedPlanet;
+
         int attribute = (int)Enum.Parse(typeof(Planet.PlanetParam), NodeValue);
 
-        ActivePlanetStat.text = Planet.CreatedPlanet[attribute].ToString();
+        ActivePlanetStat.text = planetStats[attribute].ToString();
     }
 
     public void SetToolTip()

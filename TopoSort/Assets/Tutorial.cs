@@ -72,6 +72,10 @@ public class Tutorial : MonoBehaviour
         DarkCanvas = DarkCanvas.Instance;
         LoadTexts();
         HighlightedObjects = GameObject.FindGameObjectsWithTag("Highlighted");
+        for(int i = 0; i < HighlightedObjects.Length; i++)
+        {
+            Debug.Log(HighlightedObjects[i].name);
+        }
     }
 
     // Update is called once per frame
@@ -89,6 +93,11 @@ public class Tutorial : MonoBehaviour
             {
                 StopTutorial();
             }
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            isActive = false;
+            StopTutorial();
         }
     }
 
@@ -134,118 +143,64 @@ public class Tutorial : MonoBehaviour
         Debug.Log(SlideNumber);
     }
 
-    private void LoadTexts()
+    private void  LoadTexts()
     {
         TutorialTexts = new string[]
         {   
-            "Knoten:\nHier siehst du einen Knoten. Diesen findest du links im Inventar.\nEs gibt 5 Knotenarten:\n\t- Wasser\n\t- Vegetation/Pflanzen\n\t- Atmosphäre\n\t- Plattentektonik\n\t- Mond\nAlle Knoten haben in bestimmten Kombinationen verschiedene Veränderungen des Planeten zur Folge.\n\nZum Anordnen der Knoten, musst du Ihn nur in den dafür vorgesehenen Graph-Editor mit einem Linksklick ziehen.\nPer gezogenem Rechtsklick können dann Knoten untereinander verbunden werden.\nSobald die Knoten angeordnet und miteinander verbunden sind, wirst du in der oberen rechten Ecke des Knotens den Eingangsgrad sehen.",
-            "Inventar:\nIm Inventar findest du alle vorhandenen Knotenarten, zum Bauen deines Graphen.\nNatürlich kannst du jeden Knoten beliebig oft nutzen.\nDie Zahl an der Seite drückt lediglich aus, wie viele 'Punkte' dein Planet von dieser Knotenart bekommt\n\nUm einen Knoten aus dem Inventar zu verwenden, musst du ihn einfach aus dem Inventar, per Drag and Drop, in den Graph-Editor ziehen.\n um ihn zu Löschen ziehst du ihn einfach wieder zurück ins Inventar.",
-            "Steuerung:\nDas Steuerelement für den Algorithmus.\nHier hast du 3 Funktionen zur Auswahl:\n     - Starten/Stoppen des Algorithmus (Play)\n     - Schritt überspringen (Pfeil nach rechts)\n     - Schritt wiederholen (Pfeil nach links)\n\nSobald du deinen Graph gebaut hast, kannst du den Start-Button betätigen.\nDer Algorithmus wird den Graph durchlaufen und die topologisch sortierte Reihenfolge deiner Knoten herstellen.\n\nDie einzelnen Schritte werden dir in der Konsole ausgegeben.\n", //Solltest du einmal nicht mitkommen oder du möchtest du dir nur einen bestimmten \nSchritt noch einmal ansehen, kannst du dich mittels der Pfeil-Buttons durch die \neinzelnen Schritte klicken. \n\nBeachte, dass der Algorithmus automatisch gestoppt wird, wenn du einen oder mehrere \nSchritte wiederholen oder übrspringen willst.\nZudem wird der Algorithmus abgebrochen, sobald man einen weitern Knoten platziert, solange \nder Algorithmus läuft bzw. pausiert ist",
+            "Knoten:\nHier siehst du einen Knoten. Diesen findest du links im Inventar.\nEs gibt 5 Knotenarten:\n\t- Wasser\n\t- Vegetation/Pflanzen\n\t- Atmosphäre\n\t- Plattentektonik\n\t- Mond\nAlle Knoten haben in bestimmten Kombinationen verschiedene Veränderungen des Planeten zur Folge.\n\nZum Anordnen der Knoten, musst du ihn nur in den dafür vorgesehenen Graph-Editor mit einem Linksklick ziehen.\nPer gezogenem Rechtsklick können dann Knoten untereinander verbunden werden.\nSobald die Knoten angeordnet und miteinander verbunden sind, wirst du in der oberen rechten Ecke des Knotens den Eingangsgrad sehen.",
+            "Inventar:\nIm Inventar findest du alle vorhandenen Knotenarten, zum Bauen deines Graphen.\nDu kannst jeden Knoten beliebig oft nutzen.\nDie Zahl an der Seite drückt aus, wie viele Punkte dein Planet von dieser Knotenart bekommt. Je mehr Punkte, umso mehr Gewicht hat diese Knotenart auf das Aussehen des Planeten\n\nUm einen Knoten aus dem Inventar zu verwenden, musst du ihn einfach aus dem Inventar, per Drag and Drop, in den Graph-Editor ziehen.\nUm ihn zu Löschen ziehst du ihn einfach wieder zurück ins Inventar.",
+            "Steuerung:\nDas Steuerelement für den Algorithmus.\nHier hast du 3 Funktionen zur Auswahl:\n     - Starten/Stoppen des Algorithmus (Play)\n     - Schritt weiter gehen (Pfeil nach rechts)\n     - Schritt zurück gehen (Pfeil nach links)\n\nSobald du deinen Graph gebaut hast, kannst du den Start-Button betätigen.\nDer Algorithmus wird den Graph durchlaufen und die topologisch sortierte Reihenfolge deiner Knoten herstellen.\n\nDie einzelnen Schritte werden dir in der Konsole ausgegeben.\n", //Solltest du einmal nicht mitkommen oder du möchtest du dir nur einen bestimmten \nSchritt noch einmal ansehen, kannst du dich mittels der Pfeil-Buttons durch die \neinzelnen Schritte klicken. \n\nBeachte, dass der Algorithmus automatisch gestoppt wird, wenn du einen oder mehrere \nSchritte wiederholen oder übrspringen willst.\nZudem wird der Algorithmus abgebrochen, sobald man einen weitern Knoten platziert, solange \nder Algorithmus läuft bzw. pausiert ist",
             "Graph-Editor:\nHier siehst du die Hilfsoberfläche, in welcher du deinen Graphen bauen kannst.\nZum Bauen deines Graphen, musst du dir ein paar Knoten aus dem Inventar in den Editor ziehen.\nDanach kannst du diese per Rechtsklick miteinander verbinden.\nUm deinen Graphen etwas strukturierter anzuordnen, sind dir 3 Hilfslinien gegeben.\n\nAchte darauf, keine Zyklen in deinen Graphen einzuarbeiten!\nSobald du den Algorithmus durch deinen Graphen laufen lässt, wirt du anhand von farbigen Markierungen sehen, an welchem Knoten sich der Algorithmus gerade befindet und zu welchem Knoten er als nächstes geht. Zudem wird markiert, welche Knoten bereits besucht und ausgegeben wurden, oder eben noch nicht.",
-            "Konsole:\nIn der Konsole wird dir der momentane Zustand des Planeten ausgegeben. \nDieser aktualiesiert sich mit jedem Schritt, den der Algorithmus durchführt.\nDie einzelnen Schritte, wie sich der Planet verändert, werden ebenfalls dokumentiert.\n\nDie topologisch sortierte Reihenfolge, der Knoten deines Graphen, wird sowohl am \nEnde als, auch während des Durchlaufens festgehalten.",
-            "Einstellungen:\nÜber der Konsole befindet sich eine Reihe an Steuerelementen.\nNeben den Buttons zur Steuerung der Audio-Ausgabe und Starten/Beenden des Tutorials, findest\ndu auch ein Nachschlagewerk, sowie einen Knopf zum Umschalten der Sprache des Spiels",
-            "Dynamischer Planet:\nHier befindet sich der Planet, welcher sich in Abhängigkeit deines Graphen\ndynamisch beim Durchlaufen verändert.\nDas bedeutet, dass die Reihenfolge und Häufigkeit der Knoten eine Auswirkung auf den\nPlaneten und seine äußere Erscheinungsform hat.\n\nDer Planet kann sich dabei in seiner Grundzusammensetzung (Lava-Planet, Wasser-Planet,...) als\nauch in seinen atmosphärischen Eigenschaften (Sandstürme, dünne Atmosphäre,...) verändern.\nZudem können Monde in der Umlaufbahn des Planeten erscheinen.\n"
+            "Konsole:\nIn der Konsole wird dir der momentane Zustand des Planeten ausgegeben. \nDieser aktualiesiert sich mit jedem Schritt, den der Algorithmus durchführt.\nDie einzelnen Schritte, wie sich der Planet verändert, werden ebenfalls dokumentiert.\n\nDie topologisch sortierte Reihenfolge, der Knoten deines Graphen, wird sowohl am Ende, als auch während des Durchlaufens festgehalten.",
+            "Einstellungen:\nÜber der Konsole befindet sich eine Reihe an Steuerelementen.\nNeben den Buttons zur Steuerung der Audio-Ausgabe und Starten bzw. Beenden des Tutorials, findest\ndu auch ein Nachschlagewerk, sowie einen Knopf zum Umschalten der Sprache des Spiels.",
+            "Dynamischer Planet:\nHier befindet sich der Planet, welcher sich in Abhängigkeit deines Graphen\ndynamisch beim Durchlaufen verändert.\nDas bedeutet, dass die Reihenfolge und Häufigkeit der Knoten eine Auswirkung auf den\nPlaneten und seine äußere Erscheinungsform hat.\n\nDer Planet kann sich dabei in seiner Grundzusammensetzung (Lava-Planet, Wasser-Planet, etc.) als auch in seinen atmosphärischen Eigenschaften (Sandstürme, dünne Atmosphäre, etc.) verändern.\nZudem können Monde in der Umlaufbahn des Planeten erscheinen.\n"
         };
     }
 
     private void DetermineScreenHighlights()
     {
+        int litIndex = -1;
+        
+        
         switch (SlideNumber)
         {
             case 0:
-            case 1:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==2)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+            case 1: //talk abt nodes + inventory
+                litIndex = 1;
                 break;
-            case 2:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==0)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+            case 2: //Control
+                litIndex = 4;
                 break;
-            case 3:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==3)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+            case 3: //Editor
+                litIndex = 2;
                 break;
-
-            case 4:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==4)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
-                break;    
-            case 5:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==1)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+            case 4: //Console
+                litIndex = 3;
                 break;
-            case 6:
-                for(int i = 0; i < HighlightedObjects.Length; i++)
-                {
-                    if(i==5)
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Highlighted";
-                    }
-                    else
-                    {
-                        SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
-                        sortingGroup.sortingLayerName = "Default";
-                    }
-                }
+            case 5: //Settings
+                litIndex = 0;
+                break;
+            case 6: //Planet
+                litIndex = 5;
                 break;
             default:
                 break;
         }
+
+        for(int i = 0; i < HighlightedObjects.Length; i++)
+        {
+            if(i==litIndex)
+            {
+                SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                sortingGroup.sortingLayerName = "Highlighted";
+            }
+            else
+            {
+                SortingGroup sortingGroup =  HighlightedObjects[i].GetComponent<SortingGroup>();
+                sortingGroup.sortingLayerName = "Default";
+            }
+        }
+        
+        
     }
 }
