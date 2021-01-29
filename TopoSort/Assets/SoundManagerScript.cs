@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundManagerScript : MonoBehaviour
 {
-    public static AudioClip playButtonSound, forthButtonSound, backButtonSound;
+    public static AudioClip playButtonSound, forthButtonSound, backButtonSound, errorSound, atmosphereButtonSound, plantButtonSound, groundButtonSound, waterButtonSound, moonButtonSound, buttonSound;
     public static AudioSource AudioSrc;
 
     // Start is called before the first frame update
@@ -13,6 +13,12 @@ public class SoundManagerScript : MonoBehaviour
         playButtonSound = Resources.Load<AudioClip>("Sounds/playButton");
         forthButtonSound = Resources.Load<AudioClip>("Sounds/forthButton");
         backButtonSound = Resources.Load<AudioClip>("Sounds/backButton");
+        errorSound = Resources.Load<AudioClip>("Sounds/errorSound");
+        atmosphereButtonSound = Resources.Load<AudioClip>("Sounds/atmosphereSound");
+        plantButtonSound = Resources.Load<AudioClip>("Sounds/plantSound");
+        waterButtonSound = Resources.Load<AudioClip>("Sounds/waterSound");
+        moonButtonSound = Resources.Load<AudioClip>("Sounds/moonSound");
+        buttonSound = Resources.Load<AudioClip>("Sounds/buttonSound");
 
         AudioSrc = GetComponent<AudioSource> ();
     }
@@ -35,6 +41,9 @@ public class SoundManagerScript : MonoBehaviour
             break;
             case "backButton":
             AudioSrc.PlayOneShot (backButtonSound);
+            break;
+            case "buttonSound":
+            AudioSrc.PlayOneShot (buttonSound);
             break;
         }
     }
