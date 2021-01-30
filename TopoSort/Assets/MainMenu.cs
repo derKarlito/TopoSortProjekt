@@ -5,13 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-   public void StartGame ()
+   public void StartGame()
    {
-       SceneManager.LoadScene("Scene1");
+       SceneManager.LoadScene("Scene1"); //Load the Game Scene
    }
-
-   public void ExitGame ()
+    public void CreditScene()
+    {
+        SceneManager.LoadScene("Scene2"); //Load the Credit Scene
+    }
+   public void ExitGame()
    {
-       Application.Quit();
+       Application.Quit(); //Quit the Game
    }
 }

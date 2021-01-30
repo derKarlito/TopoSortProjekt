@@ -23,12 +23,12 @@ public class SoundManagerScript : MonoBehaviour
         AudioSrc = GetComponent<AudioSource> ();
     }
 
-    // Update is called once per frame
-    void Update()
+    /*
+    void Awake()
     {
-        
+        DontDestroyOnLoad(this);
     }
-
+    */
     public static void PlaySound (string clip)
     {
         switch(clip)
