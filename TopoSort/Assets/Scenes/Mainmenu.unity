@@ -573,15 +573,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b>Project Managment</b>\t\t\t\t\t\t\t\t\t<b>Game Design</b>\n<u>Tom Leukert</u>\t\t\t\t\t\t\t\t\t\t\tTom
+  m_text: "<u>Project Managment</u>\t\t\t\t\t\t\t\t\t<u>Game Design</u>\n<b>Tom Leukert</b>\t\t\t\t\t\t\t\t\t\tTom
     Leukert\nAurel Haase\t\t\t\t\t\t\t\t\t\t\tJenny Walter\n\t\t\t\t\t\t\t\t\t\t\t\tJamison
-    Bassett\n<b>Code</b>\n<u>Jamison Bassett</u>\t\t\t\t\t\t\t\t\t\t<b>Didactics</b>\nKarl
-    B\xFCchner\t\t\t\t\t\t\t\t\t\t<u>Tobias Hofman</u>\nMarcel Popp\t\t\t\t\t\t\t\t\t\tOliver
+    Bassett\n<u>Code</u>\n<b>Jamison Bassett</b>\t\t\t\t\t\t\t\t\t<u>Didactics</u>\nKarl
+    B\xFCchner\t\t\t\t\t\t\t\t\t\t<b>Tobias Hofman</b>\nMarcel Popp\t\t\t\t\t\t\t\t\t\tOliver
     B\xF6er\nJenny Walter\t\t\t\t\t\t\t\t\t\tPaul Pfeifenbring\nOliver B\xF6er\t\t\t\t\t\t\t\t\t\t\tTom
-    Leukert\nTobias Hofmann\n\t\t\t\t\t\t\t\t\t\t\t\t<b>Development Report</b>\n<b>Visuals</b>\t\t\t\t\t\t\t\t\t\t\t<u>Marcel
-    Popp</u>\n<u>Paul Pfeifenbring</u>\t\t\t\t\t\t\t\t\t\tJamison Bassett\nTom Leukert\t\t\t\t\t\t\t\t\t\t\tAurel
-    Haase\n\n<b>Sound</b>\t\t\t\t\t\t\t\t\t\t\t<b>Presentation</b>\nJenny Walter\t\t\t\t\t\t\t\t\t\t<u>Aurel
-    Haase</u>"
+    Leukert\nTobias Hofmann\n\t\t\t\t\t\t\t\t\t\t\t\t<u>Development Report</u>\n<u>Visuals</u>\t\t\t\t\t\t\t\t\t\t\t<b>Marcel
+    Popp</b>\n<b>Paul Pfeifenbring</b>\t\t\t\t\t\t\t\t\tJamison Bassett\nTom Leukert\t\t\t\t\t\t\t\t\t\t\tAurel
+    Haase\n\n<u>Sound</u>\t\t\t\t\t\t\t\t\t\t\t<u>Presentation</u>\nJenny Walter\t\t\t\t\t\t\t\t\t\t<b>Aurel
+    Haase</b>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2107,7 +2107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2106431105
 MonoBehaviour:
   m_ObjectHideFlags: 0
