@@ -5,13 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject CreditsCanvas; //Class Variable for showing/hiding Credits
    public void StartGame()
    {
        SceneManager.LoadScene("Scene1"); //Load the Game Scene
    }
-    public void CreditScene()
+   public void CreditScene()
     {
-        SceneManager.LoadScene("Scene2"); //Load the Credit Scene
+        CreditsCanvas.SetActive(true); //Show Credits
+    }
+    public void BackToMenu()
+    {
+        CreditsCanvas.SetActive(false); //Hide Credits
     }
    public void ExitGame()
    {
