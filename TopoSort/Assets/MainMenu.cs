@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
    {
        SceneManager.LoadScene("Scene1"); //Load the Game Scene
    }
+   /*
    public void CreditScene()
     {
         CreditsCanvas.SetActive(true); //Show Credits
@@ -18,6 +19,7 @@ public class MainMenu : MonoBehaviour
     {
         CreditsCanvas.SetActive(false); //Hide Credits
     }
+    */
    public void ExitGame()
    {
        Application.Quit(); //Quit the Game
