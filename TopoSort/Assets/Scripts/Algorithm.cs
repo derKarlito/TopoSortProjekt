@@ -165,7 +165,7 @@ namespace TopoSort
          */
         void CheckFinished()
         {
-            if (SortedNodes.Count > 0 && SourceQueue.Count == 0 && !(Finished || Failed))
+            if (SortedNodes.Count >= 0 && SourceQueue.Count == 0 && !(Finished || Failed))
             {
                 if (SortedNodes.Count == GraphManager.graph.Nodes.Count)    // all nodes are sorted   
                 {
@@ -188,6 +188,7 @@ namespace TopoSort
                 else                                                        // there are unsorted nodes
                 {
                     Failed = true;
+                    CycleCanvas.getInstance().Show();
                     Debug.Log("Graph enthält einen Zyklus oder einen isolierten Knoten");
                 }
 
@@ -332,6 +333,8 @@ namespace TopoSort
             Failed = false;
 
             this.CurrentState = null;
+            
+            //CycleCanvas.getInstance().Hide();
 
             PosInGraph = 0;
 
