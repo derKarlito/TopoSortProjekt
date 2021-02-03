@@ -3,8 +3,7 @@
 <entry id="0">
 <term>graph</term>
 <synonyms></synonyms>
-<definition>
-A mathematical structure consisting of nodes and edges.
+<definition>A mathematical structure consisting of nodes and edges.
 
 acyclic graph:
 A graph that does not contain any cycles.
@@ -20,16 +19,14 @@ A graph whose edges are directed.
 <entry id="1">
 <term>node</term>
 <synonyms>vertex</synonyms>
-<definition>
-A part of a graph. Usually it has a name or value associated with it.
+<definition>A part of a graph. Usually it has a name or value associated with it.
 </definition>
 </entry>
 
 <entry id="2">
 <term>edge</term>
 <synonyms></synonyms>
-<definition>
-A part of a graph, which does connect two nodes with each other.
+<definition>A part of a graph, which does connect two nodes with each other.
 
 undirected edge:
 An edge whose direction is not determined and can be walked along in both directions.
@@ -42,8 +39,7 @@ An edge whose direction is determined and can be walked along in just one direct
 <entry id="3">
 <term>degree</term>
 <synonyms></synonyms>
-<definition>
-The number of edges that are adjacent to a node. It is used for undirected graphs more often, as the description with the in-  and out-degree is more precise for directed graphs.
+<definition>The number of edges that are adjacent to a node. It is used for undirected graphs more often, as the description with the in-  and out-degree is more precise for directed graphs.
 			
 in-degree:
 The number of directed edges entering a node.
@@ -56,28 +52,24 @@ The number of directed edges starting from a node.
 <entry id="4">
 <term>sorting</term>
 <synonyms></synonyms>
-<definition>
-A sequence of objects sorted in a certain order.
+<definition>A sequence of objects sorted in a certain order.
 			
 topological sorting:
 A sorting which sorts objects according to their dependencies on each other.
-
 </definition>
 </entry>
 
 <entry id="5">
 <term>algorithm</term>
 <synonyms></synonyms>
-<definition>
-A finite sequence of steps to solve a problem or a problem class.
+<definition>A finite sequence of steps to solve a problem or a problem class.
 </definition>
 </entry>
 
 <entry id="6">
 <term>kahn’s algorithm</term>
 <synonyms></synonyms>
-<definition>
-An algorithm that performs a topological sorting on the nodes of an acyclic, directed graph.
+<definition>An algorithm that performs a topological sorting on the nodes of an acyclic, directed graph.
 A node is only written to the output if its ancestor has already been processed. (and the algorithm that drives this simulation.)
 </definition>
 </entry>
