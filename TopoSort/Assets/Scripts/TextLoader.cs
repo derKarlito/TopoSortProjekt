@@ -32,7 +32,6 @@ namespace TopoSort
                 {
                     if (attr.Equals(page.ToString()))
                     {
-                        text = text + "Page: " + attr + "\r\n";
                         count += 3;
                         continue;
                     }
@@ -46,12 +45,12 @@ namespace TopoSort
                 {
                     if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "headline")
                     {
-                        text = text + xtr.ReadElementString() + "\r\n";
+                        text = text + xtr.ReadElementString();
                     }
 
                     if (xtr.NodeType == XmlNodeType.Element && xtr.Name == "body")
                     {
-                        text = text + xtr.ReadElementString() + "\r\n";
+                        text = text + xtr.ReadElementString();
                     }
                     count--;
                 }

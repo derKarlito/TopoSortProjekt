@@ -1,103 +1,103 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <tutorial lang ="0">
-  <page number="1">
-    <headline>Node</headline>
-    <body>
-      Here you can see a node (vertex). You can access it via the inventory on the left.
-      There are 5 types of nodes:
-      \t- water 
-      \t- vegetation/plants 
-      \t- atmosphere 
-      \t- plate tectonics 
-      \t- moon 
-      Arranging nodes in certain combinations result in various changes to the planet. 
-      To arrange the nodes, all you have to do is drag it by holding your left 
-      mouse button in place inside the intended graph editor. 
-      Once the nodes are arranged and connected with each other, 
-      you will see the in-degree in the top right corner of the node. 
-    </body>
-  </page>
+<page number="1">
+<headline>Node:</headline>
+<body>
+Here you can see a node (vertex). You can access it via the inventory on the left.
+There are 5 types of nodes:
+    - water 
+    - vegetation/plants 
+    - atmosphere 
+    - plate tectonics 
+    - moon 
+Arranging nodes in certain combinations result in various changes to the planet. 
+To arrange the nodes, all you have to do is drag it by holding your left 
+mouse button in place inside the intended graph editor. 
+Once the nodes are arranged and connected with each other, 
+you will see the in-degree in the top right corner of the node. 
+</body>
+</page>
 
-  <page number="2">
-    <headline>Inventory</headline>
-    <body>
-      The inventory contains all available types of nodes to use 
-      and build your own graph. You may use each node as often as you like. 
+<page number="2">
+<headline>Inventory:</headline>
+<body>
+The inventory contains all available types of nodes to use 
+and build your own graph. You may use each node as often as you like. 
     
-      To use a node from inventory, you simply have to 
-      drag and drop it from your inventory into the 
-      graph editor. To delete a node, just 
-      drag it back in the inventory. 
-    </body>
-  </page>
+To use a node from inventory, you simply have to 
+drag and drop it from your inventory into the 
+graph editor. To delete a node, just 
+drag it back in the inventory. 
+</body>
+</page>
 
-  <page number="3">
-    <headline>Controls</headline>
-    <body>
-      The control panel of the algorithm has three functions:
-      - Start/Pause the algorithm (play)
-      - Go to the next step (arrow to the right)
-      - Repeat the last step (arrow to the left)
+<page number="3">
+<headline>Controls:</headline>
+<body>
+The control panel of the algorithm has three functions:
+    - Start/Pause the algorithm (play)
+    - Go to the next step (arrow to the right)
+    - Repeat the last step (arrow to the left)
 
-      As soon as you build your graph, you are able to use the start button.
-      Now the algorithm will run through your graph, starting with a node that
-      has an indegree of 0, and build up your topologically sorted order.
-      Each step will be displayed at the console.
+As soon as you build your graph, you are able to use the start button.
+Now the algorithm will run through your graph, starting with a node that
+has an indegree of 0, and build up your topologically sorted order.
+Each step will be displayed at the console.
 
-      Note, if you want to repeat or skip one or multiple steps, the algorithm will
-      stop automatically. In addition, the algorithm will be canceled as soon as another
-      node is placed while the algorithm is running or paused.
-    </body>
-  </page>
+Note, if you want to repeat or skip one or multiple steps, the algorithm will
+stop automatically. In addition, the algorithm will be canceled as soon as another
+node is placed while the algorithm is running or paused.
+</body>
+</page>
 
-  <page number="4">
-    <headline>Graph editor</headline>
-    <body>
-      In this area you are able to build your own graph.
-      To build your graph, you need to drag a few nodes from
-      the inventory into the editor. Once this is done, you may
-      connect them with each other with the right mouse button.
-      To arrange your graph in a more structured way, you have 3 lines given.
+<page number="4">
+<headline>Graph editor:</headline>
+<body>
+In this area you are able to build your own graph.
+To build your graph, you need to drag a few nodes from
+the inventory into the editor. Once this is done, you may
+connect them with each other with the right mouse button.
+To arrange your graph in a more structured way, you have 3 lines given.
 
-      Be careful not to include any cycles in your graph!
-      When you run the algorithm, the current node, which the
-      algorithm is at and the node that will be visited are added to the output.
-      Nodes that have already been visited and added to the output are also marked.
-    </body>
-  </page>
+Be careful not to include any cycles in your graph!
+When you run the algorithm, the current node, which the
+algorithm is at and the node that will be visited are added to the output.
+Nodes that have already been visited and added to the output are also marked.
+</body>
+</page>
+	
+<page number="5">
+<headline>Console:</headline>
+<body>
+The console displays you the current state of your planet.
+The planet gets updated with each step of the algorithm.
+Moreover, each step will be documented here.
 
-  <page number="5">
-    <headline>Console</headline>
-    <body>
-      The console displays you the current state of your planet.
-      The planet gets updated with each step of the algorithm.
-      Moreover, each step will be documented here.
+The topologically sorted order the nodes of your graph are in
+are documented during the alrorithm‘s runtime.
+</body>
+</page>
 
-      The topologically sorted order the nodes of your graph are in
-      are documented during the alrorithm‘s runtime.
-    </body>
-  </page>
+<page number="6">
+<headline>Settings:</headline>
+<body>
+Above the console, there are a few controls.
+Beside the buttons for controlling the audio output and starting/quitting the tutorial,
+you will find a glossary as well as a button to switch the language of the game.
+</body>
+</page>
 
-  <page number="6">
-    <headline>Settings</headline>
-    <body>
-      Above the console, there are a few controls.
-      Beside the buttons for controlling the audio output and starting/quitting the tutorial,
-      you will find a glossary as well as a button to switch the language of the game.
-    </body>
-  </page>
+<page number="7">
+<headline>Dynamic planet:</headline>
+<body>
+Right above the graph editor, you will find your planet, which will change its
+appearance in depending of your graph as the algorithm runs.
+Therefore, the order and quantity of your nodes does affect the appearance of your
+planet.
 
-  <page number="7">
-    <headline>Dynamic planet</headline>
-    <body>
-      Right above the graph editor, you will find your planet, which will change its
-      appearance in depending of your graph as the algorithm runs.
-      Therefore, the order and quantity of your nodes does affect the appearance of your
-      planet.
-
-      In this way, the planet may change in its basic composition (lava planet, ocean planet, ...)
-      as well as in its atmospheric properties (sandstorms, thin atmosphere, ...).
-      Moreover, moons may also appear in the orbit of your planet.
-    </body>
-  </page>
+In this way, the planet may change in its basic composition (lava planet, ocean planet, ...)
+as well as in its atmospheric properties (sandstorms, thin atmosphere, ...).
+Moreover, moons may also appear in the orbit of your planet.
+</body>
+</page>
 </tutorial>
