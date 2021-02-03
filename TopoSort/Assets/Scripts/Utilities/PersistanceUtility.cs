@@ -34,23 +34,19 @@ public class PersistanceUtility{
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             }
         );
-        Task.Run(() => {
-            File.WriteAllText(path,json);
-        });
+        File.WriteAllText(path,json);
         RestoreLog();
     }
 
-    public async void RestoreLog()
+    public void RestoreLog()
     {
         var path = Path.Combine(Directory.GetCurrentDirectory(),"aplicationData.json" );
         if(File.Exists(path))
         {
             var data = string.Empty;
             PersistantObject persistantObject = null;
-            await Task.Run(async() => {
-                data = await FileUtil.ReadAllTextAsync(path);
-                persistantObject = JsonConvert.DeserializeObject<PersistantObject>(data);
-            });
+            data = File.ReadAllText(path);
+            persistantObject = JsonConvert.DeserializeObject<PersistantObject>(data);
             if (persistantObject != null){
                 persistanceObject = persistantObject;
             }
