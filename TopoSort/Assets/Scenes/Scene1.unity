@@ -1492,9 +1492,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 276614954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97e906a7d9624d37daf165f2265852aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 90c6ea56f815e7a3ea7984b928f38b0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HoverColor: {r: 1, g: 1, b: 1, a: 1}
+  DefaultColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
 --- !u!1 &300686510
 GameObject:
   m_ObjectHideFlags: 0
