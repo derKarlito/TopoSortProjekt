@@ -51,13 +51,11 @@ Die einzelnen Schritte werden dir in der Konsole ausgegeben.
 <headline>Graph-Editor:</headline>
 <body>
 Hier siehst du die Hilfsoberfläche, in welcher du deinen Graphen bauen kannst.
-Zum Bauen deines Graphen, musst du dir ein paar Knoten aus dem Inventar in den Editor ziehen.
-Danach kannst du diese per Rechtsklick miteinander verbinden.
+Zum Bauen deines Graphen, kannst du die erstellten Knoten per Rechtsklick miteinander verbinden.
 Um deinen Graphen etwas strukturierter anzuordnen, sind dir 3 Hilfslinien gegeben.
 
 Achte darauf, keine Zyklen in deinen Graphen einzuarbeiten!
-Sobald du den Algorithmus durch deinen Graphen laufen lässt, wirt du anhand von farbigen Markierungen sehen,
-an welchem Knoten sich der Algorithmus gerade befindet und zu welchem Knoten er als nächstes geht. 
+Sobald du den Algorithmus durch deinen Graphen laufen lässt, wirt du anhand von farbigen Markierungen sehen, an welchem Knoten sich der Algorithmus gerade befindet und zu welchem Knoten er als nächstes geht. 
 Zudem wird markiert, welche Knoten bereits besucht und ausgegeben wurden, oder eben noch nicht.
 </body>
 </page>
@@ -83,7 +81,7 @@ du auch ein Nachschlagewerk, sowie einen Knopf zum Umschalten der Sprache des Sp
 </page>
 
 <page number="7">
-<headline>Dynamischer Planet\n</headline>
+<headline>Dynamischer Planet</headline>
 <body>
 Hier befindet sich der Planet, welcher sich in Abhängigkeit deines Graphen
 dynamisch beim Durchlaufen verändert.
