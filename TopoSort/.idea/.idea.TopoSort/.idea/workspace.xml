@@ -33,11 +33,10 @@
     <list default="true" id="cacf2f57-6546-4f23-91a9-f344fc5bc73e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TopoSort/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/EdgeControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controller/EdgeControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controller/NodeControl.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controller/NodeControl.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Graph.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Graph.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Node.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Node.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MainMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Mainmenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Mainmenu.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,24 +47,15 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.1.1/Scripts/Runtime/TextMeshPro.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.1.1/Scripts/Runtime/TMPro_Private.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controller/GraphManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.1.1/Scripts/Runtime/TMPro_Private.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/Graph.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@2.1.1/Scripts/Runtime/TextMeshPro.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/MoveCube.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Algorithm.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Controller/GraphManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Graph.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Controller/NodeDestructionControl.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Models/Node.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Controller/NodeControl.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Controller/EdgeControl.cs" />
-      </list>
-    </option>
+    <changedPaths>
+      <option value="$PROJECT_DIR$/Assets/MainMenu.cs" />
+    </changedPaths>
   </component>
   <component name="ProjectId" id="1lQSuezXNsfIVyph6B6YOHl9XXx" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -86,7 +76,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <set />
+        <list />
       </option>
       <method v="2" />
     </configuration>
@@ -95,7 +85,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <set />
+        <list />
       </option>
       <method v="2" />
     </configuration>
@@ -114,6 +104,7 @@
       <workItem from="1608661592288" duration="7968000" />
       <workItem from="1608669599612" duration="389000" />
       <workItem from="1608670032932" duration="1109000" />
+      <workItem from="1612109543776" duration="759000" />
     </task>
     <servers />
   </component>
