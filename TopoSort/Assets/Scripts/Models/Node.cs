@@ -18,6 +18,10 @@ namespace Models {
             Name = name;
             Descendants = descendants;
         }
+        public Node()
+        {
+
+        }
 
         public Node(int id)
         {
