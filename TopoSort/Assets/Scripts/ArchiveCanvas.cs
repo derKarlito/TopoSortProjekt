@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ArchiveCanvas : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class ArchiveCanvas : MonoBehaviour
     private Dictionary<string, bool> DiscoveredPlanets = new Dictionary<string, bool>();
     private Dictionary<string, bool> DiscoveredAtmosphere = new Dictionary<string, bool>();
 
+    private Dictionary<string, GameObject> sprites;
+    
     private string SaveFile = "discoveries";
     
     
@@ -30,8 +33,6 @@ public class ArchiveCanvas : MonoBehaviour
         }
 
         LoadDataFromFile();
-        
-        this.Hide();
     }
 
     // Update is called once per frame
@@ -45,6 +46,52 @@ public class ArchiveCanvas : MonoBehaviour
         return ArchiveCanvas.Instance;
     }
 
+    public void ColorArchive()
+    {
+        foreach (string planetType in Planet.AvailablePlanets)
+        {
+            if (planetType != "Default")
+            {
+                Debug.Log("Color-Archive: " + planetType);
+
+                if (transform.Find(planetType) == null)
+                {
+                    Debug.Log("Color-Archive: " + planetType);
+                    continue;
+                }
+                
+                GameObject entry = transform.Find(planetType).gameObject;
+
+                
+                
+                
+                Image image = entry.GetComponent<Image>();
+                
+                image.color = Color.black;
+
+                if (DiscoveredPlanets[planetType])
+                {
+                    image.color = Color.white;
+                } 
+            }
+        }
+        
+        foreach (string atmosphereType in Atmosphere.AvailableAtomspheres)
+        {
+            if (atmosphereType != "Default")
+            {
+                Image image = this.transform.Find(atmosphereType).gameObject.GetComponent<Image>();
+
+                image.color = Color.black;
+                
+                if (DiscoveredAtmosphere[atmosphereType])
+                {
+                    image.color = Color.white;
+                } 
+            }
+        }
+    }
+    
     /*
      * checks if the planet is new.
      * returns true, if it is, false, if not
@@ -59,6 +106,9 @@ public class ArchiveCanvas : MonoBehaviour
         Debug.Log("Added new Planet: " + planetType);
         
         this.DiscoveredPlanets[planetType] = true;
+
+        GameObject planetSprite = this.transform.Find(planetType).gameObject;
+        
         
         return true;
     }
@@ -103,6 +153,8 @@ public class ArchiveCanvas : MonoBehaviour
             File.Create(SaveFile);
         }
 
+        ColorArchive();
+        
         string discoveriesSoFar = "";
 
         foreach (string type in Planet.AvailablePlanets)
