@@ -157,6 +157,16 @@ namespace TopoSort
                 Debug.Log("Reset");
                 ResetGraph();
             }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                ArchiveCanvas.GetInstance().WriteDataToFile();
+            }
+            
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                ArchiveCanvas.GetInstance().LoadDataFromFile();
+            }
         }
 
 
@@ -182,6 +192,12 @@ namespace TopoSort
                     alignment.sorted = sorted;
                     alignment.ImprovedGraphVisualisation();
 
+                    ArchiveCanvas.GetInstance().checkPlanet(Planet.State);
+                    ArchiveCanvas.GetInstance().checkAtmosphere(Atmosphere.State);
+                    
+                    Debug.Log("Atmosphere type: " + Atmosphere.State);
+                    Debug.Log("Planet type: " + Planet.State);
+                    
                     Debug.Log("Algorithmus erfolgreich beendet");
                     
                 }
@@ -200,7 +216,13 @@ namespace TopoSort
          *  fills source queue and builds the in degree table
          */
         void PrepareAlgorithm(Graph graph)
-        { 
+        {
+            if (graph.Nodes.Count == 0)
+            {
+                Debug.Log("There is no Graph");
+                return;
+            }
+            
             InDegrees = new Dictionary<Node, int>();
             foreach (Node node in graph.Nodes)                   // initializes the indegree table
             {              
