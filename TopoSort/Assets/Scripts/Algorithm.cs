@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 using Models;
 using TopoSort;
-
+using TopoSort.Controller;
 
 
 namespace TopoSort
@@ -160,12 +160,12 @@ namespace TopoSort
 
             if (Input.GetKeyDown(KeyCode.S))
             {
-                ArchiveCanvas.GetInstance().WriteDataToFile();
+                ArchiveManager.WriteDataToFile();
             }
             
             if (Input.GetKeyDown(KeyCode.L))
             {
-                ArchiveCanvas.GetInstance().LoadDataFromFile();
+                ArchiveManager.LoadDataFromFile();
             }
         }
 
@@ -191,9 +191,8 @@ namespace TopoSort
                     AlignmentUtil alignment = new AlignmentUtil();
                     alignment.sorted = sorted;
                     alignment.ImprovedGraphVisualisation();
-                    ArchiveCanvas.GetInstance().checkPlanet(Planet.State);
-                    ArchiveCanvas.GetInstance().checkAtmosphere(Atmosphere.State);
-                    
+                    ArchiveManager.checkResult(Planet.State, Atmosphere.State);
+
                     Debug.Log("Atmosphere type: " + Atmosphere.State);
                     Debug.Log("Planet type: " + Planet.State);
                     
