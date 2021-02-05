@@ -39,6 +39,7 @@ public class ArchiveCanvas : MonoBehaviour
             DiscoveredPlanetText.text = "Entdeckte Planeten";
             DiscoveredAtmosphereText.text = "Entdeckte Atmosphären";    
         }
+        
     }
 
     public void OnEnable()

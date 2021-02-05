@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -24,6 +25,8 @@ namespace TopoSort.Controller
             {
                 DiscoveredAtmosphere[type] = false;
             }
+            
+            LoadDataFromFile();
         }
 
 
@@ -180,6 +183,8 @@ namespace TopoSort.Controller
             string tmp;
             for (int bytePos = 0; bytePos < data.Length; bytePos++)
             {
+                
+                
                 for (int bitPos = 0; bitPos < 8; bitPos++)
                 {
                     index = bytePos * 8 + bitPos;
@@ -198,6 +203,7 @@ namespace TopoSort.Controller
             string tmp;
             for (int bytePos = 0; bytePos < data.Length; bytePos++)
             {
+                
                 for (int bitPos = 0; bitPos < 8; bitPos++)
                 {
                     index = bytePos * 8 + bitPos;

@@ -46,10 +46,11 @@ public class Planet : MonoBehaviour
         {"Toxic", new[]{3, 2, 0, 3, 0}},
         {"Fire", new[]{2, 0, 2, 6, 1}},
         {"Asteroids", new[]{5, 1, 0, 0, 6}},
+        {"Obsidian", new[]{6, 5, 0, 1, 0}}
        /* {"Jungle", new[]{2, 3, 6, 2, 2}},
         {"Earth_Relief_2", new[]{69, 1337, 420, 69, 1312}},
         {"Fire_Jungle", new[]{4, 3, 6, 2, 2}},
-        {"Obsidian", new[]{6, 5, 0, 1, 0}} */
+         */
     };
 
     public static List<string> AvailablePlanets = new List<string>()
@@ -69,7 +70,8 @@ public class Planet : MonoBehaviour
         "Phytoplankton",
         "Gas",
         "Desert",
-        "Asteroids"
+        "Asteroids",
+        "Obsidian"
     };
 
     // Start is called before the first frame update

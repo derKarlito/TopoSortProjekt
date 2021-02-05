@@ -41,7 +41,8 @@ public class Localisation : MonoBehaviour
         {"Hurricanes", "Orkanen"},
         {"Clouds", "Wolken"},
         {"Asteroid Belt", "Asteroidengürtel"},
-        {"Rings", "Ringen"}
+        {"Rings", "Ringen"},
+        {"Obsidian", "Obsidianplanet"}
     };
 
     private void Start() 
