@@ -545,7 +545,7 @@ Transform:
   m_GameObject: {fileID: 31137609}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 11.059946, y: 8.996975, z: 10.58368}
+  m_LocalScale: {x: 1, y: 1, z: 10.58368}
   m_Children: []
   m_Father: {fileID: 735895249}
   m_RootOrder: 0
@@ -589,8 +589,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: -923508032568769581, guid: 32dcc55d3c8f09d44a4321ee883e7347,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: b7c828e3dd2b8294aad6cbcca47fddc0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3212,7 +3211,7 @@ Transform:
   m_GameObject: {fileID: 735895247}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.52, y: -3.24, z: 0}
-  m_LocalScale: {x: 1.069187, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 31137610}
   m_Father: {fileID: 0}
@@ -4534,8 +4533,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4335292995106586537, guid: adbca6d96e2459b45b9c5a5f984701e4,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: e661ff258b92fbd40a6b6140adb63688, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4555,7 +4553,7 @@ Transform:
   m_GameObject: {fileID: 999119389}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.42, y: 0.8, z: 0}
-  m_LocalScale: {x: 4.3502316, y: 4.996173, z: 5.329024}
+  m_LocalScale: {x: 1, y: 1, z: 5.329024}
   m_Children:
   - {fileID: 2108474481}
   m_Father: {fileID: 0}
@@ -8275,8 +8273,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 5}
+  m_AnchoredPosition: {x: -0.016, y: -0.018}
+  m_SizeDelta: {x: 3.8346028, y: 3.8414311}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2108474482
 MonoBehaviour:
@@ -8325,8 +8323,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.75
-  m_fontSizeBase: 0.75
+  m_fontSize: 3
+  m_fontSizeBase: 3
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8361,7 +8359,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 1
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 9.59492, y: 2.1206646, z: 9.576517, w: 2.1129382}
+  m_margin: {x: 0.11258483, y: 0.09372783, z: 0.04758644, w: 0.10929924}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
