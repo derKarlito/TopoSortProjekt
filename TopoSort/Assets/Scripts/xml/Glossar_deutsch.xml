@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<glossary lang="1">
+<entry id="0">
+<term>Graph</term>
+<synonyms></synonyms>
+<definition>Eine aus Knoten und Kanten bestehende mathematische Struktur.
+
+Ungerichteter Graph:
+Ein Graph, dessen Kanten ungerichtet sind.
+
+Gerichteter Graph(Direktionaler Graph, Digraph):
+Ein Graph, dessen Kanten gerichtet sind.
+
+Azyklischer Graph:
+Ein Graph, der keine Zyklen enthält.
+</definition>
+</entry>
+
+<entry id="1">
+<term>Knoten</term>
+<synonyms></synonyms>
+<definition>Bestandteil eines Graphen. Hat meist einen Namen oder Wert mit ihm assoziiert.
+</definition>
+</entry>
+
+<entry id="2">
+<term>Kante</term>
+<synonyms></synonyms>
+<definition>Bestandteil des Graphen, das zwei Knoten miteinander verbindet.
+
+Ungerichtete Kante:
+Eine Kante, deren Richtung nicht bestimmt ist und in beide Richtungen begangen werden kann.
+
+Gerichtete Kante:
+Eine Kante, deren Richtung bestimmt ist und nur von Start- zu Zielknoten begangen werden kann.
+</definition>
+</entry>
+
+<entry id="3">
+<term>Grad</term>
+<synonyms>Knotengrad</synonyms>
+<definition>Anzahl der Kanten, die inzident (anliegend) an einen Knoten sind.
+Wird eher bei ungerichteten Graphen verwendet, da die Beschreibung mit
+Eingangs- und Ausgangsgrad bei gerichteten Graphen präziser ist.
+
+Eingangsgrad(Innengrad):
+Anzahl der gerichteten Kanten, die in einen Knoten eingehen.
+
+Ausgangsgrad(Außengrad):
+Anzahl der gerichteten Kante, die von einem Knoten ausgehen.
+</definition>
+</entry>
+
+<entry id="4">
+<term>Sortierung</term>
+<synonyms></synonyms>
+<definition>Eine mit einer bestimmten Ordnung versehenen Folge von Objekten.
+
+Topologische Sortierung:
+Eine Sortierung, welche Objekte nach ihren Abhängigkeiten
+zueinander ordnet.
+</definition>
+</entry>
+
+<entry id="5">
+<term>Algorithmus</term>
+<synonyms></synonyms>
+<definition>Endliche Folge von Handlungsschritten zur Lösung eines Problems
+oder einer Problemklasse.
+</definition>
+</entry>
+
+<entry id="6">
+<term>Kahn-Algorithmus</term>
+<synonyms></synonyms>
+<definition>Algorithmus, der ein einem azyklischen, gerichteten Graphen eine topologische Sortierung auf den Knoten ausführt.
+Ein Knoten wird immer nur dann in die Ausgabe geschrieben, wenn dessen Vorgänger bereits abgearbeitet wurden. 
+(Und der Algorithmus, der diese Simulation antreibt.)
+</definition>
+</entry>
+</glossary>

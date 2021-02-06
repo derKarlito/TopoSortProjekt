@@ -3,15 +3,14 @@
     "",
     "\\TopoSort",
     "\\TopoSort\\Assets",
-    "\\TopoSort\\Assets\\Resources",
-    "\\TopoSort\\Assets\\Resources\\Models",
     "\\TopoSort\\Assets\\Scenes",
     "\\TopoSort\\Assets\\Scripts",
     "\\TopoSort\\Assets\\Scripts\\Controller",
     "\\TopoSort\\Assets\\Scripts\\Models",
     "\\TopoSort\\Assets\\Scripts\\Utilities",
+    "\\TopoSort\\Assets\\Scripts\\xml",
     "\\TopoSort\\Assets\\Sprites"
   ],
-  "SelectedNode": "\\TopoSort\\Assets\\Scripts\\Controller\\NodeControl.cs",
+  "SelectedNode": "\\TopoSort\\Assets\\Scripts\\xml\\Glossar_deutsch.xml",
   "PreviewInSolutionExplorer": false
 }

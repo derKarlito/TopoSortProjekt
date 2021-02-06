@@ -48,6 +48,11 @@ namespace TopoSort
         {
             return this.Synonyms;
         }
+
+        public void SetSynonyms(List<string> list) 
+        {
+            this.Synonyms = list;
+        }
         
         
     }
