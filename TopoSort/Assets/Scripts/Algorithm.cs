@@ -18,6 +18,7 @@ namespace TopoSort
         private Collider2D BackwardCollider;
         private Collider2D LastToolTipEnter;
 
+        public PersistanceUtility persistanceUtility;
         public TextMeshPro ToolTip;
         public TextMeshPro QueueText;
         public Planet Planet;           //gameobject to then get the script from
@@ -205,6 +206,8 @@ namespace TopoSort
                     AlignmentUtil alignment = new AlignmentUtil();
                     alignment.sorted = sorted;
                     alignment.ImprovedGraphVisualisation();
+
+                    persistanceUtility.WriteFile();
 
                     Debug.Log("Algorithmus erfolgreich beendet");
                     
