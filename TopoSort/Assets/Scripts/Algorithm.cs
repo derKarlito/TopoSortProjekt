@@ -207,7 +207,7 @@ namespace TopoSort
                     alignment.sorted = sorted;
                     alignment.ImprovedGraphVisualisation();
 
-                    persistanceUtility.WriteFile();
+                    persistanceUtility.AddLogEntry(Planet, GraphManager.graph);
 
                     Debug.Log("Algorithmus erfolgreich beendet");
                     

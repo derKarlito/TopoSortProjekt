@@ -50,14 +50,27 @@ namespace Models
             Nodes.Remove(trem);
         }
 
-        public void toString()
+        public string toString()
         {
             string text = "";
-            foreach (Node i in Nodes) 
+            for(int i = 1; i <= Length; i++)
             {
-                text += i.Id+"+";
+                foreach (Node node in Nodes)
+                {
+                    if(node.position == i)
+                    {
+                        if(!Localisation.isGermanActive)
+                            text += node.Name+" + ";
+                        else
+                        {
+                            Localisation.Translator.TryGetValue(node.Name, out var german);
+                            text += german+" + ";
+                        }
+                    }
+                }
             }
-            Debug.Log(text);
+            var result = text.Remove(text.Length-3);
+            return result;
         }
     }
 }

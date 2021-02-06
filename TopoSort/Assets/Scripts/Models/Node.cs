@@ -1,18 +1,22 @@
 using System;
 using System.Collections.Generic;
 using TopoSort;
+using Newtonsoft.Json;
 namespace Models {
-    
     public class Node{
         
-        public string Name{get; private set;} //equal to value of Nodetype i.e. Water-Node/Atmosphere-Node/etc
+        public string Name{get; set;} //equal to value of Nodetype i.e. Water-Node/Atmosphere-Node/etc
         public int Id;
         public int position; //Position in Graph. Important for the Node to know, bc of how planets are created
+        [JsonIgnore]
         public List<Node> Descendants = new List<Node>(); //immediate children of the node
+        [JsonIgnore]
         public List<Node> Ancestors = new List<Node>();   //Nodes need to be able to know what came before them for some impacts on the planet
         public int InDegree = 0; //Number of incomming edges default is no ancestors
         public int SimulatedInDegree = 0;
         
+        public Node()
+        {}
         
         public Node(string name, List<Node> descendants){
             Name = name;
