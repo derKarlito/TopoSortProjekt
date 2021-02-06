@@ -24,9 +24,11 @@ public class PersistanceUtility : MonoBehaviour
         PersistanceObject.graphList.Insert(PersistanceObject.nextIndex,graph);
         PersistanceObject.PlanetName.Insert(PersistanceObject.nextIndex, planet.State);
         PersistanceObject.nextIndex++;
-        if(PersistanceObject.nextIndex > 10){
+        if(PersistanceObject.nextIndex > 6){
+            //UpdateLogList();
             PersistanceObject.graphList.RemoveAt(0);
             PersistanceObject.PlanetName.RemoveAt(0);
+            PersistanceObject.nextIndex = 0;
         }
         WriteFile();
     }
@@ -79,19 +81,51 @@ public class PersistanceUtility : MonoBehaviour
         
     }
 
+    public void UpdateLogList()
+    {
+        //0 kommt raus
+        //everrything else moves one up
+        for(int i = 1; i < 6; i++)
+        {
+            var prevEntryImage = ImageTransform.GetChild(i-1).gameObject;
+            var currentEntryImage = ImageTransform.GetChild(i).gameObject;
+            prevEntryImage = currentEntryImage;
+        }
+        PersistanceObject.nextIndex = 6;
+    }
+
     public Image CreateLogImage()
     {
-        var imageprefab = Resources.Load<Image>("Models/LogImage");
-        var image = UnityEngine.Object.Instantiate(imageprefab);
-        image.transform.SetParent(ImageTransform, false); 
+        Image image;
+
+        if(ImageTransform.childCount < 6 ) //check to see if we already have a gameobject we can fill or if we need to instantiate a new one if true
+        {
+            var imageprefab = Resources.Load<Image>("Models/LogImage");
+            image = UnityEngine.Object.Instantiate(imageprefab);
+            image.transform.SetParent(ImageTransform, false); 
+            image.tag = ("Log"+(PersistanceObject.nextIndex-1).ToString());
+        }
+        else
+        {
+            image = ImageTransform.GetChild(PersistanceObject.nextIndex).GetComponent<Image>();
+        }
         return image;
     }
 
     public TextMeshProUGUI CreateLogText()
     {
-        var textprefab = Resources.Load<TextMeshProUGUI>("Models/LogText");
-        var text = UnityEngine.Object.Instantiate(textprefab);
-        text.transform.SetParent(TextTransform, false); 
+        TextMeshProUGUI text;
+        if(TextTransform.childCount < 6 )
+        {
+            var textprefab = Resources.Load<TextMeshProUGUI>("Models/LogText");
+            text = UnityEngine.Object.Instantiate(textprefab);
+            text.transform.SetParent(TextTransform, false); 
+            text.tag = ("Log"+(PersistanceObject.nextIndex-1).ToString());
+        }
+        else
+        {
+            text = TextTransform.GetChild(PersistanceObject.nextIndex).GetComponent<TextMeshProUGUI>();
+        }
         return text;
     }
 }
