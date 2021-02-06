@@ -10,6 +10,13 @@ TagManager:
   - Highlighted
   - LogImage
   - LogText
+  - Log0
+  - Log1
+  - Log2
+  - Log3
+  - Log4
+  - Log5
+  - Log6
   layers:
   - Default
   - TransparentFX
