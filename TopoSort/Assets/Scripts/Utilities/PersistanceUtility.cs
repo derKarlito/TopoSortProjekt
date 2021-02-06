@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Models;
@@ -73,12 +74,76 @@ public class PersistanceUtility : MonoBehaviour
 
         //Gets the planet name and the nodes it took to get there
         string planetState = PersistanceObject.PlanetName[PersistanceObject.nextIndex-1];
+        
         string nodes = PersistanceObject.graphList[PersistanceObject.nextIndex-1].toString();
 
         //uses that information to write that into the log
         logImage.sprite = Planet.GetPlanetSprite(planetState);
+        if(Localisation.isGermanActive) //localisation of the planet name. Nodenames get localised in the toStroing() method called earlier
+        {
+            Localisation.Translator.TryGetValue(planetState, out var german);
+            planetState = german;
+        }
         logText.text = ($"Planet: {planetState}\nNodes: {nodes}");
         
+    }
+
+    private void OnEnable() 
+    {
+        ConsiderLanguage();
+    }
+
+    public void ConsiderLanguage()
+    {
+        for(int i = 0; i < TextTransform.childCount; i++)
+        {
+            // Cut up the single parts of the log entry
+            var text = TextTransform.GetChild(i).GetComponent<TextMeshProUGUI>();  // text.text smth like $"Planet: {planetState}\nNodes: {nodes}"
+            var split = text.text.Split('\n'); //splits once at the newline
+            var planetName = split[0].Split(' ')[1]; // takes the first line and splits it at the space then takes the latter part the "{planetstate}"
+            var nodeList = split[1].Split(' '); // the second line of a log entry has multiple spaces so we just put that all into a new array called nodeList (Note that nodeList[0] will be the normal declaration of "Nodes:")
+            
+            if(Localisation.isGermanActive)
+            {
+                if(!Localisation.Translator.ContainsKey(planetName)) //then it already is german and we can skip
+                    break;
+                Localisation.Translator.TryGetValue(planetName, out var germanPlanet);
+                var germanNodes = nodeList;
+                var germanNodeLine = "";
+                for(int j = 1; j < nodeList.Length; j+=2) //Takes two steps bc every other array place is '+'
+                {
+                    Localisation.Translator.TryGetValue(planetName, out germanNodes[j]);
+                    germanNodeLine += germanNodes[j] + " + ";
+                }
+                germanNodeLine = germanNodeLine.Remove(germanNodeLine.Length-3);
+                
+                text.text = ($"Planet: {germanPlanet}\nNodes: {germanNodeLine}");
+            }
+            else
+            {
+                if(Localisation.Translator.ContainsKey(planetName))
+                    break;
+                var englishPlanet = "";
+                foreach (KeyValuePair<string, string> dictEntry in Localisation.Translator)
+                {
+                    if(dictEntry.Value == planetName)
+                        englishPlanet = dictEntry.Key;
+                }
+                var englishNodes = nodeList;
+                var englishNodeLine = "";
+                for(int j = 1; j < nodeList.Length; j += 2)
+                {
+                    foreach (KeyValuePair<string, string> dictEntry in Localisation.Translator)
+                    {
+                        if(dictEntry.Value == englishNodes[j])
+                            englishNodeLine += dictEntry.Key + " + ";
+                    }
+                }
+                englishNodeLine = englishNodeLine.Remove(englishNodeLine.Length-3);
+                text.text = ($"Planet: {englishPlanet}\nNodes: {englishNodeLine}");
+            }
+            
+        }
     }
 
     public void UpdateLogList()

@@ -53,7 +53,13 @@ namespace Models
                 {
                     if(node.position == i)
                     {
-                        text += node.Name+" + ";
+                        if(!Localisation.isGermanActive)
+                            text += node.Name+" + ";
+                        else
+                        {
+                            Localisation.Translator.TryGetValue(node.Name, out var german);
+                            text += german+" + ";
+                        }
                     }
                 }
             }
