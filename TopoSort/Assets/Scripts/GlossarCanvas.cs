@@ -20,6 +20,7 @@ public class GlossarCanvas : MonoBehaviour
     public TextMeshProUGUI InfoText;
 
     public Button CloseButton;
+
     
     
     private static string[] TermsGerman =
@@ -49,8 +50,8 @@ public class GlossarCanvas : MonoBehaviour
     {
         GlossarEntry entryGerman;
         GlossarEntry entryEnglish;
-        TextLoader germanLoader = new TextLoader("Assets\\Scripts\\xml\\Glossar_deutsch.xml");
-        TextLoader englishLoader = new TextLoader("Assets\\Scripts\\xml\\Glossar_englisch.xml");
+        TextLoader germanLoader = new TextLoader("Assets\\Resources\\xml\\Glossar_deutsch.xml");
+        TextLoader englishLoader = new TextLoader("Assets\\Resources\\xml\\Glossar_englisch.xml");
 
 
         // 0 - Graph Entry
@@ -147,8 +148,13 @@ public class GlossarCanvas : MonoBehaviour
     void Start()
     {
         GlossarCanvas.Instance = this;
-        LoadEntries();
-        SetTexts(TermsGerman[0]);
+        try{
+            LoadEntries();
+            SetTexts(TermsGerman[0]);
+        }
+        catch{}
+
+
         
         CloseButton.onClick.AddListener(Hide);
         this.Hide();

@@ -112,6 +112,7 @@ public class Tutorial : MonoBehaviour
     public void StopTutorial()
     {
         DarkCanvas.gameObject.SetActive(false);
+        isActive = false;
         TextField.text = String.Empty;
     }
 
@@ -147,8 +148,8 @@ public class Tutorial : MonoBehaviour
 
     private void  LoadTexts()
     {
-            TextLoader loaderGerman = new TextLoader("Assets\\Scripts\\xml\\Tutorial_deutsch.xml");
-            TextLoader loaderEnglish = new TextLoader("Assets\\Scripts\\xml\\Tutorial_englisch.xml");
+            TextLoader loaderGerman = new TextLoader("Assets\\Resources\\xml\\Tutorial_deutsch.xml");
+            TextLoader loaderEnglish = new TextLoader("Assets\\Resources\\xml\\Tutorial_englisch.xml");
             
             if (Localisation.isGermanActive)
             {
