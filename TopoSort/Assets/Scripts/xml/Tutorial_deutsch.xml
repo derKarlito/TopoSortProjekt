@@ -42,8 +42,9 @@ Hier hast du 3 Funktionen zur Auswahl:
 
 Sobald du deinen Graph gebaut hast, kannst du den Start-Button betätigen.
 Der Algorithmus wird den Graph durchlaufen und die topologisch sortierte Reihenfolge deiner Knoten herstellen.
-
 Die einzelnen Schritte werden dir in der Konsole ausgegeben.
+
+Du hast auch die Möglichkeit, alle Nodes auf einmal zu löschen, indem du auf den Papierkorb klickst.
 </body>
 </page>
 

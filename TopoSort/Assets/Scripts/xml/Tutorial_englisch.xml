@@ -38,8 +38,9 @@ The control panel of the algorithm has three functions:
 
 As soon as you built your graph, you are able to use the start button. 
 Now the algorithm will run through your graph and build up your topological order.
-
 The steps will be displayed on the console.
+
+You also have the opportunity to delete all nodes at once by clicking on the bin
 </body>
 </page>
 
