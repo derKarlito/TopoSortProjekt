@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 using Models;
 using TopoSort;
+using TopoSort.Controller;
 
 
 
@@ -208,6 +209,7 @@ namespace TopoSort
                     alignment.ImprovedGraphVisualisation();
 
                     persistanceUtility.AddLogEntry(Planet, GraphManager.graph);
+                    ArchiveManager.checkResult(Planet.State, Atmosphere.State);
 
                     Debug.Log("Algorithmus erfolgreich beendet");
                     
