@@ -72,10 +72,6 @@ public class Tutorial : MonoBehaviour
         DarkCanvas = DarkCanvas.Instance;
         LoadTexts();
         HighlightedObjects = GameObject.FindGameObjectsWithTag("Highlighted");
-        for(int i = 0; i < HighlightedObjects.Length; i++)
-        {
-            Debug.Log(HighlightedObjects[i].name);
-        }
     }
 
     // Update is called once per frame

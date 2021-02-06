@@ -8,18 +8,14 @@ using UnityEngine.UIElements;
 
 public class Log : MonoBehaviour
 {
-    PersistanceUtility persistanceUtility = new PersistanceUtility();
+    public static TextMeshProUGUI LogText;
+    public static PersistanceUtility PersistanceUtility = new PersistanceUtility();
+    
+    
     void Awake()
     {
-        persistanceUtility.RestoreLog();       
-    }
-    void Start()
-    {
-        var lol = "test";
+        PersistanceUtility.RestoreLog();       
     }
 
-    void Update()
-    {
-
-    }
+    
 }

@@ -111,8 +111,6 @@ namespace TopoSort.Controller
             {
                 File.Create(SaveFile);
             }
-
-            Debug.Log("Discoveries loaded");
         }
         
         

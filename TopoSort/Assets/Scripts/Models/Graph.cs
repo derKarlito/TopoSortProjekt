@@ -8,23 +8,17 @@ namespace Models
 {
     public class Graph
     {
-        public string Name { get; set; }
         public int Length => Nodes.Count;       //Makes it so that length always points to the count of the current list of Nodes
         public List<Node> Nodes { get; set; }
-        public Graph(string name, List<Node> nodes)        //Graph can have a Name and contains Nodes
+
+        public Graph(List<Node> nodes)        //Graph can NOT have Name ONLY contain Nodes
         {
-            Name = name;
             Nodes = nodes;
         }
 
         public Graph()                                    //Graph can be empty
         {
             Nodes = new List<Node>();                     //But still needs to have a new, empty list to it
-        }
-
-        public Graph(List<Node> nodes)
-        {
-            Nodes = nodes;
         }
         
         public void AddNodes(List<Node> toAdd)        //Adds List of Nodes to Graph
@@ -50,14 +44,21 @@ namespace Models
             Nodes.Remove(trem);
         }
 
-        public void toString()
+        public string toString()
         {
             string text = "";
-            foreach (Node i in Nodes) 
+            for(int i = 1; i <= Length; i++)
             {
-                text += i.Id+"+";
+                foreach (Node node in Nodes)
+                {
+                    if(node.position == i)
+                    {
+                        text += node.Name+" + ";
+                    }
+                }
             }
-            Debug.Log(text);
+            var result = text.Remove(text.Length-3);
+            return result;
         }
     }
 }

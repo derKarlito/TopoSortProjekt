@@ -4,24 +4,29 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 using Models;
 using Newtonsoft.Json;
 using TopoSort;
+using TMPro;
 
 
-public class PersistanceUtility{
-    private PersistantObject persistanceObject = new PersistantObject();
-
+public class PersistanceUtility : MonoBehaviour
+{
+    public PersistantObject PersistanceObject = new PersistantObject();
+    public Planet Planet;
+    public Transform TextTransform;
+    public Transform ImageTransform;
 
     public void AddLogEntry(Planet planet, Graph graph)
     {  
         var tempGraph = new Graph(graph.Nodes);
-        persistanceObject.graphList.Insert(persistanceObject.nextIndex,graph);
-        persistanceObject.planetList.Insert(persistanceObject.nextIndex,planet.CreatedPlanet);
-        persistanceObject.nextIndex++;
-        if(persistanceObject.nextIndex > 10){
-            persistanceObject.graphList.RemoveAt(0);
-            persistanceObject.planetList.RemoveAt(0);
+        PersistanceObject.graphList.Insert(PersistanceObject.nextIndex,graph);
+        PersistanceObject.PlanetName.Insert(PersistanceObject.nextIndex, planet.State);
+        PersistanceObject.nextIndex++;
+        if(PersistanceObject.nextIndex > 10){
+            PersistanceObject.graphList.RemoveAt(0);
+            PersistanceObject.PlanetName.RemoveAt(0);
         }
         WriteFile();
     }
@@ -29,7 +34,7 @@ public class PersistanceUtility{
     public void WriteFile()
     {
         var path = Path.Combine(Directory.GetCurrentDirectory(),"aplicationData.json" );
-        var json = JsonConvert.SerializeObject(persistanceObject, Formatting.Indented,
+        var json = JsonConvert.SerializeObject(PersistanceObject, Formatting.Indented,
             new JsonSerializerSettings() {
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             }
@@ -46,16 +51,51 @@ public class PersistanceUtility{
             var data = string.Empty;
             PersistantObject persistantObject = null;
             data = File.ReadAllText(path);
-            persistantObject = JsonConvert.DeserializeObject<PersistantObject>(data);
-            if (persistantObject != null){
-                persistanceObject = persistantObject;
+            persistantObject = JsonConvert.DeserializeObject<PersistantObject>(data); 
+            if (persistantObject != null)
+            {
+                PersistanceObject = persistantObject;
             }
         }
+        if(PersistanceObject != null)
+        {
+            WriteToLog();
+        }
     }
-    
-    
-    
+
+    public void WriteToLog() //DONT FORGET LOCALISATZIONS
+    {
+        // Creates new gameobjects that act as the visible Log Entries
+        var logImage = CreateLogImage();
+        var logText = CreateLogText();
+
+        //Gets the planet name and the nodes it took to get there
+        string planetState = PersistanceObject.PlanetName[PersistanceObject.nextIndex-1];
+        string nodes = PersistanceObject.graphList[PersistanceObject.nextIndex-1].toString();
+
+        //uses that information to write that into the log
+        logImage.sprite = Planet.GetPlanetSprite(planetState);
+        logText.text = ($"Planet: {planetState}\nNodes: {nodes}");
+        
+    }
+
+    public Image CreateLogImage()
+    {
+        var imageprefab = Resources.Load<Image>("Models/LogImage");
+        var image = UnityEngine.Object.Instantiate(imageprefab);
+        image.transform.SetParent(ImageTransform, false); 
+        return image;
+    }
+
+    public TextMeshProUGUI CreateLogText()
+    {
+        var textprefab = Resources.Load<TextMeshProUGUI>("Models/LogText");
+        var text = UnityEngine.Object.Instantiate(textprefab);
+        text.transform.SetParent(TextTransform, false); 
+        return text;
+    }
 }
+
 public static class FileUtil
 {
     public static async Task<string> ReadAllTextAsync(string filePath)

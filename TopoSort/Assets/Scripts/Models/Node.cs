@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using TopoSort;
 namespace Models {
-    
+
+    [Serializable]
     public class Node{
         
-        public string Name{get; private set;} //equal to value of Nodetype i.e. Water-Node/Atmosphere-Node/etc
+        public string Name{get; set;} //equal to value of Nodetype i.e. Water-Node/Atmosphere-Node/etc
         public int Id;
         public int position; //Position in Graph. Important for the Node to know, bc of how planets are created
         public List<Node> Descendants = new List<Node>(); //immediate children of the node
@@ -14,9 +15,9 @@ namespace Models {
         public int SimulatedInDegree = 0;
         
         
-        public Node(string name, List<Node> descendants){
+        public Node(string name)
+        {
             Name = name;
-            Descendants = descendants;
         }
         public Node()
         {

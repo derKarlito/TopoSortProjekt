@@ -7,6 +7,9 @@ TagManager:
   - Edge
   - Node
   - ToolTip
+  - Highlighted
+  - LogImage
+  - LogText
   layers:
   - Default
   - TransparentFX

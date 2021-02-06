@@ -63,7 +63,6 @@ public class Atmosphere : MonoBehaviour
     public static void SetAtmosphereActive(bool active)
     {
        AtmosphereInstance.gameObject.SetActive(active);
-       Debug.Log(active);
     }
 
     public static void AddNode(Node node)

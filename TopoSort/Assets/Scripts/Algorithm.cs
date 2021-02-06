@@ -12,7 +12,7 @@ namespace TopoSort
 {
     public class Algorithm : MonoBehaviour
     {
-        public PersistanceUtility persistanceUtility = new PersistanceUtility();
+        public PersistanceUtility persistanceUtility;
         private Collider2D Collider;
         private Collider2D ForwardCollider;
         private Collider2D BackwardCollider;
@@ -192,12 +192,8 @@ namespace TopoSort
                     alignment.sorted = sorted;
                     alignment.ImprovedGraphVisualisation();
                     ArchiveManager.checkResult(Planet.State, Atmosphere.State);
-
-                    Debug.Log("Atmosphere type: " + Atmosphere.State);
-                    Debug.Log("Planet type: " + Planet.State);
                     
                     persistanceUtility.AddLogEntry(Planet,GraphManager.graph);
-                    Debug.Log("Algorithmus erfolgreich beendet");
                     
                 }
                 else                                                        // there are unsorted nodes

@@ -14,7 +14,7 @@ public class Planet : MonoBehaviour
 
     private static Sprite[] MoonSprites;
 
-    public static string State = "Default";
+    public string State = "Default";
 
     public enum PlanetParam //Enum listing all possible Planet attributes. Last item MUST be count, for array length
     {
@@ -99,7 +99,7 @@ public class Planet : MonoBehaviour
 
         CreatedPlanet[attribute] += multiplier;
 
-        State = DiffManhattan(CreatedPlanet, Planets);
+        State = DiffManhattan(CreatedPlanet);
 
         if(node.Name == "Moon" && State != "Asteroids")
         {
@@ -176,9 +176,9 @@ public class Planet : MonoBehaviour
             }
         }
 
-        string planetDisplayed = DiffRay(CreatedPlanet, Planets);
+        State = DiffRay(CreatedPlanet, Planets);
 
-        if(node.Name == "Moon" && planetDisplayed != "Asteroids")
+        if(node.Name == "Moon" && State != "Asteroids")
         {
             Moon.SetAllActive(true);
             RemoveMoon();
@@ -186,7 +186,7 @@ public class Planet : MonoBehaviour
 
         Atmosphere.RemoveNode(node);
 
-        SetPlanetSprite(planetDisplayed);
+        SetPlanetSprite(State);
 
     }
 
@@ -210,11 +210,11 @@ public class Planet : MonoBehaviour
     }
 
     //returns the planet which is closest to whatever the player created
-    public string DiffManhattan(int[] createdPlanet, Dictionary<string, int[]> planetArchetype)
+    public string DiffManhattan(int[] createdPlanet)
     {
         int absDifference = 99;
         string archetype = "";
-        foreach (KeyValuePair<string, int[]> valuePair in planetArchetype)
+        foreach (KeyValuePair<string, int[]> valuePair in Planets)
         {
             int localDifference = 0;
             for(int i = 0; i < createdPlanet.Length; i++)
@@ -275,7 +275,7 @@ public class Planet : MonoBehaviour
     }
 
 
-    public void SetPlanetSprite(string planet)
+    public void SetPlanetSprite(string state)
     {
         bool defaultCheck = true;
 
@@ -295,7 +295,7 @@ public class Planet : MonoBehaviour
 
         Atmosphere.SetAtmosphere(Atmosphere.GetAtmosphere());
 
-        if(planet == "Asteroids")
+        if(state == "Asteroids")
         {
             Moon.SetAllActive(false);
             Atmosphere.SetAtmosphereActive(false);
@@ -305,11 +305,25 @@ public class Planet : MonoBehaviour
         for(int i = 0; i < AvailablePlanets.Count ; i++)
         {
             
-            if(AvailablePlanets[i] == planet)
+            if(AvailablePlanets[i] == state)
             {
                 Sprite.sprite = PlanetSprites[i];
             }
         }
     }
+
+    public Sprite GetPlanetSprite(string state)
+    {
+        for(int i = 1; i < AvailablePlanets.Count ; i++)
+        {
+            
+            if(AvailablePlanets[i] == state)
+            {
+                return PlanetSprites[i];
+            }
+        }
+        return PlanetSprites[0];
+    }
+    
 
 }
