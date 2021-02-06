@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using TMPro;
 using TopoSort.Controller;
 using UnityEngine;
@@ -9,12 +6,15 @@ using UnityEngine.UI;
 
 public class ArchiveCanvas : MonoBehaviour
 {
+    // stores the sprite objects displayed in the archive
     private Dictionary<string, Image> PlanetSprites = new Dictionary<string, Image>();
     private Dictionary<string, Image> AtmosphereSprites = new Dictionary<string, Image>();
 
+    // stores the header of the archive categories to alter them on a language change
     public TextMeshProUGUI DiscoveredPlanetText;
     public TextMeshProUGUI DiscoveredAtmosphereText;
 
+    // stores the color values the sprite's RGB Values are multiplied with
     public Color DiscoveredColor = Color.white;
     public Color CoveredColor = Color.black;
     
@@ -42,13 +42,19 @@ public class ArchiveCanvas : MonoBehaviour
         
     }
 
+    /*
+     * Colors the Archive every time the ArchiveCanvas is set to active
+     */
     public void OnEnable()
     {
         ColorArchive();
     }
 
 
-
+    /*
+     * loads the image objects displayed in the game and caches them into a dictionary to avoid further
+     * Find() or GetComponent() calls
+     */
     private void LoadSprites()
     {
         Transform tmpTrans = null;
@@ -57,7 +63,7 @@ public class ArchiveCanvas : MonoBehaviour
         {
             if (planetType != "Default")
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 4; i++)     
                 {
                     tmpTrans = transform.Find("Planets/Row" + i + "/" + planetType);
 
@@ -87,6 +93,9 @@ public class ArchiveCanvas : MonoBehaviour
     }
     
     
+    /*
+     * colors the archive sprites depending on its associated entity's state of discovery
+     */
     public void ColorArchive()
     {
         CoveredColor.a = 1;
