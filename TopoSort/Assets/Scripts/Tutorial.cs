@@ -85,8 +85,8 @@ public class Tutorial : MonoBehaviour
         bool onButton = MouseManager.MouseHover(Collider);
         if(Input.GetMouseButtonDown(0) && onButton)
         {
-            isActive = !isActive;
-            if(isActive)
+
+            if(!isActive)
             {
                 LoadTexts();
                 StartTutorial();
@@ -106,6 +106,7 @@ public class Tutorial : MonoBehaviour
     public void StartTutorial()
     {
         DarkCanvas.gameObject.SetActive(true);
+        isActive = true;
         TutorialUpdate();
     }
 
