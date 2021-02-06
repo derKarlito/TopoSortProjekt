@@ -42,6 +42,7 @@ public class NodeCreationControl : MonoBehaviour
         }
         if(Input.GetMouseButtonDown(0) && onInventory)
         {
+            PlaySound();
             var prefab = Resources.Load<NodeControl>("Models/Node");  //creates new Node prefab
             var node = UnityEngine.Object.Instantiate(prefab);          //enables use of Node
             node.name = (string.Empty + node.GetInstanceID());
@@ -53,6 +54,11 @@ public class NodeCreationControl : MonoBehaviour
             node.node = new Node(NodeValue, node.GetInstanceID());     //Initializes new Node with unique identifier
             GraphManager.graph.AddNode(node.node);      //Graph gets updated to contain new node
         }
+    }
+
+    public void PlaySound()
+    {
+        SoundManagerScript.PlaySound(NodeValue);
     }
 
     public int FindSpriteIndex()

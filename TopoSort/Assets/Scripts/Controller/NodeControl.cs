@@ -73,14 +73,7 @@ public class NodeControl : MonoBehaviour
             isHeld = false;
             if(InventoryManager.hoverControl != null) //Node gets deleted if Let go of over inventory
             {
-                if(node.Descendants.Count != 0)
-                    node.rmvDescendants(node.Descendants);        //Removes all Descendants
-
-                if(node.Ancestors.Count != 0)
-                    node.rmvAncestors(node.Ancestors);
-
-                GraphManager.graph.RmvNode(node);            //Removes Node from Graph
-                Destroy(gameObject);                         //Destroys this Object
+                DeleteNode();
             }
         }
 
@@ -95,5 +88,17 @@ public class NodeControl : MonoBehaviour
         else{
             NodeManager.ExitHover(this);
         }
+    }
+
+    public void DeleteNode()
+    {
+        if(node.Descendants.Count != 0)
+            node.rmvDescendants(node.Descendants);        //Removes all Descendants
+
+        if(node.Ancestors.Count != 0)
+            node.rmvAncestors(node.Ancestors);
+
+        GraphManager.graph.RmvNode(node);            //Removes Node from Graph
+        Destroy(gameObject);                         //Destroys this Object
     }
 }
