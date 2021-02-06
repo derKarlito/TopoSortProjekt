@@ -32,7 +32,7 @@ namespace TopoSort
         public bool Automatic;         // steps in a fixed interval specified by MAX_STEP_TIME    
         public bool Prepared;          // is set to true, when the Graph and all needed Objects are prepared
         public bool Changed;           // is set to true, when there were a state change
-        public bool Finished;          // is set to true, when the algorithm finishes successful
+        public bool Finished;          // is set to true, when the algorithm finishes
         public bool Failed;            // is set to true, when the algorithm fails
 
         public float DeltaStep;                             // holds the time past since the last step
@@ -189,7 +189,7 @@ namespace TopoSort
          */
         void CheckFinished()
         {
-            if (SortedNodes.Count > 0 && SourceQueue.Count == 0 && !(Finished || Failed))
+            if (SortedNodes.Count >= 0 && SourceQueue.Count == 0 && !(Finished || Failed))
             {
                 if (SortedNodes.Count == GraphManager.graph.Nodes.Count)    // all nodes are sorted   
                 {
@@ -210,8 +210,10 @@ namespace TopoSort
                     
                 }
                 else                                                        // there are unsorted nodes
-                {
+                { 
+                    Finished = true;
                     Failed = true;
+                    CycleCanvas.getInstance().Show();
                     Debug.Log("Graph enthält einen Zyklus oder einen isolierten Knoten");
                 }
 
@@ -356,6 +358,8 @@ namespace TopoSort
             Failed = false;
 
             this.CurrentState = null;
+            
+            //CycleCanvas.getInstance().Hide();
 
             PosInGraph = 0;
 
