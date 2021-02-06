@@ -157,16 +157,6 @@ namespace TopoSort
                 Debug.Log("Reset");
                 ResetGraph();
             }
-
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                ArchiveManager.WriteDataToFile();
-            }
-            
-            if (Input.GetKeyDown(KeyCode.L))
-            {
-                ArchiveManager.LoadDataFromFile();
-            }
         }
 
 
