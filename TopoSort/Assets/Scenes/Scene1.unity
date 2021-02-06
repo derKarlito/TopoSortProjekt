@@ -4632,7 +4632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &975846919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8030,7 +8030,7 @@ MonoBehaviour:
   marginDimensions:
   - {x: 320, y: 69, z: 320, w: 132}
   - {x: 320, y: 69, z: 649, w: 323}
-  - {x: 302, y: 188, z: 261, w: 342}
+  - {x: 302, y: 80, z: 261, w: 342}
   - {x: 385, y: 48.1, z: 174, w: 346}
   - {x: 448, y: 202, z: 612, w: 132}
   - {x: 1126, y: 219, z: 105, w: 132}
