@@ -23,7 +23,7 @@ public class MusicManager : MonoBehaviour
         Speaker = GetComponent<SpriteRenderer>();
         Collider = GetComponent<Collider2D>();
         Music = GetComponent<AudioSource>();
-
+        Music.maxDistance = 0.69f;
         Play = true;
     }
 
