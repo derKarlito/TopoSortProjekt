@@ -75,7 +75,7 @@ public class PersistanceUtility : MonoBehaviour
         //Gets the planet name and the nodes it took to get there
         string planetState = PersistanceObject.PlanetName[PersistanceObject.nextIndex-1];
         
-        string nodes = PersistanceObject.graphList[PersistanceObject.nextIndex-1].toString();
+        //string nodes = PersistanceObject.graphList[PersistanceObject.nextIndex-1].toString();
 
         //uses that information to write that into the log
         logImage.sprite = Planet.GetPlanetSprite(planetState);
@@ -84,7 +84,7 @@ public class PersistanceUtility : MonoBehaviour
             Localisation.Translator.TryGetValue(planetState, out var german);
             planetState = german;
         }
-        logText.text = ($"Planet: {planetState}\nNodes: {nodes}");
+        //logText.text = ($"Planet: {planetState}\nNodes: {nodes}");
         
     }
 

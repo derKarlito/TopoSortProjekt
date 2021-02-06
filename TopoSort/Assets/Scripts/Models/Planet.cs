@@ -14,7 +14,7 @@ public class Planet : MonoBehaviour
 
     private static Sprite[] MoonSprites;
 
-    public static string State = "Default";
+    public string State = "Default";
 
     public enum PlanetParam //Enum listing all possible Planet attributes. Last item MUST be count, for array length
     {
@@ -310,5 +310,17 @@ public class Planet : MonoBehaviour
             }
         }
     }
-
+    public Sprite GetPlanetSprite(string planet)
+    {
+        for(int i = 0; i < AvailablePlanets.Count ; i++)
+        {
+            
+            if(AvailablePlanets[i] == planet)
+            {
+                return PlanetSprites[i];
+            }
+            
+        }
+        return PlanetSprites[0];
+    }
 }
