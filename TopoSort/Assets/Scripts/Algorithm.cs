@@ -16,7 +16,9 @@ namespace TopoSort
         private Collider2D Collider;
         private Collider2D ForwardCollider;
         private Collider2D BackwardCollider;
+        private Collider2D LastToolTipEnter;
 
+        public TextMeshPro ToolTip;
         public TextMeshPro QueueText;
         public Planet Planet;           //gameobject to then get the script from
 
@@ -94,63 +96,85 @@ namespace TopoSort
         {
             // Play/Pause Button
             bool onButton = MouseManager.MouseHover(Collider);
-            if (Input.GetMouseButtonDown(0) && onButton)
+            if(onButton)
             {
-
-                Automatic = Automatic ? false : true;               // switches between true and false
-                if (!Prepared)
+                SetToolTip("Play", Collider);
+                if (Input.GetMouseButtonDown(0))
                 {
-                    SoundManagerScript.PlaySound("playButton");
-                    Planet.RemoveAllMoons();
-                    Planet.PlanetReset();
-                    PrepareAlgorithm(GraphManager.graph);           // Prepares the algorithm in case it is not already
-                }
 
+                    Automatic = Automatic ? false : true;               // switches between true and false
+                    if (!Prepared)
+                    {
+                        SoundManagerScript.PlaySound("playButton");
+                        Planet.RemoveAllMoons();
+                        Planet.PlanetReset();
+                        PrepareAlgorithm(GraphManager.graph);           // Prepares the algorithm in case it is not already
+                    }
+
+                }
+            }
+            else
+            {
+                DeleteToolTip(Collider);
             }
 
             // Forward Button
             onButton = MouseManager.MouseHover(ForwardCollider);
-            if (Input.GetMouseButtonDown(0) && onButton)
+            if(onButton)
             {
-                SoundManagerScript.PlaySound("forthButton");
-
-                if (!Prepared)
+                SetToolTip("Step Forward", ForwardCollider);
+                if (Input.GetMouseButtonDown(0) && onButton)
                 {
-                    PrepareAlgorithm(GraphManager.graph);           
-                }
-                else if (!Finished)
-                {
-                    if (Automatic)                                  // pauses the automatic stepping and avoids stepping one step further
-                    {
-                        Automatic = false;
-                    }
-                    else
-                    {
-                        StepForward();
-                    }
-                }
+                    SoundManagerScript.PlaySound("forthButton");
 
+                    if (!Prepared)
+                    {
+                        PrepareAlgorithm(GraphManager.graph);           
+                    }
+                    else if (!Finished)
+                    {
+                        if (Automatic)                                  // pauses the automatic stepping and avoids stepping one step further
+                        {
+                            Automatic = false;
+                        }
+                        else
+                        {
+                            StepForward();
+                        }
+                    }
+
+                }
             }
-
+            else
+            {
+                DeleteToolTip(ForwardCollider);
+            }
             // Backward Button
             onButton = MouseManager.MouseHover(BackwardCollider);
-            if (Input.GetMouseButtonDown(0) && onButton)
-            { 
-                SoundManagerScript.PlaySound("backButton");
-                if ((Prepared && !Finished) && StepStack.Count > 0)     
-                {
-                    if (Automatic)                                  
+            if(onButton)
+            {
+                SetToolTip("Step Back", BackwardCollider);
+                if (Input.GetMouseButtonDown(0))
+                { 
+                    SoundManagerScript.PlaySound("backButton");
+                    if ((Prepared && !Finished) && StepStack.Count > 0)     
                     {
-                        Automatic = false;
+                        if (Automatic)                                  
+                        {
+                            Automatic = false;
+                        }
+                        else
+                        {
+                            StepBackward();
+                        }
                     }
-                    else
-                    {
-                        StepBackward();
-                    }
+
                 }
-
             }
-
+            else
+            {
+                DeleteToolTip(BackwardCollider);
+            }
             // Reset-Key / Stop
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -608,5 +632,45 @@ namespace TopoSort
             }
         }  
         
+        public void SetToolTip(string tip, Collider2D lastEnter)
+        {
+            string german = default;
+            ToolTip.transform.position = MouseManager.GetMousePos().Z(-2);
+            DetermineToolTipPos(tip);
+            LastToolTipEnter = lastEnter;
+
+            if(Localisation.isGermanActive)
+            {
+                Localisation.Translator.TryGetValue(tip, out german);
+
+                    ToolTip.text = german;       
+            }
+            else
+            {
+                ToolTip.text = tip;
+            }
+        }
+    
+        public void DeleteToolTip(Collider2D lastExit)
+        {
+            if(LastToolTipEnter == lastExit)
+                ToolTip.text = "";
+        }
+
+        public void DetermineToolTipPos(string tip)
+        {
+            switch (tip)
+            {
+                case "Play":
+                    ToolTip.transform.position += new Vector3 (0.5f, -1f, 0f);
+                    break;
+                case "Step Forward":
+                    ToolTip.transform.position += new Vector3(0.5f, -0.5f, 0f);
+                    break;
+                case "Step Back":
+                    ToolTip.transform.position += new Vector3 (0.5f, 0.2f, 0);
+                    break;
+            }
+        }
     }
 }

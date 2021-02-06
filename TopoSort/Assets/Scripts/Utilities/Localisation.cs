@@ -42,7 +42,15 @@ public class Localisation : MonoBehaviour
         {"Clouds", "Wolken"},
         {"Asteroid Belt", "Asteroidengürtel"},
         {"Rings", "Ringen"},
-        {"Obisdian", "Obisdian"}
+        {"Obisdian", "Obisdian"},
+        {"Play", "Start"},
+        {"Step Forward", "Schritt vor"},
+        {"Step Back", "Schritt zurück"},
+        {"Delete All Nodes", "Alle Nodes löschen"},
+        {"Mute/Unmute", "Musik Aus/Ein"},
+        {"Tutorial", "Tutorial"},
+        {"Glossary", "Glossar"},
+        {"Language", "Sprache"}
     };
 
     private void Start() 
