@@ -36,6 +36,17 @@ namespace TopoSort.Controller
          */
         static ArchiveManager()
         {
+            InitDictionaries();
+            
+            LoadDataFromFile();
+        }
+
+
+        /*
+         * used to initialize the dictionaries with default values;
+         */
+        private static void InitDictionaries()
+        {
             foreach (string type in Planet.AvailablePlanets)
             {
                 DiscoveredPlanets[type] = type == "Default";        // The planet type "Default" is set to true by default
@@ -45,11 +56,15 @@ namespace TopoSort.Controller
             {
                 DiscoveredAtmosphere[type] = false;
             }
-            
-            LoadDataFromFile();
         }
 
 
+        public static void ResetDiscoveries()
+        {
+            InitDictionaries();
+            WriteDataToFile();
+        }
+        
 
         /*
          * checks whether or not a planet is currently discovered.
@@ -119,7 +134,7 @@ namespace TopoSort.Controller
          */
         public static void checkResult(string planetType, string atmosphereType)
         {
-            if (checkPlanet(planetType) || checkAtmosphere(atmosphereType))
+            if (checkPlanet(planetType) | checkAtmosphere(atmosphereType))
             {
                 WriteDataToFile();
             }

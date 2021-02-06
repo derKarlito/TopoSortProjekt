@@ -2,8 +2,9 @@
 using TMPro;
 using TopoSort.Controller;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+    
 public class ArchiveCanvas : MonoBehaviour
 {
     // stores the sprite objects displayed in the archive
@@ -17,6 +18,17 @@ public class ArchiveCanvas : MonoBehaviour
     // stores the color values the sprite's RGB Values are multiplied with
     public Color DiscoveredColor = Color.white;
     public Color CoveredColor = Color.black;
+
+    
+    
+    // Reset button
+    public Button ResetButton;
+    private TextMeshProUGUI ResetButtonContent;
+    
+    public Color ResetButtonEnterColor = new Color(1.0f, 1.0f, 1.0f);
+    public Color ResetButtonExitColor = new Color(0.75f, 0.75f, 0.75f);
+
+    
     
     // Start is called before the first frame update
     void Start()
@@ -24,8 +36,26 @@ public class ArchiveCanvas : MonoBehaviour
         ArchiveManager.LoadDataFromFile();
         
         LoadSprites();
+
+        ColorArchive();
+
+        ResetButtonContent = ResetButton.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+        ResetButtonContent.color = ResetButtonExitColor;
+        ResetButton.onClick.AddListener(ResetProgress);
         
-        this.gameObject.SetActive(false);
+        EventTrigger.Entry enterEvent = new EventTrigger.Entry();
+        enterEvent.eventID = EventTriggerType.PointerEnter;
+        enterEvent.callback.AddListener(ButtonEnter);
+        
+        EventTrigger.Entry exitEvent = new EventTrigger.Entry();
+        exitEvent.eventID = EventTriggerType.PointerExit;
+        exitEvent.callback.AddListener(ButtonExit);
+
+        EventTrigger trigger = ResetButton.gameObject.AddComponent<EventTrigger>();
+
+        trigger.triggers.Add(enterEvent);
+        trigger.triggers.Add(exitEvent);
+        // this.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,11 +63,13 @@ public class ArchiveCanvas : MonoBehaviour
     {
         DiscoveredPlanetText.text = "Discovered Planets";
         DiscoveredAtmosphereText.text = "Discovered Atmospheres";
+        ResetButtonContent.text = "Reset Progress";
         
         if (Localisation.isGermanActive)
         {
             DiscoveredPlanetText.text = "Entdeckte Planeten";
             DiscoveredAtmosphereText.text = "Entdeckte Atmosphären";    
+            ResetButtonContent.text = "Fortschritt zurücksetzen";
         }
         
     }
@@ -91,6 +123,13 @@ public class ArchiveCanvas : MonoBehaviour
             }
         }
     }
+
+
+    public void ResetProgress()
+    {
+        ArchiveManager.ResetDiscoveries();
+        ColorArchive();
+    }
     
     
     /*
@@ -127,5 +166,16 @@ public class ArchiveCanvas : MonoBehaviour
                 } 
             }
         }
+    }
+    
+    
+    public void ButtonEnter(BaseEventData data)
+    {
+        ResetButtonContent.color = ResetButtonEnterColor;
+    }
+    
+    public void ButtonExit(BaseEventData data)
+    {
+        ResetButtonContent.color = ResetButtonExitColor;
     }
 }
