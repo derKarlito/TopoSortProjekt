@@ -27,52 +27,46 @@ public class SoundManagerScript : MonoBehaviour
         StartVolume = AudioSrc.volume;
     }
 
-    /*
-    void Awake()
-    {
-        DontDestroyOnLoad(this);
-    }
-    */
     public static void PlaySound (string clip)
     {
         switch(clip)
         {
             case "playButton":
-            AudioSrc.PlayOneShot (playButtonSound);
-            break;
+                AudioSrc.PlayOneShot (playButtonSound);
+                break;
             case "forthButton":
-            AudioSrc.PlayOneShot (forthButtonSound);
-            break;
+                AudioSrc.PlayOneShot (forthButtonSound);
+                break;
             case "backButton":
-            AudioSrc.PlayOneShot (backButtonSound);
-            break;
+                AudioSrc.PlayOneShot (backButtonSound);
+                break;
             case "buttonSound":
-            AudioSrc.PlayOneShot (buttonSound);
-            break;
+                AudioSrc.PlayOneShot (buttonSound);
+                break;
             case "Water":
-            AudioSrc.PlayOneShot(waterButtonSound);
-            break;
+                AudioSrc.PlayOneShot(waterButtonSound);
+                break;
             case "Ground":
-            AudioSrc.PlayOneShot(groundButtonSound);
-            break;
+                AudioSrc.PlayOneShot(groundButtonSound);
+                break;
             case "Plants":
-            AudioSrc.PlayOneShot(plantButtonSound);
-            break;
+                AudioSrc.PlayOneShot(plantButtonSound);
+                break;
             case "Moon":
-            AudioSrc.volume += 90000;
-            AudioSrc.volume *= 90000;       // Moon is barely audible :(
-            AudioSrc.PlayOneShot(moonButtonSound);
-            goto case "Volume";
+                AudioSrc.volume += 90000;
+                AudioSrc.volume *= 90000;       // Moon is barely audible :(
+                AudioSrc.PlayOneShot(moonButtonSound);
+                goto case "Volume";
             case "Atmosphere":
-            AudioSrc.volume *= 50;
-            AudioSrc.PlayOneShot(atmosphereButtonSound);
-            goto case "Volume";
+                AudioSrc.volume *= 50;
+                AudioSrc.PlayOneShot(atmosphereButtonSound);
+                goto case "Volume";
             case "Error":
-            AudioSrc.PlayOneShot(errorSound);
-            break;
+                AudioSrc.PlayOneShot(errorSound);
+                break;
             case "Volume":
-            AudioSrc.volume = StartVolume;
-            break;
+                AudioSrc.volume = StartVolume;
+                break;
         }
     }
 }

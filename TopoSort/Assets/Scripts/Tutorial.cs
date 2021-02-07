@@ -6,6 +6,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine.Rendering;
 using TopoSort;
+using UnityEngine.SocialPlatforms;
 
 public class Tutorial : MonoBehaviour
 {
@@ -149,36 +150,26 @@ public class Tutorial : MonoBehaviour
 
     private void  LoadTexts()
     {
-            TextLoader loaderGerman = new TextLoader("xml/Tutorial_deutsch");
-            TextLoader loaderEnglish = new TextLoader("xml/Tutorial_englisch");
-            
-            if (Localisation.isGermanActive)
-            {
-                TutorialTexts = new string[]
-                {   
-                    loaderGerman.LoadTutorialPage(1),
-                    loaderGerman.LoadTutorialPage(2),
-                    loaderGerman.LoadTutorialPage(3),
-                    loaderGerman.LoadTutorialPage(4),
-                    loaderGerman.LoadTutorialPage(5),
-                    loaderGerman.LoadTutorialPage(6),
-                    loaderGerman.LoadTutorialPage(7)
-                };
-            }
-            else
-            {
-                TutorialTexts = new string[]
-                {   
-                    loaderEnglish.LoadTutorialPage(1),
-                    loaderEnglish.LoadTutorialPage(2),
-                    loaderEnglish.LoadTutorialPage(3),
-                    loaderEnglish.LoadTutorialPage(4),
-                    loaderEnglish.LoadTutorialPage(5),
-                    loaderEnglish.LoadTutorialPage(6),
-                    loaderEnglish.LoadTutorialPage(7),
-                };  
-            }
+        TextLoader loader;
 
+        if (Localisation.isGermanActive)
+        {
+            loader = new TextLoader("xml/Tutorial_deutsch");
+        }
+        else
+        {
+            loader = new TextLoader("xml/Tutorial_englisch");
+        }
+
+            
+        string[] texts = new string[7];
+            
+        for (int i = 0; i < texts.Length; i++)
+        {
+            texts[i] = loader.LoadTutorialPage(i + 1);
+        }
+
+        TutorialTexts = texts;
     }
 
     private void DetermineScreenHighlights()
@@ -206,8 +197,6 @@ public class Tutorial : MonoBehaviour
                 break;
             case 6: //Planet
                 litIndex = 5;
-                break;
-            default:
                 break;
         }
 

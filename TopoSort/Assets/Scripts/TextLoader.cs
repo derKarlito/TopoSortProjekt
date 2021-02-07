@@ -40,10 +40,6 @@ namespace TopoSort
                         count += 3;
                         continue;
                     }
-                    else
-                    {
-                        continue;
-                    }
                 }
 
                 if (count != 0 && count > 0) 
@@ -80,10 +76,6 @@ namespace TopoSort
                     if (attr.Equals(id.ToString()))
                     {
                         count += 4;
-                        continue;
-                    }
-                    else
-                    {
                         continue;
                     }
                 }
