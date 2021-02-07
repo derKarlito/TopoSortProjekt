@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class DialogOkButton : MonoBehaviour
 {
-    private Button ButtonComponent;
-    private TextMeshProUGUI Content;
+    public Button ButtonComponent;
+    public TextMeshProUGUI Content;
     
     public Color HoverColor = new Color(1.0f, 1.0f, 1.0f);
     public Color DefaultColor = new Color(0.75f, 0.75f, 0.75f);
