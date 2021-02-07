@@ -149,8 +149,8 @@ public class Tutorial : MonoBehaviour
 
     private void  LoadTexts()
     {
-            TextLoader loaderGerman = new TextLoader("Assets\\Resources\\xml\\Tutorial_deutsch.xml");
-            TextLoader loaderEnglish = new TextLoader("Assets\\Resources\\xml\\Tutorial_englisch.xml");
+            TextLoader loaderGerman = new TextLoader("xml/Tutorial_deutsch");
+            TextLoader loaderEnglish = new TextLoader("xml/Tutorial_englisch");
             
             if (Localisation.isGermanActive)
             {
@@ -162,7 +162,7 @@ public class Tutorial : MonoBehaviour
                     loaderGerman.LoadTutorialPage(4),
                     loaderGerman.LoadTutorialPage(5),
                     loaderGerman.LoadTutorialPage(6),
-                    loaderGerman.LoadTutorialPage(7),
+                    loaderGerman.LoadTutorialPage(7)
                 };
             }
             else

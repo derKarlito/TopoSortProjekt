@@ -392,6 +392,7 @@ namespace TopoSort
                     Localisation.Translator.TryGetValue(tempSourceQueue[i].Name, out german);
                 else
                     german = tempSourceQueue[i].Name;
+                
                 if(i < tempSourceQueue.Count - 1)
                 {
                     queueText += german + " | ";
@@ -409,6 +410,7 @@ namespace TopoSort
                     Localisation.Translator.TryGetValue(tempSortedNodes[i].Name, out german);
                 else
                     german = tempSortedNodes[i].Name;
+                
                 if(i < tempSortedNodes.Count-1)
                 {
                     sortedText += german + " -> ";
@@ -420,10 +422,11 @@ namespace TopoSort
             }
 
             // Reading + Translating of the PlanetState
-            if(Localisation.isGermanActive)
+            if (Localisation.isGermanActive)
                 Localisation.Translator.TryGetValue(Planet.State, out german);
-            else
+            else 
                 german = Planet.State;
+            
             planetName = german;
 
             if(Atmosphere.State != null)

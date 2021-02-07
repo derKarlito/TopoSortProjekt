@@ -7,6 +7,7 @@ using System.Xml;
 using System.IO;
 
 using TopoSort;
+using UnityEngine;
 
 namespace TopoSort
 {
@@ -22,8 +23,12 @@ namespace TopoSort
         public string LoadTutorialPage(int page) 
         {
             String text = "";   //will contain the page number, headline and text
-            int count = 0;      //if a node attribute match page, it will increased by 3 
-            XmlTextReader xtr = new XmlTextReader(this.Path);
+            int count = 0;      //if a node attribute match page, it will increased by 3
+            
+            TextAsset temp = Resources.Load<TextAsset>(this.Path);
+            
+            XmlReader xtr = XmlReader.Create(new StringReader(temp.text));
+
 
             while (xtr.Read())
             {
@@ -61,7 +66,10 @@ namespace TopoSort
         public GlossarEntry LoadGlossarEntry(int id) 
         {
             GlossarEntry entry = new GlossarEntry();
-            XmlTextReader xtr = new XmlTextReader(this.Path);
+            
+            TextAsset temp = Resources.Load(this.Path) as TextAsset;
+            XmlReader xtr = XmlReader.Create(new StringReader(temp.text));
+            
             int count = 0;
             while (xtr.Read()) 
             {

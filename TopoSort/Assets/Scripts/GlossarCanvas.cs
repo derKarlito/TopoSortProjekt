@@ -50,8 +50,8 @@ public class GlossarCanvas : MonoBehaviour
     {
         GlossarEntry entryGerman;
         GlossarEntry entryEnglish;
-        TextLoader germanLoader = new TextLoader("Assets\\Resources\\xml\\Glossar_deutsch.xml");
-        TextLoader englishLoader = new TextLoader("Assets\\Resources\\xml\\Glossar_englisch.xml");
+        TextLoader germanLoader = new TextLoader("xml/Glossar_deutsch");
+        TextLoader englishLoader = new TextLoader("xml/Glossar_englisch");
 
 
         // 0 - Graph Entry

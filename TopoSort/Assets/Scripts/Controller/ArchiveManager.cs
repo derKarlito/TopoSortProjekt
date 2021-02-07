@@ -147,12 +147,14 @@ namespace TopoSort.Controller
         {
             if (File.Exists(SaveFile))
             {
-                BinaryReader reader = new BinaryReader(File.Open(SaveFile, FileMode.Open, FileAccess.Read));
+                FileStream file = File.Open(SaveFile, FileMode.Open, FileAccess.Read);
+                BinaryReader reader = new BinaryReader(file);
 
                 LoadPlanets(reader.ReadBytes(4));       
                 LoadAtmosphere(reader.ReadBytes(2));
             
                 reader.Close();
+                file.Close();
                 
                 Debug.Log("Discoveries loaded");
             }
@@ -164,18 +166,25 @@ namespace TopoSort.Controller
          */
         public static void WriteDataToFile()
         {
+
+            FileStream file;
             
             if (! File.Exists(SaveFile))
             {
-                File.Create(SaveFile);
+                file = File.Create(SaveFile);
+            }
+            else
+            {
+                file = File.Open(SaveFile, FileMode.Open, FileAccess.Write);
             }
             
-            BinaryWriter writer = new BinaryWriter(File.Open(SaveFile, FileMode.Open, FileAccess.Write));
+            BinaryWriter writer = new BinaryWriter(file);
             
             writer.Write(StorePlanets());
             writer.Write(StoreAtmosphere());
             
             writer.Close();
+            file.Close();
             
             Debug.Log("Discoveries Saved!");
         }
